@@ -1,0 +1,141 @@
+<div class="container-fluid">
+  <!-- <app-page-title
+    title="Profile"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title> -->
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="row p-4">
+          <div class="col-6">
+            <h4 class="card-title" style="padding: 0px; font-size: 1.5rem">
+              Gender Settings
+            </h4>
+            <p style="font-size: 1rem">List available gender.</p>
+          </div>
+          <div class="col-6">
+            <button
+              class="btn btn-primary text-right"
+              style="display: flex; flex-direction: row; align-items: center; float: right;"
+              (click)="createRecordModal(createItemModal)"
+            >
+              <!-- <app-keenicon name="plus-square" class="fs-3"></app-keenicon> -->
+              <span style="margin-left: 6px">Create Gender</span>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-12">
+              <!-- search field goes here -->
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-middle gs-0 gy-4">
+              <thead>
+                <tr class="fw-bolder text-muted bg-light">
+                  <th
+                    class="min-w-10px text-gray-900 text-end rounded-end"
+                  ></th>
+                  <th class="min-w-100px text-gray-900">Gender</th>
+                  <th class="min-w-50px text-gray-900">Status</th>
+                  <th class="min-w-100px text-gray-900">Created At</th>
+                  <th class="min-w-100px text-gray-900"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="data != null">
+                  <tr *ngFor="let item of data">
+                    <td class="text-end">
+                      <a
+                        (click)="viewRecord(item)"
+                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                      >
+                        <!-- <app-keenicon name="pencil" class="fs-3"></app-keenicon> -->
+                      </a>
+                    </td>
+                    <td>
+                      {{ item.gender }}
+                    </td>
+                    <td>
+                      {{ item?.createdAt | date }}
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #createItemModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Create Admin</h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="gender"
+            [class.text-danger]="gender.invalid &amp;&amp; gender.touched"
+            class="form-label"
+            >Gender <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="gender"
+            #gender="ngModel"
+            [(ngModel)]="obj.gender"
+            [class.is-invalid]="gender.invalid &amp;&amp; gender.touched"
+            placeholder="Enter Gender"
+            required
+          />
+
+          <div *ngIf="gender.invalid &amp;&amp; gender.touched">
+            <small *ngIf="gender.errors?.required" class="text-danger"
+              >Gender is Required</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        *ngIf="!isLoading"
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        (click)="onSubmit()"
+      >
+        Submit
+      </button>
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-danger"
+        (click)="closeModal()"
+      >
+        Cancel
+      </button>
+      <button
+        *ngIf="isLoading"
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        disabled
+      >
+        Processing <span><i class="bx bx-loader bx-spin"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>

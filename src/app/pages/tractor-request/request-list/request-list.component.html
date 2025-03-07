@@ -1,0 +1,521 @@
+<div class="container-fluid">
+  <!-- <app-page-title
+    title="Profile"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title> -->
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="row p-4">
+          <div class="col-6">
+            <h4 class="card-title" style="padding: 0px; font-size: 1.5rem">
+              Tractor Request Module
+            </h4>
+            <p style="font-size: 1rem">
+              This is a list of all tractor requests.
+            </p>
+          </div>
+          <div class="col-6">
+            <dx-button
+              stylingMode="contained"
+              text="Contained"
+              type="normal"
+              style="float: right; margin-left: 10px"
+              [width]="230"
+              (onClick)="onShowMakeRequestModal()"
+            >
+              <span style="margin-right: 10px"
+                ><i class="bx bx-slider" style="font-size: 20px"></i
+              ></span>
+              <p style="margin: 0px; font-size: 14px; font-weight: 500">
+                Make Tractor Request
+              </p>
+            </dx-button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-12">
+              <dx-button
+                stylingMode="contained"
+                text="Contained"
+                type="normal"
+                style="float: right; margin-left: 10px"
+                [width]="120"
+              >
+                <span style="margin-right: 10px"
+                  ><i class="bx bx-slider" style="font-size: 20px"></i
+                ></span>
+                <p style="margin: 0px; font-size: 14px; font-weight: 500">
+                  Location
+                </p>
+              </dx-button>
+              <dx-button
+                stylingMode="contained"
+                text="Contained"
+                type="normal"
+                style="float: right"
+                [width]="120"
+              >
+                <span style="margin-right: 10px"
+                  ><i class="bx bx-slider" style="font-size: 20px"></i
+                ></span>
+                <p style="margin: 0px; font-size: 14px; font-weight: 500">
+                  Filter
+                </p>
+              </dx-button>
+              <!-- <button
+                class="btn btn-secondary"
+                style="
+                  float: right;
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                "
+              >
+                <span style="margin-right: 10px"
+                  ><i class="bx bx-slider" style="font-size: 26px"></i
+                ></span>
+                <p style="margin: 0px; font-size: 17px">Filter</p>
+              </button> -->
+            </div>
+          </div>
+          <dx-data-grid
+            id="gridContainer"
+            [dataSource]="data"
+            keyExpr="id"
+            [showBorders]="true"
+            [showColumnLines]="true"
+            [showRowLines]="true"
+            [rowAlternationEnabled]="true"
+            [columnAutoWidth]="true"
+            [allowColumnResizing]="true"
+          >
+            <dxo-paging [pageSize]="10"> </dxo-paging>
+            <dxo-selection mode="single"></dxo-selection>
+            <div>
+              <dx-button
+                stylingMode="contained"
+                text="Contained"
+                type="normal"
+                [width]="120"
+              >
+              </dx-button>
+            </div>
+            <dxo-export
+              [enabled]="true"
+              [allowExportSelectedData]="true"
+            ></dxo-export>
+
+            <dxo-search-panel [visible]="true" [width]="350"></dxo-search-panel>
+
+            <dxi-column dataField="id" caption="Request ID"></dxi-column>
+            <dxi-column
+              dataField="farmerName"
+              caption="Farmer Name"
+            ></dxi-column>
+            <dxi-column
+              dataField="farmer.phone"
+              caption="Farmer Phone"
+            ></dxi-column>
+
+            <dxi-column
+              dataField="farmer.email"
+              caption="Farmer Email"
+            ></dxi-column>
+
+            <dxi-column
+              dataField="service_name"
+              caption="Service Name"
+            ></dxi-column>
+
+            <dxi-column
+              dataField="service_price"
+              caption="Service Amount"
+            ></dxi-column>
+
+            <dxi-column
+              dataField="service_duration"
+              caption="Service Duration"
+            ></dxi-column>
+
+            <dxi-column
+              dataField="location_name"
+              caption="Location"
+            ></dxi-column>
+
+            <dxi-column dataField="status" caption="Status"></dxi-column>
+
+            <dxi-column caption="Action" name="delistBtn" type="buttons">
+              <dxi-button
+                text="View Appointment"
+                [onClick]="viewDetail"
+              ></dxi-button>
+            </dxi-column>
+
+            <dxo-summary>
+              <dxi-total-item column="id" summaryType="count"> </dxi-total-item>
+            </dxo-summary>
+          </dx-data-grid>
+
+          <div class="modal-footer" style="margin-top: 2%">
+            <button
+              type="button"
+              class="btn"
+              style="
+                background-color: #2a3042;
+                color: #ffffff;
+                display: flex;
+                cursor: pointer;
+              "
+              [disabled]="pageable.pageNumber === 0"
+              (click)="gotoPage(pageable.pageNumber - 1)"
+            >
+              <i
+                class="bx bx-chevron-left"
+                style="font-size: 16px; font-weight: bold; align-items: center"
+              ></i>
+            </button>
+            <div style="font-size: 14px; font-weight: bold; margin: 0 0.6rem">
+              page {{ pageable.pageNumber + 1 || 0 }} of
+              {{ pageable.totalPages || 0 }}
+            </div>
+            <button
+              type="button"
+              class="btn"
+              style="
+                background-color: #2a3042;
+                color: #ffffff;
+                display: flex;
+                cursor: pointer;
+              "
+              (click)="gotoPage(pageable.pageNumber + 1)"
+              [disabled]="
+                pageable.pageNumber > 1 &&
+                pageable.pageNumber < pageable.pageNumber
+              "
+            >
+              <i
+                class="bx bx-chevron-right"
+                style="font-size: 16px; font-weight: bold; align-items: center"
+              ></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #bookAppointmentModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Make Tractor Request</h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modal.close('by: close icon')"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="farmerId"
+            [class.text-danger]="farmerId.invalid &amp;&amp; farmerId.touched"
+            class="form-label"
+            >Select Farmer <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="farmerList"
+            bindValue="id"
+            bindLabel="name"
+            name="farmerId"
+            #farmerId="ngModel"
+            [(ngModel)]="appointmentObj.farmerId"
+            [class.is-invalid]="farmerId.invalid &amp;&amp; farmerId.touched"
+            placeholder="--Select Farmer--"
+            required
+            (change)="selectFarmer($event)"
+          ></ng-select>
+
+          <div *ngIf="farmerId.invalid &amp;&amp; farmerId.touched">
+            <small *ngIf="farmerId.errors?.required" class="text-danger"
+              >Farmer is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="farmlandId"
+            [class.text-danger]="farmlandId.invalid &amp;&amp; farmlandId.touched"
+            class="form-label"
+            >Select Farmland <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="farmLandList"
+            bindValue="id"
+            bindLabel="name"
+            name="farmlandId"
+            #farmlandId="ngModel"
+            [(ngModel)]="appointmentObj.farmlandId"
+            [class.is-invalid]="farmlandId.invalid &amp;&amp; farmlandId.touched"
+            placeholder="--Select Farmland--"
+            required
+          ></ng-select>
+
+          <div *ngIf="farmlandId.invalid &amp;&amp; farmlandId.touched">
+            <small *ngIf="farmlandId.errors?.required" class="text-danger"
+              >Farmland is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="service"
+            [class.text-danger]="service.invalid &amp;&amp; service.touched"
+            class="form-label"
+            >Select Service <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="serviceList"
+            bindValue="name"
+            bindLabel="name"
+            name="service"
+            #service="ngModel"
+            [(ngModel)]="appointmentObj.service"
+            [class.is-invalid]="service.invalid &amp;&amp; service.touched"
+            placeholder="--Select Service--"
+            required
+          ></ng-select>
+
+          <div *ngIf="service.invalid &amp;&amp; service.touched">
+            <small *ngIf="service.errors?.required" class="text-danger"
+              >Service is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="scheduledDate"
+            [class.text-danger]="scheduledDate.invalid &amp;&amp; scheduledDate.touched"
+            class="form-label"
+            >Appointment Date <span class="text-danger">*</span></label
+          >
+          <input
+            type="date"
+            class="form-control"
+            name="scheduledDate"
+            #scheduledDate="ngModel"
+            [(ngModel)]="appointmentObj.scheduledDate"
+            [class.is-invalid]="scheduledDate.invalid &amp;&amp; scheduledDate.touched"
+            required
+          />
+
+          <div
+            *ngIf="scheduledDate.invalid &amp;&amp; scheduledDate.touched"
+          >
+            <small *ngIf="scheduledDate.errors?.required" class="text-danger"
+              >Scheduled Date is Required</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        (click)="onBookAppointment()"
+      >
+        Request Tractor
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #appointmentDetailModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">
+      Appointment Details - Appointment Status ({{ appointmentDetail?.status }})
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modal.close('by: close icon')"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="row">
+        <h5>Customer Information</h5>
+        <br />
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="userId" class="form-label">Customer Name</label>
+            <br />
+            <b>{{ appointmentDetail?.customer }}</b>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="userId" class="form-label">Customer Phone</label>
+            <br />
+            <b>{{ appointmentDetail?.customer_phone }}</b>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="userId" class="form-label">Customer Email</label>
+            <br />
+            <b>{{ appointmentDetail?.customer_email }}</b>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="row">
+        <h5>Staff Information</h5>
+        <br />
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="adminId" class="form-label">Admin Name</label>
+            <br />
+            <b>{{ appointmentDetail?.admin_name }}</b>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="userId" class="form-label">Admin Phone</label>
+            <br />
+            <b>{{ appointmentDetail?.admin_phone }}</b>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="row">
+        <h5>Appointment Information</h5>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="categoryId" class="form-label">Service Category</label>
+            <br />
+            <b>{{ appointmentDetail?.category_name }}</b>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="serviceId" class="form-label">Service Name</label>
+            <br />
+            <b>{{ appointmentDetail?.service_name }}</b>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="serviceId" class="form-label">Service Duration</label>
+            <br />
+            <b>{{ appointmentDetail?.service_duration }}</b>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="serviceId" class="form-label">Service Price</label>
+            <br />
+            <b>{{ appointmentDetail?.service_price }}</b>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="locationId" class="form-label">Location Name</label>
+            <br />
+            <b>{{ appointmentDetail?.location_name }}</b>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="locationId" class="form-label">Location Address</label>
+            <br />
+            <b>{{ appointmentDetail?.location_address }}</b>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="locationId" class="form-label">Location Phone</label>
+            <br />
+            <b>{{ appointmentDetail?.location_phone }}</b>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="locationId" class="form-label">Note</label>
+            <br />
+            <b>{{
+              appointmentDetail?.note != null
+                ? appointmentDetail?.note
+                : "Not Available"
+            }}</b>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="appointmentDate" class="form-label"
+              >Appointment Date</label
+            >
+            <br />
+            <b>{{ appointmentDetail?.appointment_date | date }}</b>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="appointmentTime" class="form-label"
+              >Appointment Time</label
+            >
+            <br />
+            <b>{{ appointmentDetail?.appointment_time }}</b>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-3">
+            <label for="appointmentTime" class="form-label"
+              >Document Name</label
+            >
+            <br />
+            <b>{{
+              appointmentDetail?.document_name != null
+                ? appointmentDetail?.document_name
+                : "Not Available"
+            }}</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,453 @@
+<div class="container-fluid">
+  <!-- <app-page-title
+    title="Profile"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title> -->
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="row p-4">
+          <div class="col-6">
+            <h4 class="card-title" style="padding: 0px; font-size: 1.5rem">
+              Tractor Owner Manager
+            </h4>
+            <p style="font-size: 1rem">This is a list of all tractor owner.</p>
+          </div>
+          <div class="col-6">
+            <dx-button
+              stylingMode="contained"
+              text="Contained"
+              type="normal"
+              style="float: right; margin-left: 10px"
+              [width]="200"
+              (onClick)="onShowCreateRecordModal()"
+            >
+              <span style="margin-right: 10px"
+                ><i class="bx bx-slider" style="font-size: 20px"></i
+              ></span>
+              <p style="margin: 0px; font-size: 14px; font-weight: 500">
+                Create Tractor Owner
+              </p>
+            </dx-button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-12">
+              <dx-button
+                stylingMode="contained"
+                text="Contained"
+                type="normal"
+                style="float: right; margin-left: 10px"
+                [width]="120"
+              >
+                <span style="margin-right: 10px"
+                  ><i class="bx bx-slider" style="font-size: 20px"></i
+                ></span>
+                <p style="margin: 0px; font-size: 14px; font-weight: 500">
+                  Location
+                </p>
+              </dx-button>
+              <dx-button
+                stylingMode="contained"
+                text="Contained"
+                type="normal"
+                style="float: right"
+                [width]="120"
+              >
+                <span style="margin-right: 10px"
+                  ><i class="bx bx-slider" style="font-size: 20px"></i
+                ></span>
+                <p style="margin: 0px; font-size: 14px; font-weight: 500">
+                  Filter
+                </p>
+              </dx-button>
+              <!-- <button
+                class="btn btn-secondary"
+                style="
+                  float: right;
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                "
+              >
+                <span style="margin-right: 10px"
+                  ><i class="bx bx-slider" style="font-size: 26px"></i
+                ></span>
+                <p style="margin: 0px; font-size: 17px">Filter</p>
+              </button> -->
+            </div>
+          </div>
+          <dx-data-grid
+            id="gridContainer"
+            [dataSource]="data"
+            keyExpr="id"
+            [showBorders]="true"
+            [showColumnLines]="true"
+            [showRowLines]="true"
+            [rowAlternationEnabled]="true"
+            [columnAutoWidth]="true"
+            [allowColumnResizing]="true"
+          >
+            <dxo-paging [pageSize]="10"> </dxo-paging>
+            <dxo-selection mode="single"></dxo-selection>
+            <div>
+              <dx-button
+                stylingMode="contained"
+                text="Contained"
+                type="normal"
+                [width]="120"
+              >
+              </dx-button>
+            </div>
+            <dxo-export
+              [enabled]="true"
+              [allowExportSelectedData]="true"
+            ></dxo-export>
+
+            <dxo-search-panel [visible]="true" [width]="350"></dxo-search-panel>
+
+            <dxi-column dataField="firstName" caption="First Name"></dxi-column>
+            <dxi-column dataField="lastName" caption="Last Name"></dxi-column>
+            <dxi-column dataField="phone" caption="Phone"></dxi-column>
+            <dxi-column dataField="email" caption="Email"></dxi-column>
+            <dxi-column dataField="dob" caption="Date of Birth"></dxi-column>
+            <dxi-column dataField="address" caption="address"></dxi-column>
+
+            <dxi-column caption="View" name="delistBtn" type="buttons">
+              <dxi-button text="View" [onClick]="viewRecord"></dxi-button>
+            </dxi-column>
+
+            <dxo-summary>
+              <dxi-total-item column="id" summaryType="count"> </dxi-total-item>
+            </dxo-summary>
+          </dx-data-grid>
+
+          <div class="modal-footer" style="margin-top: 2%">
+            <button
+              type="button"
+              class="btn"
+              style="
+                background-color: #2a3042;
+                color: #ffffff;
+                display: flex;
+                cursor: pointer;
+              "
+              [disabled]="pageable.pageNumber === 0"
+              (click)="gotoPage(pageable.pageNumber - 1)"
+            >
+              <i
+                class="bx bx-chevron-left"
+                style="font-size: 16px; font-weight: bold; align-items: center"
+              ></i>
+            </button>
+            <div style="font-size: 14px; font-weight: bold; margin: 0 0.6rem">
+              page {{ pageable.pageNumber + 1 || 0 }} of
+              {{ pageable.totalPages || 0 }}
+            </div>
+            <button
+              type="button"
+              class="btn"
+              style="
+                background-color: #2a3042;
+                color: #ffffff;
+                display: flex;
+                cursor: pointer;
+              "
+              (click)="gotoPage(pageable.pageNumber + 1)"
+              [disabled]="
+                pageable.pageNumber > 1 &&
+                pageable.pageNumber < pageable.pageNumber
+              "
+            >
+              <i
+                class="bx bx-chevron-right"
+                style="font-size: 16px; font-weight: bold; align-items: center"
+              ></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #createdRecordModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Create Tractor Owner</h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="ownerType"
+            [class.text-danger]="ownerType.invalid &amp;&amp; ownerType.touched"
+            class="form-label"
+            >Owner Type <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="ownerTypeList"
+            bindValue="name"
+            bindLabel="name"
+            name="ownerType"
+            #ownerType="ngModel"
+            [(ngModel)]="obj.ownerType"
+            [class.is-invalid]="ownerType.invalid &amp;&amp; ownerType.touched"
+            placeholder="--Select Owner Type--"
+            required
+          ></ng-select>
+
+          <div *ngIf="ownerType.invalid &amp;&amp; ownerType.touched">
+            <small *ngIf="ownerType.errors?.required" class="text-danger"
+              >Owner Type is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="firstName"
+            [class.text-danger]="firstName.invalid &amp;&amp; firstName.touched"
+            class="form-label"
+            >First Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="firstName"
+            #firstName="ngModel"
+            [(ngModel)]="obj.firstName"
+            [class.is-invalid]="firstName.invalid &amp;&amp; firstName.touched"
+            placeholder="Enter First Name"
+            required
+          />
+
+          <div *ngIf="firstName.invalid &amp;&amp; firstName.touched">
+            <small *ngIf="firstName.errors?.required" class="text-danger"
+              >First Name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="lastName"
+            [class.text-danger]="lastName.invalid &amp;&amp; lastName.touched"
+            class="form-label"
+            >Last Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="lastName"
+            #lastName="ngModel"
+            [(ngModel)]="obj.lastName"
+            [class.is-invalid]="lastName.invalid &amp;&amp; lastName.touched"
+            placeholder="Enter Last Name"
+            required
+          />
+
+          <div *ngIf="lastName.invalid &amp;&amp; lastName.touched">
+            <small *ngIf="lastName.errors?.required" class="text-danger"
+              >Last Name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="otherName"
+            [class.text-danger]="otherName.invalid &amp;&amp; otherName.touched"
+            class="form-label"
+            >Other Name 
+            <!-- <span class="text-danger">*</span> -->
+            </label>
+          <input
+            type="text"
+            class="form-control"
+            name="otherName"
+            #otherName="ngModel"
+            [(ngModel)]="obj.otherName"
+            [class.is-invalid]="otherName.invalid &amp;&amp; otherName.touched"
+            placeholder="Enter Other Name"
+          />
+
+          <div *ngIf="otherName.invalid &amp;&amp; otherName.touched">
+            <small *ngIf="otherName.errors?.required" class="text-danger"
+              >Other Name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="phone"
+            [class.text-danger]="phone.invalid &amp;&amp; phone.touched"
+            class="form-label"
+            >Phone <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="phone"
+            #phone="ngModel"
+            [(ngModel)]="obj.phone"
+            [class.is-invalid]="phone.invalid &amp;&amp; phone.touched"
+            placeholder="Enter Phone Number"
+            required
+          />
+
+          <div *ngIf="phone.invalid &amp;&amp; phone.touched">
+            <small *ngIf="phone.errors?.required" class="text-danger"
+              >Phone Number is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="email"
+            [class.text-danger]="email.invalid &amp;&amp; email.touched"
+            class="form-label"
+            >Email <span class="text-danger">*</span></label
+          >
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            #email="ngModel"
+            [(ngModel)]="obj.email"
+            [class.is-invalid]="email.invalid &amp;&amp; email.touched"
+            placeholder="Enter Email"
+            required
+          />
+
+          <div *ngIf="email.invalid &amp;&amp; email.touched">
+            <small *ngIf="email.errors?.required" class="text-danger"
+              >Email is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="address"
+            [class.text-danger]="address.invalid &amp;&amp; address.touched"
+            class="form-label"
+            >Address <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="address"
+            #address="ngModel"
+            [(ngModel)]="obj.address"
+            [class.is-invalid]="address.invalid &amp;&amp; address.touched"
+            placeholder="Enter Address"
+            required
+          />
+
+          <div *ngIf="address.invalid &amp;&amp; address.touched">
+            <small *ngIf="address.errors?.required" class="text-danger"
+              >Address is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="state"
+            [class.text-danger]="state.invalid &amp;&amp; state.touched"
+            class="form-label"
+            >State <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="stateList"
+            bindValue="id"
+            bindLabel="name"
+            name="state"
+            #state="ngModel"
+            [(ngModel)]="obj.state"
+            [class.is-invalid]="state.invalid &amp;&amp; state.touched"
+            placeholder="--Select State--"
+            required
+          ></ng-select>
+
+          <div *ngIf="state.invalid &amp;&amp; state.touched">
+            <small *ngIf="state.errors?.required" class="text-danger"
+              >State is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="city"
+            [class.text-danger]="city.invalid &amp;&amp; city.touched"
+            class="form-label"
+            >City <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="cityList"
+            bindValue="id"
+            bindLabel="name"
+            name="city"
+            #city="ngModel"
+            [(ngModel)]="obj.city"
+            [class.is-invalid]="city.invalid &amp;&amp; city.touched"
+            placeholder="--Select City--"
+            required
+          ></ng-select>
+
+          <div *ngIf="city.invalid &amp;&amp; city.touched">
+            <small *ngIf="city.errors?.required" class="text-danger"
+              >City is Required</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        *ngIf="!isLoading"
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        (click)="onSubmit()"
+      >
+        Create Tractor Owner
+      </button>
+      <button
+        *ngIf="isLoading"
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        disabled
+      >
+        Processing <span><i class="bx bx-loader bx-spin"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>

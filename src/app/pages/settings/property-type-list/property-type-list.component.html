@@ -1,0 +1,460 @@
+<div class="container-fluid">
+  <!-- <app-page-title
+    title="Profile"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title> -->
+
+  <!-- <div class="row"> -->
+  <div class="d-flex">
+    <div [ngClass]="showDetail ? 'col-lg-8 col-md-8' : 'col-lg-12'">
+      <div class="card">
+        <div class="row p-4">
+          <div class="col-6">
+            <h4 class="card-title" style="padding: 0px; font-size: 1.5rem">
+              Property Types
+            </h4>
+            <p style="font-size: 1rem">List available property types.</p>
+          </div>
+          <div class="col-6">
+            <button
+              class="btn btn-primary text-right"
+              style="
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                float: right;
+              "
+              (click)="createRecordModal(createItemModal)"
+            >
+              <!-- <app-keenicon name="plus-square" class="fs-3"></app-keenicon> -->
+              <span style="margin-left: 6px">Create Property Type</span>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-12">
+              <!-- search field goes here -->
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-middle gs-0 gy-4">
+              <thead>
+                <tr class="fw-bolder text-muted bg-light">
+                  <th
+                    class="min-w-10px text-gray-900 text-end rounded-end"
+                  ></th>
+                  <th class="min-w-100px text-gray-900">Property Type</th>
+                  <th class="min-w-50px text-gray-900">Description</th>
+                  <th class="min-w-100px text-gray-900">Created At</th>
+                  <th class="min-w-100px text-gray-900"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container
+                  *ngIf="
+                    (propertyTypes$ | async)?.data != null ||
+                    (propertyTypes$ | async)?.data > 0
+                  "
+                >
+                  <tr *ngFor="let item of (propertyTypes$ | async)?.data">
+                    <td class="text-end">
+                      <a (click)="viewRecord(item)" style="cursor: pointer">
+                        <i class="bx bx-pointer"></i>
+                        Edit
+                      </a>
+                    </td>
+                    <td>
+                      {{ item.name }}
+                    </td>
+                    <td>
+                      {{ item.description }}
+                    </td>
+                    <td>
+                      {{ item?.createdAt | date }}
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showDetail"
+      class="col-lg-4 col-md-4 border border-primary border-dashed receipt-container"
+    >
+      <div class="card mb-9">
+        <div class="card-body pt-9 pb-9 pb-0">
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              margin-bottom: 1rem;
+            "
+          >
+            <div class="fw-bold fs-4 text-gray-800 mb-4">
+              Property Type Detail
+            </div>
+            <a
+              (click)="closeDetail()"
+              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+              style="cursor: pointer"
+            >
+              <!-- <app-keenicon name="abstract-11" class="fs-3"></app-keenicon> -->
+              Close Details
+            </a>
+          </div>
+
+          <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+            <div class="me-7 mb-4">
+              <div
+                class="symbol symbol-100px symbol-lg-70px symbol-fixed position-relative"
+              >
+                <img src="./assets/media/avatars/blank.png" alt="Metronic" />
+                <div
+                  class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"
+                ></div>
+              </div>
+            </div>
+
+            <div class="flex-grow-1">
+              <div
+                class="d-flex justify-content-between align-items-start flex-wrap mb-2"
+              >
+                <div class="d-flex flex-column">
+                  <div class="d-flex align-items-center mb-2">
+                    <a
+                      class="text-gray-800 text-primary fs-2 fw-bolder me-1 cursor-pointer"
+                    >
+                      {{ propertyType?.name }}
+                    </a>
+                  </div>
+
+                  <div class="d-flex flex-wrap fw-bold fs-6 mb-4 pe-2">
+                    <a
+                      class="d-flex align-items-center text-black-500 me-5 mb-2 cursor-pointer"
+                      style="font-size: 12px; color: black"
+                    >
+                      Created By: {{ propertyType?.createdBy }}
+                    </a>
+                    <a
+                      class="d-flex align-items-center text-black-500 mb-2 cursor-pointer"
+                      style="font-size: 12px; color: black"
+                    >
+                      Created At:
+                      {{ propertyType?.createdAt | date }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex flex-wrap flex-stack">
+                <div class="d-flex flex-column flex-grow-1 pe-8">
+                  <div class="row mb-7 fw-bold fs-6">
+                    <div class="col-lg-12 fv-row">
+                      <label class="fw-semibold fs-6 mb-2"> Description </label>
+                      <br />
+                      {{ propertyType?.description }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex overflow-auto h-55px">
+            <ul
+              class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap"
+            >
+              <li class="nav-item">
+                <a
+                  (click)="toggleTab('property-sub-type')"
+                  class="nav-link text-active-primary me-6"
+                  [ngStyle]="{
+                    'border-bottom-width':
+                      tabType == 'property-sub-type' ? '2px' : '0px'
+                  }"
+                  style="border-bottom-color: #499dff; cursor: pointer"
+                >
+                  Property Sub-Type
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="tabType == 'property-sub-type'">
+        <div class="card col-lg-12 h-50">
+          <div class="row p-4">
+            <div class="col-12">
+              <h3 class="card-title d-flex align-items-start flex-column">
+                <span class="card-label fw-bolder fs-3 mb-1"
+                  >Property Sub Types</span
+                >
+                <span class="text-muted mt-1 fw-bold fs-7"
+                  >List all property types</span
+                >
+              </h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button
+                (click)="
+                  showCreatePropertySubTypeModal(createPropertySubTypeModal)
+                "
+                class="btn btn-primary"
+                style="
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  margin-right: 1rem;
+                  float: right;
+                "
+              >
+                <!-- <app-keenicon name="plus-square" class="fs-3"></app-keenicon> -->
+                <span style="margin-left: 6px"> Add Property Sub-Type </span>
+              </button>
+            </div>
+          </div>
+
+          <div class="card-body py-3" style="padding: 0px 0px">
+            <div class="row">
+              <div class="table-responsive">
+                <table class="table align-middle gs-0 gy-1">
+                  <thead>
+                    <tr class="fw-bolder text-muted bg-light">
+                      <th class="min-w-20px text-gray-900 text-center">ID</th>
+                      <th class="min-w-350px text-gray-900">
+                        Property Sub-Type
+                      </th>
+                      <th class="min-w-200px text-gray-900">Description</th>
+                      <!-- <th class="min-w-100px text-gray-900">Status</th> -->
+                      <th class="min-w-100px text-gray-900">Created By</th>
+                      <th class="min-w-100px text-gray-900">Created At</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container
+                      *ngIf="(propertySubTypes$ | async)?.length > 0"
+                    >
+                      <tr *ngFor="let item of propertySubTypes$ | async">
+                        <td class="text-center">
+                          {{ item.id }}
+                        </td>
+                        <td>
+                          {{ item.name }}
+                        </td>
+                        <td>
+                          {{ item.description }}
+                        </td>
+                        <!-- <td>
+                          <span
+                            class=""
+                            ngClass="{{
+                              item?.status == true
+                                ? 'text-success'
+                                : 'text-danger'
+                            }}"
+                          >
+                            {{ item?.status }}
+                          </span>
+                        </td> -->
+                        <td>{{ item?.firstName }} {{ item?.lastName }}</td>
+                        <td>
+                          {{ item?.createdAt | date }}
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #createItemModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Create Nationality</h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="name"
+            [class.text-danger]="name.invalid &amp;&amp; name.touched"
+            class="form-label"
+            >Property Type <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            #name="ngModel"
+            [(ngModel)]="obj.name"
+            [class.is-invalid]="name.invalid &amp;&amp; name.touched"
+            placeholder="Enter Property Type"
+            required
+          />
+
+          <div *ngIf="name.invalid &amp;&amp; name.touched">
+            <small *ngIf="name.errors?.required" class="text-danger"
+              >Property Type is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="description"
+            [class.text-danger]="description.invalid &amp;&amp; description.touched"
+            class="form-label"
+            >Description <span class="text-danger">*</span></label
+          >
+          <textarea
+            class="form-control"
+            name="description"
+            #description="ngModel"
+            [(ngModel)]="obj.description"
+            [class.is-invalid]="description.invalid &amp;&amp; description.touched"
+            placeholder="Enter Description"
+            required
+          ></textarea>
+          <div *ngIf="description.invalid &amp;&amp; description.touched">
+            <small *ngIf="description.errors?.required" class="text-danger"
+              >Description is Required</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        *ngIf="!isLoading"
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        (click)="onSubmit()"
+      >
+        Submit
+      </button>
+      <button *ngIf="!isLoading" class="btn btn-danger" (click)="closeModal()">
+        Cancel
+      </button>
+      <button
+        *ngIf="isLoading"
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        disabled
+      >
+        Processing <span><i class="bx bx-loader bx-spin"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #createPropertySubTypeModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Create Property Sub-Type</h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="name"
+            [class.text-danger]="name.invalid &amp;&amp; name.touched"
+            class="form-label"
+            >Property Sub-Type <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            #name="ngModel"
+            [(ngModel)]="propertySubType.name"
+            [class.is-invalid]="name.invalid &amp;&amp; name.touched"
+            placeholder="Enter Property Sub-Type"
+            required
+          />
+
+          <div *ngIf="name.invalid &amp;&amp; name.touched">
+            <small *ngIf="name.errors?.required" class="text-danger"
+              >Property Sub-Type is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="description"
+            [class.text-danger]="description.invalid &amp;&amp; description.touched"
+            class="form-label"
+            >Description <span class="text-danger">*</span></label
+          >
+          <textarea
+            class="form-control"
+            name="description"
+            #description="ngModel"
+            [(ngModel)]="propertySubType.description"
+            [class.is-invalid]="description.invalid &amp;&amp; description.touched"
+            placeholder="Enter Description"
+            required
+          ></textarea>
+          <div *ngIf="description.invalid &amp;&amp; description.touched">
+            <small *ngIf="description.errors?.required" class="text-danger"
+              >Description is Required</small
+            >
+          </div>
+        </div>
+      </div> -->
+    </div>
+    <div class="modal-footer">
+      <button
+        *ngIf="!isLoading"
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        (click)="onSubmitPropertySubType()"
+      >
+        Submit
+      </button>
+      <button *ngIf="!isLoading" class="btn btn-danger" (click)="closeModal()">
+        Cancel
+      </button>
+      <button
+        *ngIf="isLoading"
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        disabled
+      >
+        Processing <span><i class="bx bx-loader bx-spin"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
