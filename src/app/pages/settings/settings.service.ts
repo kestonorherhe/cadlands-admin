@@ -10,6 +10,15 @@ export class SettingsService {
     private readonly httpService: HttpService
   ) {}
 
+  // payment sub plans observable
+  private paymentSubPlansSubject = new BehaviorSubject<any | []>([]);
+  get paymentSubPlans$() {
+    return this.paymentSubPlansSubject.asObservable();
+  }
+  setPaymentSubPlans(paymentSubPlans: any) {
+    this.paymentSubPlansSubject.next(paymentSubPlans);
+  }
+
   // meal sub-types observable
   private propertySubTypesSubject = new BehaviorSubject<any | []>([]);
   get propertySubTypes$() {
@@ -123,14 +132,22 @@ export class SettingsService {
   updatePaymentPlan(data: any) {
     return this.httpService.post(`payment-plan`, data);
   }
+  // payment sub plan
+  createPaymentSubPlan(data: any) {
+    return this.httpService.post(`payment-plan/payment-sub-plan`, data);
+  }
 
-  getAllPaymentPlans(payload: { propertyTypeId?: string }) {
+  updatePaymentSubPlan(data: any) {
+    return this.httpService.post(`payment-plan/payment-sub-plan`, data);
+  }
+
+  getAllPaymentPlans(payload: { paymentPlanId?: string }) {
     // Initialize URLSearchParams
-    const params = new URLSearchParams();
+    const params = new URLSearchParams()
 
     // Add the availability parameter conditionally
-    if (payload?.propertyTypeId) {
-      params.set("property_type_id", payload.propertyTypeId);
+    if (payload?.paymentPlanId) {
+      params.set("payment_plan_id", payload.paymentPlanId);
     }
 
     // Construct final URL
@@ -207,6 +224,30 @@ export class SettingsService {
 
     // Construct final URL
     const url = `property-purpose?${params.toString()}`;
+
+    return this.httpService.get(url);
+  }
+
+  //   precautionary tip routes
+  createRelationship(data: any) {
+    return this.httpService.post(`relationship`, data);
+  }
+
+  updateRelationship(data: any) {
+    return this.httpService.post(`relationship`, data);
+  }
+
+  getAllRelationship(payload: { propertyTypeId?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.propertyTypeId) {
+      params.set("property_type_id", payload.propertyTypeId);
+    }
+
+    // Construct final URL
+    const url = `relationship?${params.toString()}`;
 
     return this.httpService.get(url);
   }

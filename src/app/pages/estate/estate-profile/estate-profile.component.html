@@ -1,0 +1,845 @@
+<div class="container-fluid">
+  <app-page-title
+    title="Profile"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+
+  <div class="row">
+    <div class="col-xl-4">
+      <div class="card overflow-hidden">
+        <div class="bg-soft bg-primary">
+          <div class="row">
+            <div class="col-8">
+              <div class="text-primary p-3">
+                <h5 class="text-primary">Agent Profile</h5>
+                <p class="mb-4">View and Edit Profile</p>
+              </div>
+            </div>
+
+            <div class="col-4 mr-2">
+              <div class="row mt-4">
+                <div
+                  class="align-self-end"
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                  "
+                >
+                  <button class="btn btn-primary btn-sm">Edit Estate</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body pt-0">
+          <div class="row">
+            <div class="col-sm-4 mt-4">
+              <!-- <div class="avatar-md profile-user-wid mb-4">
+                <img
+                  src="assets/images/users/default-img.jpg"
+                  alt=""
+                  class="img-thumbnail rounded-circle"
+                />
+              </div> -->
+              <h5 class="font-size-15 text-truncate">
+                {{ estate?.name }}
+              </h5>
+              <!-- <p class="text-muted mb-0 text-truncate">UI/UX Designer</p> -->
+            </div>
+
+            <div class="col-sm-8">
+              <div class="pt-4">
+                <div class="row">
+                  <div class="col-6">
+                    <p class="text-muted mb-0 text-center">
+                      Total Property Templates
+                    </p>
+                    <h5 class="font-size-13 text-center">{{ estate?.propertyTemplates.length | number }}</h5>
+                  </div>
+                  <div class="col-6">
+                    <p class="text-muted mb-0 text-center">Total Properties</p><br/>
+                    <h5 class="font-size-13 text-center">{{ (properties$ |async)?.data?.properties.length | number }}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end card -->
+
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Estate Information</h4>
+          <!-- <div class="table-responsive">
+            <table class="table table-nowrap mb-0">
+              <tbody>
+                <tr>
+                  <th scope="row">Description :</th>
+                  <br />
+                  <td>{{ estate?.description }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div> -->
+          <div>
+            <p style="margin: 0px"><strong>Description :</strong></p>
+            <br />
+            <p>{{ estate?.description }}</p>
+          </div>
+        </div>
+      </div>
+      <!-- end card -->
+    </div>
+
+    <div class="col-xl-8">
+      <div class="card">
+        <div class="card-body">
+          <!-- <h4 class="card-title mb-4">Tasks</h4> -->
+          <ul
+            ngbNav
+            #nav1="ngbNav"
+            [activeId]="1"
+            class="nav-pills bg-light rounded"
+          >
+            <li [ngbNavItem]="1">
+              <a ngbNavLink>Property Templates</a>
+              <ng-template ngbNavContent>
+                <ngx-simplebar style="height: auto">
+                  <!-- table goes here -->
+                  <div class="card">
+                    <div class="row p-4">
+                      <div class="col-6">
+                        <h4
+                          class="card-title"
+                          style="padding: 0px; font-size: 1.5rem"
+                        >
+                          Property Templates
+                        </h4>
+                        <p style="font-size: 1rem">
+                          List all property templates.
+                        </p>
+                      </div>
+                      <div class="col-6">
+                        <button
+                          class="btn btn-primary text-right"
+                          style="
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            float: right;
+                          "
+                          (click)="
+                            createPropertyTemplateModal(
+                              createPropertyTemplateRecordModal
+                            )
+                          "
+                        >
+                          <!-- <app-keenicon name="plus-square" class="fs-3"></app-keenicon> -->
+                          <span style="margin-left: 6px"
+                            >Create Property Template</span
+                          >
+                        </button>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row mb-3">
+                        <div class="col-12">
+                          <!-- search field goes here -->
+                        </div>
+                      </div>
+
+                      <div class="table-responsive">
+                        <table class="table align-middle gs-0 gy-4">
+                          <thead>
+                            <tr class="fw-bolder text-muted bg-light">
+                              <th
+                                class="min-w-10px text-gray-900 text-end rounded-end"
+                              ></th>
+                              <th class="min-w-100px text-gray-900">
+                                Template Name
+                              </th>
+                              <th class="min-w-50px text-gray-900">
+                                Property Type
+                              </th>
+                              <th class="min-w-50px text-gray-900">
+                                Property Sub Type
+                              </th>
+                              <th class="min-w-50px text-gray-900">Status</th>
+                              <th class="min-w-100px text-gray-900">
+                                Created At
+                              </th>
+                              <th class="min-w-100px text-gray-900"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngIf="data != null">
+                              <tr *ngFor="let item of estate?.propertyTemplates">
+                                <td class="text-end">
+                                  <a
+                                    (click)="viewRecord(item)"
+                                    style="cursor: pointer"
+                                  >
+                                    <i class="bx bx-pointer"></i>
+                                    Edit
+                                  </a>
+                                </td>
+                                <td>
+                                  {{ item.templateName }}
+                                </td>
+                                <td>
+                                  {{ item.type.name }}
+                                </td>
+                                <td>
+                                  {{ item.subType.name }}
+                                </td>
+                                <td>Active</td>
+                                <td>
+                                  {{ item?.createdAt | date }}
+                                </td>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </ngx-simplebar>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+              <a ngbNavLink>Properties</a>
+              <ng-template ngbNavContent>
+                <ngx-simplebar style="height: auto">
+                  <div class="card">
+                    <div class="row p-4">
+                      <div class="col-6">
+                        <h4
+                          class="card-title"
+                          style="padding: 0px; font-size: 1.5rem"
+                        >
+                          Properties Listings
+                        </h4>
+                        <p style="font-size: 1rem">List all properties.</p>
+                      </div>
+                      <div class="col-6">
+                        <button
+                          class="btn btn-primary text-right"
+                          style="
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            float: right;
+                          "
+                          (click)="
+                            createPropertyModal(createPropertyRecordModal)
+                          "
+                        >
+                          <!-- <app-keenicon name="plus-square" class="fs-3"></app-keenicon> -->
+                          <span style="margin-left: 6px">Create Property</span>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row mb-3">
+                        <div class="col-12">
+                          <!-- search field goes here -->
+                        </div>
+                      </div>
+
+                      <div class="table-responsive">
+                        <table class="table align-middle gs-0 gy-4">
+                          <thead>
+                            <tr class="fw-bolder text-muted bg-light">
+                              <th
+                                class="min-w-10px text-gray-900 text-end rounded-end"
+                              ></th>
+                              <th class="min-w-100px text-gray-900">Estate</th>
+                              <th class="min-w-100px text-gray-900">Property</th>
+                              <th class="min-w-100px text-gray-900">Plot</th>
+                              <th class="min-w-100px text-gray-900">Property Type</th>
+                              <th class="min-w-100px text-gray-900">Property Sub-Type</th>
+                              <th class="min-w-50px text-gray-900">Status</th>
+                              <th class="min-w-100px text-gray-900">
+                                Created At
+                              </th>
+                              <th class="min-w-100px text-gray-900"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- {{ (properties$ |async)?.data?.properties | json }} -->
+                            <ng-container *ngIf="(properties$ |async)?.data?.properties != null">
+                              <tr *ngFor="let item of (properties$ |async)?.data?.properties">
+                                <td class="text-end">
+                                  <a
+                                    (click)="viewRecord(item)"
+                                    style="cursor: pointer"
+                                  >
+                                    <i class="bx bx-pointer"></i>
+                                    Edit
+                                  </a>
+                                </td>
+                                <td>
+                                  {{ item?.propertyTemplate?.estate?.name }}
+                                </td>
+                                <td>
+                                  {{ item?.propertyTemplate?.templateName }}
+                                </td>
+                                <td>
+                                  {{ item?.name }}
+                                </td>
+                                 <td>
+                                  {{ item?.propertyTemplate?.type?.name }}
+                                </td>
+                                 <td>
+                                  {{ item?.propertyTemplate?.subType?.name }}
+                                </td>
+                                <td>
+                                  {{ item?.status }}
+                                </td>
+                                <td>
+                                  {{ item?.createdAt | date }}
+                                </td>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </ngx-simplebar>
+              </ng-template>
+            </li>
+          </ul>
+          <div [ngbNavOutlet]="nav1" class="mt-4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>
+
+<ng-template #createPropertyTemplateRecordModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Create Estate</h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="templateName"
+            [class.text-danger]="templateName.invalid &amp;&amp; templateName.touched"
+            class="form-label"
+            >Property Template Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="templateName"
+            #templateName="ngModel"
+            [(ngModel)]="obj.templateName"
+            [class.is-invalid]="templateName.invalid &amp;&amp; templateName.touched"
+            placeholder="Enter Property Template Name"
+            required
+          />
+
+          <div *ngIf="templateName.invalid &amp;&amp; templateName.touched">
+            <small *ngIf="templateName.errors?.required" class="text-danger"
+              >Property Template Name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="propertyTypeId"
+            [class.text-danger]="propertyTypeId.invalid &amp;&amp; propertyTypeId.touched"
+            class="form-label"
+            >Property Type <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="(propertyTypes$ | async)?.data"
+            bindValue="id"
+            bindLabel="name"
+            name="propertyTypeId"
+            #propertyTypeId="ngModel"
+            [(ngModel)]="obj.propertyTypeId"
+            [class.is-invalid]="propertyTypeId.invalid &amp;&amp; propertyTypeId.touched"
+            placeholder="--Select Property Type--"
+            (change)="onSelectPropertyType($event)"
+            required
+          ></ng-select>
+
+          <div *ngIf="propertyTypeId.invalid &amp;&amp; propertyTypeId.touched">
+            <small *ngIf="propertyTypeId.errors?.required" class="text-danger"
+              >Property Type is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="propertySubTypeId"
+            [class.text-danger]="propertySubTypeId.invalid &amp;&amp; propertySubTypeId.touched"
+            class="form-label"
+            >Property Sub-Type <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="propertySubTypeList"
+            bindValue="id"
+            bindLabel="name"
+            name="propertySubTypeId"
+            #propertySubTypeId="ngModel"
+            [(ngModel)]="obj.propertySubTypeId"
+            [class.is-invalid]="propertySubTypeId.invalid &amp;&amp; propertySubTypeId.touched"
+            placeholder="--Select Property Sub-Type--"
+            required
+          ></ng-select>
+
+          <div
+            *ngIf="propertySubTypeId.invalid &amp;&amp; propertySubTypeId.touched"
+          >
+            <small
+              *ngIf="propertySubTypeId.errors?.required"
+              class="text-danger"
+              >Property Sub-Type is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="buildingStructure"
+            [class.text-danger]="buildingStructure.invalid &amp;&amp; buildingStructure.touched"
+            class="form-label"
+            >Building Structure <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="buildingStructures"
+            bindValue="name"
+            bindLabel="name"
+            name="buildingStructure"
+            #buildingStructure="ngModel"
+            [(ngModel)]="obj.buildingStructure"
+            [class.is-invalid]="buildingStructure.invalid &amp;&amp; buildingStructure.touched"
+            placeholder="--Select Estate--"
+            required
+          ></ng-select>
+
+          <div
+            *ngIf="buildingStructure.invalid &amp;&amp; buildingStructure.touched"
+          >
+            <small
+              *ngIf="buildingStructure.errors?.required"
+              class="text-danger"
+              >Building Structure is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="mapUrl"
+            [class.text-danger]="mapUrl.invalid &amp;&amp; mapUrl.touched"
+            class="form-label"
+            >Map Url <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="mapUrl"
+            #mapUrl="ngModel"
+            [(ngModel)]="obj.mapUrl"
+            [class.is-invalid]="mapUrl.invalid &amp;&amp; mapUrl.touched"
+            placeholder="Enter Map Url"
+            required
+          />
+
+          <div *ngIf="mapUrl.invalid &amp;&amp; mapUrl.touched">
+            <small *ngIf="mapUrl.errors?.required" class="text-danger"
+              >Map Url is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="size"
+            [class.text-danger]="size.invalid &amp;&amp; size.touched"
+            class="form-label"
+            >Land Size <span class="text-danger">*</span>(in square
+            meter)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="size"
+            #size="ngModel"
+            [(ngModel)]="obj.size"
+            [class.is-invalid]="size.invalid &amp;&amp; size.touched"
+            placeholder="Enter Land Size"
+            required
+          />
+
+          <div *ngIf="size.invalid &amp;&amp; size.touched">
+            <small *ngIf="size.errors?.required" class="text-danger"
+              >Land Size is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="prices"
+            [class.text-danger]="prices.invalid &amp;&amp; prices.touched"
+            class="form-label"
+            >Property Price <span class="text-danger">*</span></label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="prices"
+            #prices="ngModel"
+            [(ngModel)]="obj.propertyPrice"
+            [class.is-invalid]="prices.invalid &amp;&amp; prices.touched"
+            placeholder="Enter Property price"
+            required
+          />
+
+          <div *ngIf="prices.invalid &amp;&amp; prices.touched">
+            <small *ngIf="size.errors?.required" class="text-danger"
+              >Property price is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="negotiationStatusId"
+            [class.text-danger]="negotiationStatusId.invalid &amp;&amp; negotiationStatusId.touched"
+            class="form-label"
+            >Negotiation Status <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="(negotiationStatus$ | async)?.data"
+            bindValue="id"
+            bindLabel="name"
+            name="negotiationStatusId"
+            #negotiationStatusId="ngModel"
+            [(ngModel)]="obj.negotiationStatusId"
+            [class.is-invalid]="negotiationStatusId.invalid &amp;&amp; negotiationStatusId.touched"
+            placeholder="--Select Negotiation Status--"
+            required
+          ></ng-select>
+
+          <div
+            *ngIf="negotiationStatusId.invalid &amp;&amp; negotiationStatusId.touched"
+          >
+            <small
+              *ngIf="negotiationStatusId.errors?.required"
+              class="text-danger"
+              >Negotiation Status is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="negotiationStatusId"
+            [class.text-danger]="negotiationStatusId.invalid &amp;&amp; negotiationStatusId.touched"
+            class="form-label"
+            >Negotiation Status <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="(negotiationStatus$ | async)?.data"
+            bindValue="id"
+            bindLabel="name"
+            name="negotiationStatusId"
+            #negotiationStatusId="ngModel"
+            [(ngModel)]="obj.negotiationStatusId"
+            [class.is-invalid]="negotiationStatusId.invalid &amp;&amp; negotiationStatusId.touched"
+            placeholder="--Select Negotiation Status--"
+            required
+          ></ng-select>
+
+          <div
+            *ngIf="negotiationStatusId.invalid &amp;&amp; negotiationStatusId.touched"
+          >
+            <small
+              *ngIf="negotiationStatusId.errors?.required"
+              class="text-danger"
+              >Negotiation Status is Required</small
+            >
+          </div>
+        </div>
+      </div> -->
+
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="facilities"
+            [class.text-danger]="facilities.invalid &amp;&amp; facilities.touched"
+            class="form-label"
+            >Property Facilities <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="(facilities$ | async)?.data"
+            [multiple]="true"
+            bindValue="id"
+            bindLabel="name"
+            name="facilities"
+            #facilities="ngModel"
+            [(ngModel)]="obj.facilities"
+            [class.is-invalid]="facilities.invalid &amp;&amp; facilities.touched"
+            placeholder="--Select Property Facilities--"
+            required
+          ></ng-select>
+
+          <div *ngIf="facilities.invalid &amp;&amp; facilities.touched">
+            <small *ngIf="facilities.errors?.required" class="text-danger"
+              >Property Facilities is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="titles"
+            [class.text-danger]="titles.invalid &amp;&amp; titles.touched"
+            class="form-label"
+            >Property Titles <span class="text-danger">*</span></label
+          >
+          <!-- [items]="(facilities$ | async)?.data" -->
+          <ng-select
+            [items]="propertyTitles"
+            [multiple]="true"
+            bindValue="name"
+            bindLabel="name"
+            name="titles"
+            #titles="ngModel"
+            [(ngModel)]="obj.titles"
+            [class.is-invalid]="titles.invalid &amp;&amp; titles.touched"
+            placeholder="--Select Property Titles--"
+            required
+          ></ng-select>
+
+          <div *ngIf="titles.invalid &amp;&amp; titles.touched">
+            <small *ngIf="titles.errors?.required" class="text-danger"
+              >Property Titles is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <ngx-dropzone [multiple]="false" (change)="onSelect($event)">
+          <ngx-dropzone-label>Drop images!</ngx-dropzone-label>
+
+          <ngx-dropzone-image-preview
+            ngProjectAs="ngx-dropzone-preview"
+            *ngFor="let f of files"
+            [file]="f"
+            required
+          >
+            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+          </ngx-dropzone-image-preview>
+        </ngx-dropzone>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12 mt-4">
+        <div class="mb-3">
+          <label
+            for="description"
+            [class.text-danger]="description.invalid &amp;&amp; description.touched"
+            class="form-label"
+            >Property Description/Prototype
+            <span class="text-danger">*</span></label
+          >
+          <ckeditor
+            [editor]="Editor"
+            [data]="obj.description"
+            name="description"
+            #description="ngModel"
+            [(ngModel)]="obj.description"
+          ></ckeditor>
+
+          <div *ngIf="description.invalid &amp;&amp; description.touched">
+            <small *ngIf="description.errors?.required" class="text-danger"
+              >Estate Description is Required</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        *ngIf="!isLoading"
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        (click)="onSubmit()"
+      >
+        Submit
+      </button>
+      <button *ngIf="!isLoading" class="btn btn-danger" (click)="closeModal()">
+        Cancel
+      </button>
+      <button
+        *ngIf="isLoading"
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        disabled
+      >
+        Processing <span><i class="bx bx-loader bx-spin"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #createPropertyRecordModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Create Property/Plot</h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <div class="mb-3">
+          <label
+            for="propertyTemplateId"
+            [class.text-danger]="propertyTemplateId.invalid &amp;&amp; propertyTemplateId.touched"
+            class="form-label"
+            >Property Template <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="(propertyTemplates$ | async)?.data?.propertyTemplates"
+            bindValue="id"
+            bindLabel="templateName"
+            name="propertyTemplateId"
+            #propertyTemplateId="ngModel"
+            [(ngModel)]="propertyObj.propertyTemplateId"
+            [class.is-invalid]="propertyTemplateId.invalid &amp;&amp; propertyTemplateId.touched"
+            placeholder="--Select Property Template--"
+            (change)="onSelectPropertyType($event)"
+            required
+          ></ng-select>
+
+          <div *ngIf="propertyTemplateId.invalid &amp;&amp; propertyTemplateId.touched">
+            <small *ngIf="propertyTemplateId.errors?.required" class="text-danger"
+              >Property Template is Required</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <h4 class="card-title" style="padding: 0px; font-size: 1rem">
+          Property Items
+        </h4>
+        <p style="font-size: 1rem">List all properties.</p>
+      </div>
+      <div class="col-6">
+        <button
+          class="btn btn-primary text-right"
+          style="
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            float: right;
+          "
+          (click)="addItem()"
+        >
+          <!-- <app-keenicon name="plus-square" class="fs-3"></app-keenicon> -->
+          <span style="margin-left: 6px">Add Property/Plot</span>
+        </button>
+      </div>
+    </div>
+    <div class="row" *ngFor="let property of propertyObj.properties; index as i">
+      <div class="col-lg-11 col-md-11">
+        <div class="mb-3">
+          <label
+            for="propertyName"
+            [class.text-danger]="propertyName.invalid &amp;&amp; propertyName.touched"
+            class="form-label"
+            >Property/Plot Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="propertyName{{ i }}"
+            #propertyName="ngModel"
+            [(ngModel)]="property.propertyName"
+            [class.is-invalid]="propertyName.invalid &amp;&amp; propertyName.touched"
+            placeholder="Enter Property Name"
+            required
+          />
+
+          <div *ngIf="propertyName.invalid &amp;&amp; propertyName.touched">
+            <small *ngIf="propertyName.errors?.required" class="text-danger"
+              >Property Name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-1 col-md-1">
+        <div style="margin-top: 2.2rem">
+          <i class="bx bx-trash fs-2 text-danger" (click)="removeItem(i)"></i>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        *ngIf="!isLoading"
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        (click)="onSubmitProperty()"
+      >
+        Submit
+      </button>
+      <button *ngIf="!isLoading" class="btn btn-danger" (click)="closeModal()">
+        Cancel
+      </button>
+      <button
+        *ngIf="isLoading"
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        disabled
+      >
+        Processing <span><i class="bx bx-loader bx-spin"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>

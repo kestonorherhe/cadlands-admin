@@ -25,6 +25,7 @@ import { PaymentPlanListComponent } from "./payment-plan-list/payment-plan-list.
 import { PrecautionaryTipsComponent } from "./precautionary-tips/precautionary-tips.component";
 import { PropertyFacilityListComponent } from "./property-facility-list/property-facility-list.component";
 import { PropertyPurposeListComponent } from "./property-purpose-list/property-purpose-list.component";
+import { RelationshipListComponent } from "./relationship-list/relationship-list.component";
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { PropertyPurposeListComponent } from "./property-purpose-list/property-p
     PrecautionaryTipsComponent,
     PropertyFacilityListComponent,
     PropertyPurposeListComponent,
+    RelationshipListComponent,
   ],
   imports: [
     CommonModule,

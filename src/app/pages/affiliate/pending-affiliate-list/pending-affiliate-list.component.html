@@ -1,0 +1,384 @@
+<div class="container-fluid">
+  <!-- <app-page-title
+    title="Profile"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title> -->
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="row p-4">
+          <div class="col-6">
+            <h4 class="card-title" style="padding: 0px; font-size: 1.5rem">
+              Pending Affiliates
+            </h4>
+            <p style="font-size: 1rem">This is a list of all pending affiliate.</p>
+          </div>
+          <div class="col-6">
+            <!-- <button
+              class="btn btn-primary text-right"
+              style="
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                float: right;
+              "
+            >
+              <span style="margin-left: 6px">Create Affiliate</span>
+            </button> -->
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-12">
+              <!-- search field goes here -->
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-middle gs-0 gy-4">
+              <thead>
+                <tr class="fw-bolder text-muted bg-light">
+                  <!-- <th
+                    class="min-w-10px text-gray-900 text-end rounded-end"
+                  ></th> -->
+                  <th
+                    class="min-w-10px text-gray-900 text-end rounded-end"
+                  ></th>
+                  <th class="min-w-100px text-gray-900">First Name</th>
+                  <th class="min-w-100px text-gray-900">Last Name</th>
+                  <th class="min-w-150px text-gray-900">Email</th>
+                  <th class="min-w-100px text-gray-900">Phone</th>
+                  <th class="min-w-100px text-gray-900">Birth Date</th>
+                  <th class="min-w-50px text-gray-900">Status</th>
+                  <th class="min-w-50px text-gray-900">Created At</th>
+                  <th class="min-w-50px text-gray-900"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <ng-container *ngIf="data == null">
+                  <tr>
+                    <td *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9]">
+                      <ngx-skeleton-loader
+                        count="3"
+                      ></ngx-skeleton-loader>
+                    </td>
+                  </tr>
+                </ng-container> -->
+
+                <ng-container *ngIf="data != null">
+                  <tr *ngFor="let item of data">
+                    <td>
+                      <div
+                        class="symbol-label fs-3 bg-primary text-success"
+                        style="
+                          display: flex;
+                          justify-content: center;
+                          border-radius: 50%;
+                          padding: 5px;
+                        "
+                      >
+                        {{ item.firstName[0] }}
+                      </div>
+                    </td>
+                    <td>
+                      {{ item.firstName }}
+                    </td>
+                    <td>
+                      {{ item?.lastName }}
+                    </td>
+                    <td>
+                      {{ item?.email }}
+                    </td>
+                    <td>
+                      {{ item?.phone }}
+                    </td>
+                    <td>
+                      {{ item?.role }}
+                    </td>
+                    <td>{{ item?.status }}</td>
+                    <td>
+                      {{ item?.createdAt | date }}
+                    </td>
+                    <td class="text-center">
+                      <a (click)="processApplicationFn(item)" style="cursor: pointer">
+                        <i class="bx bx-pointer"></i>
+                        Process
+                      </a>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="modal-footer" style="margin-top: 2%">
+            <button
+              type="button"
+              class="btn"
+              style="
+                background-color: #2a3042;
+                color: #ffffff;
+                display: flex;
+                cursor: pointer;
+              "
+              [disabled]="pageable.pageNumber === 0"
+              (click)="gotoPage(pageable.pageNumber - 1)"
+            >
+              <i
+                class="bx bx-chevron-left"
+                style="font-size: 16px; font-weight: bold; align-items: center"
+              ></i>
+            </button>
+            <div style="font-size: 14px; font-weight: bold; margin: 0 0.6rem">
+              page {{ pageable.pageNumber + 1 || 0 }} of
+              {{ pageable.totalPages || 0 }}
+            </div>
+            <button
+              type="button"
+              class="btn"
+              style="
+                background-color: #2a3042;
+                color: #ffffff;
+                display: flex;
+                cursor: pointer;
+              "
+              (click)="gotoPage(pageable.pageNumber + 1)"
+              [disabled]="
+                pageable.pageNumber > 1 &&
+                pageable.pageNumber < pageable.pageNumber
+              "
+            >
+              <i
+                class="bx bx-chevron-right"
+                style="font-size: 16px; font-weight: bold; align-items: center"
+              ></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #processAffiliateApplicationModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Process Affiliate Application</h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="firstName"
+            [class.text-danger]="firstName.invalid &amp;&amp; firstName.touched"
+            class="form-label"
+            >First Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="firstName"
+            #firstName="ngModel"
+            [(ngModel)]="obj.firstName"
+            [class.is-invalid]="firstName.invalid &amp;&amp; firstName.touched"
+            placeholder="Enter First Name"
+            disabled
+          />
+
+          <div *ngIf="firstName.invalid &amp;&amp; firstName.touched">
+            <small *ngIf="firstName.errors?.required" class="text-danger"
+              >First Name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="lastName"
+            [class.text-danger]="lastName.invalid &amp;&amp; lastName.touched"
+            class="form-label"
+            >Last Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="lastName"
+            #lastName="ngModel"
+            [(ngModel)]="obj.lastName"
+            [class.is-invalid]="lastName.invalid &amp;&amp; lastName.touched"
+            placeholder="Enter Last Name"
+            disabled
+          />
+
+          <div *ngIf="lastName.invalid &amp;&amp; lastName.touched">
+            <small *ngIf="lastName.errors?.required" class="text-danger"
+              >Last Name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="phone"
+            [class.text-danger]="phone.invalid &amp;&amp; phone.touched"
+            class="form-label"
+            >Phone <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="phone"
+            #phone="ngModel"
+            [(ngModel)]="obj.phone"
+            [class.is-invalid]="phone.invalid &amp;&amp; phone.touched"
+            placeholder="Enter Phone Number"
+            disabled
+          />
+
+          <div *ngIf="phone.invalid &amp;&amp; phone.touched">
+            <small *ngIf="phone.errors?.required" class="text-danger"
+              >Phone Number is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="email"
+            [class.text-danger]="email.invalid &amp;&amp; email.touched"
+            class="form-label"
+            >Email <span class="text-danger">*</span></label
+          >
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            #email="ngModel"
+            [(ngModel)]="obj.email"
+            [class.is-invalid]="email.invalid &amp;&amp; email.touched"
+            placeholder="Enter Email"
+            disabled
+          />
+
+          <div *ngIf="email.invalid &amp;&amp; email.touched">
+            <small *ngIf="email.errors?.required" class="text-danger"
+              >Email is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="address"
+            [class.text-danger]="address.invalid &amp;&amp; address.touched"
+            class="form-label"
+            >Address <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="address"
+            #address="ngModel"
+            [(ngModel)]="obj.address"
+            [class.is-invalid]="address.invalid &amp;&amp; address.touched"
+            placeholder="Enter Address"
+            disabled
+          />
+
+          <div *ngIf="address.invalid &amp;&amp; address.touched">
+            <small *ngIf="address.errors?.required" class="text-danger"
+              >Address is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="statusOption"
+            [class.text-danger]="statusOption.invalid &amp;&amp; statusOption.touched"
+            class="form-label"
+            >Account Status <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="actionList"
+            bindValue="id"
+            bindLabel="name"
+            name="statusOption"
+            #statusOption="ngModel"
+            [(ngModel)]="obj.statusOption"
+            [class.is-invalid]="statusOption.invalid &amp;&amp; statusOption.touched"
+            placeholder="--Select Account Status--"
+            required
+          ></ng-select>
+
+          <div *ngIf="statusOption.invalid &amp;&amp; statusOption.touched">
+            <small *ngIf="statusOption.errors?.required" class="text-danger"
+              >Account Status is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="state"
+            [class.text-danger]="state.invalid &amp;&amp; state.touched"
+            class="form-label"
+            >State <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="stateList"
+            bindValue="id"
+            bindLabel="name"
+            name="state"
+            #state="ngModel"
+            [(ngModel)]="obj.state"
+            [class.is-invalid]="state.invalid &amp;&amp; state.touched"
+            placeholder="--Select State--"
+            required
+          ></ng-select>
+
+          <div *ngIf="state.invalid &amp;&amp; state.touched">
+            <small *ngIf="state.errors?.required" class="text-danger"
+              >State is Required</small
+            >
+          </div>
+        </div>
+      </div> -->
+    </div>
+    <div class="modal-footer">
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-primary"
+        (click)="onSubmit()"
+      >
+        Process Application
+      </button>
+      <button
+        *ngIf="isLoading"
+        class="btn btn-primary"
+        disabled
+      >
+        Processing <span><i class="bx bx-loader bx-spin"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>

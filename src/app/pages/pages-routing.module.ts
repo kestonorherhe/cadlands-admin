@@ -12,17 +12,26 @@ const routes: Routes = [
     loadChildren: () =>
       import("./dashboards/dashboards.module").then((m) => m.DashboardsModule),
   },
+  // {
+  //   path: "estates",
+  //   component: EstateListComponent,
+  // },
   {
-    path: "tractor-requests",
+    path: "application-request",
     loadChildren: () =>
-      import("./tractor-request/tractor-request.module").then(
-        (m) => m.TractorRequestModule
+      import("./application-request/application-request.module").then(
+        (m) => m.ApplicationRequestModule
       ),
   },
   {
-    path: "farmers",
+    path: "estate",
     loadChildren: () =>
-      import("./farmer/farmer.module").then((m) => m.FarmerModule),
+      import("./estate/estate.module").then((m) => m.EstateModule),
+  },
+  {
+    path: "property",
+    loadChildren: () =>
+      import("./property/property.module").then((m) => m.PropertyModule),
   },
   {
     path: "staff",
@@ -30,11 +39,9 @@ const routes: Routes = [
       import("./staff/staff.module").then((m) => m.StaffModule),
   },
   {
-    path: "tractor-owner",
+    path: "affiliate",
     loadChildren: () =>
-      import("./tractor-owner/tractor-owner.module").then(
-        (m) => m.TractorOwnerModule
-      ),
+      import("./affiliate/affiliate.module").then((m) => m.AffiliateModule),
   },
   {
     path: "settings",

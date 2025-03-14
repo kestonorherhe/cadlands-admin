@@ -19,38 +19,44 @@ export const MENU: MenuItem[] = [
     subItems: [
       {
         id: 4,
-        label: "All Requests",
-        link: "/tractor-requests",
+        label: "All Applications",
+        link: "/application-request/all-applications",
         parentId: 3,
       },
       {
         id: 5,
-        label: "Pending Requests",
-        link: "/tractor-requests/pending-requests",
+        label: "Pending Pending",
+        link: "/application-request/pending-applications",
         parentId: 3,
       },
       {
-        id: 6,
-        label: "Assigned Requests",
-        link: "/tractor-requests/assigned-requests",
+        id: 5,
+        label: "Approved Pending",
+        link: "/application-request/approved-applications",
         parentId: 3,
       },
       {
         id: 7,
-        label: "Paid Requests",
-        link: "/tractor-requests/paid-requests",
+        label: "Paid Applications",
+        link: "/application-request/paid-applications",
+        parentId: 3,
+      },
+      {
+        id: 7,
+        label: "On-going Payment",
+        link: "/application-request/on-going-applications",
         parentId: 3,
       },
       {
         id: 8,
-        label: "Completed Requests",
-        link: "/tractor-requests/completed-requests",
+        label: "Completed Applications",
+        link: "/application-request/all-applications",
         parentId: 3,
       },
       {
         id: 9,
-        label: "Cancelled Requests",
-        link: "/tractor-requests/cancelled-requests",
+        label: "Cancelled Applications",
+        link: "/application-request/all-applications",
         parentId: 3,
       },
     ],
@@ -59,14 +65,45 @@ export const MENU: MenuItem[] = [
     id: 36,
     label: "Estates",
     icon: "bx-user",
-    link: "/staff/staff-listings",
+    link: "/estate/list",
   },
 
+  // {
+  //   id: 36,
+  //   label: "Properties",
+  //   icon: "bx-user",
+  //   link: "/property/list",
+  // },
   {
     id: 36,
     label: "Properties",
-    icon: "bx-user",
-    link: "/tractor-owner/list",
+    icon: "bx-cog",
+    subItems: [
+      {
+        id: 37,
+        label: "All Properties",
+        link: "/property/list",
+        parentId: 36,
+      },
+      {
+        id: 37,
+        label: "Available Properties",
+        link: "/property/available-property",
+        parentId: 36,
+      },
+      {
+        id: 37,
+        label: "Sold Properties",
+        link: "/property/sold-property",
+        parentId: 36,
+      },
+      {
+        id: 37,
+        label: "On-going Payment",
+        link: "/property/ongoing-property",
+        parentId: 36,
+      },
+    ],
   },
 
   {
@@ -76,13 +113,44 @@ export const MENU: MenuItem[] = [
     link: "/staff/staff-listings",
   },
 
+  // {
+  //   id: 36,
+  //   label: "Affiliates",
+  //   icon: "bx-user",
+  //   link: "/staff/agents",
+  // },
+
   {
     id: 36,
     label: "Affiliates",
-    icon: "bx-user",
-    link: "/staff/agents",
+    icon: "bx-cog",
+    subItems: [
+      {
+        id: 37,
+        label: "All Affiliates",
+        link: "/affiliate",
+        parentId: 36,
+      },
+      {
+        id: 37,
+        label: "Verified Affiliates",
+        link: "/affiliate/verified-affiliates",
+        parentId: 36,
+      },
+      {
+        id: 37,
+        label: "Pending Approvals",
+        link: "/affiliate/pending-affiliates",
+        parentId: 36,
+      },
+      {
+        id: 37,
+        label: "Deactivated Accounts",
+        link: "/affiliate/deactivated-affiliates",
+        parentId: 36,
+      },
+    ],
   },
-
   {
     id: 36,
     label: "Access Control",
@@ -152,16 +220,16 @@ export const MENU: MenuItem[] = [
       {
         id: 38,
         label: "Relationship",
-        link: "/settings/locations",
+        link: "/settings/relationship",
         parentId: 36,
       },
     ],
   },
 
-  {
-    id: 36,
-    label: "Support (coming soon)",
-    icon: "bx-chat",
-    link: "/dashboard",
-  },
+  // {
+  //   id: 36,
+  //   label: "Support (coming soon)",
+  //   icon: "bx-chat",
+  //   link: "/dashboard",
+  // },
 ];

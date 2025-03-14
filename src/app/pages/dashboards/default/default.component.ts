@@ -3,8 +3,6 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { EventService } from "../../../core/services/event.service";
 import { QueryService } from "src/app/core/services/query.service";
 import { StaffService } from "../../staff/staff.service";
-import { FarmerService } from "../../farmer/farmer.service";
-import { TractorOwnerService } from "../../tractor-owner/tractor-owner.service";
 
 @Component({
   selector: "app-default",
@@ -35,8 +33,6 @@ export class DefaultComponent implements OnInit {
     private modalService: NgbModal,
     private eventService: EventService,
     private staffService: StaffService,
-    private farmerService: FarmerService,
-    private tractorOwnerService: TractorOwnerService
   ) {
     this.viewDetail = this.viewDetail.bind(this);
   }
@@ -112,26 +108,12 @@ export class DefaultComponent implements OnInit {
       (error) => {}
     );
 
-    this.farmerService.getRecords({}).subscribe(
-      (response: any) => {
-        this.farmerCount = response.length;
-      },
-      (error) => {}
-    );
-
-    this.tractorOwnerService.getRecords({}).subscribe(
-      (response: any) => {
-        this.tractorOwnerCount = response.length;
-      },
-      (error) => {}
-    );
-
-    this.tractorOwnerService.getTractorRecords({}).subscribe(
-      (response: any) => {
-        this.tractorCount = response.length;
-      },
-      (error) => {}
-    );
+    // this.farmerService.getRecords({}).subscribe(
+    //   (response: any) => {
+    //     this.farmerCount = response.length;
+    //   },
+    //   (error) => {}
+    // );
   }
 
   /**
