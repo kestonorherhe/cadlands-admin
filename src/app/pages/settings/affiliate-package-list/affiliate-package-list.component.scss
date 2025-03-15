@@ -1,0 +1,28 @@
+.receipt-container {
+  padding: 10px;
+  margin-left: 10px;
+  background-color: #ffffff; /* White background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  width: 100%; /* Take full width of parent container */
+  max-width: 33.5%; /* Limit the width */
+  height: 790px; /* Fixed height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.receipt-container:hover {
+  transform: translateY(-4px); /* Slight elevation on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced shadow on hover */
+}
+
+.card {
+  width: 100%; /* Fill the max-width of the container */
+  min-height: fit-content; /* Adjusts height to content */
+  background-color: #f8f9fa; /* Light background for the card */
+  padding: 5px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+

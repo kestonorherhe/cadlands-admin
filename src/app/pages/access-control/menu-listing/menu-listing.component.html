@@ -1,0 +1,372 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="row p-4">
+          <div class="col-6">
+            <h4 class="card-title" style="padding: 0px; font-size: 1.5rem">
+              Menu Manager
+            </h4>
+            <p style="font-size: 1rem">List menu items.</p>
+          </div>
+          <div class="col-6">
+            <button
+              class="btn btn-primary text-right"
+              style="
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                float: right;
+              "
+              (click)="createRecordModal(createItemModal)"
+            >
+              <span style="margin-left: 6px">Add Menu Item</span>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-12">
+              <!-- search field goes here -->
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-middle gs-0 gy-4">
+              <thead>
+                <tr class="fw-bolder text-white bg-primary">
+                  <th
+                    class="min-w-10px text-gray-900 text-end text-center"
+                  ></th>
+                  <th class="min-w-250px text-gray-900">Feature</th>
+                  <th class="min-w-250px text-gray-900">Label</th>
+                  <th class="min-w-300px text-gray-900">Link</th>
+                  <th class="min-w-150px text-gray-900">Status</th>
+                  <th class="min-w-150px text-gray-900">Created At</th>
+                  <th class="min-w-100px text-gray-900"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="(menuList$ | async)?.data != null">
+                  <tr *ngFor="let item of (menuList$ | async)?.data">
+                    <td class="text-center">
+                      {{ item.id }}
+                    </td>
+                    <td>
+                      {{ item?.feature?.name }}
+                    </td>
+                    <td>{{ item?.parentMenu?.label }}, {{ item.label }}</td>
+                    <td>
+                      {{ item.link }}
+                    </td>
+                    <td>
+                      <span class="badge badge-light-primary fs-7 fw-bold"
+                        >Active</span
+                      >
+                    </td>
+                    <td>
+                      {{ item.createdAt | date }}
+                    </td>
+                    <!-- <td class="text-end">
+                      <a
+                        (click)="edit(item)"
+                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                      >
+                        Edit
+                      </a>
+                    </td> -->
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #createItemModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Create Menu Item</h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="featureId"
+            [class.text-danger]="featureId.invalid &amp;&amp; featureId.touched"
+            class="form-label"
+            >Feature <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="(featureList$ | async)?.data"
+            bindValue="id"
+            bindLabel="name"
+            name="featureId"
+            #featureId="ngModel"
+            [(ngModel)]="obj.featureId"
+            [class.is-invalid]="featureId.invalid &amp;&amp; featureId.touched"
+            placeholder="--Select Feature--"
+            required
+          ></ng-select>
+
+          <div *ngIf="featureId.invalid &amp;&amp; featureId.touched">
+            <small *ngIf="featureId.errors?.required" class="text-danger"
+              >Feature is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="label"
+            [class.text-danger]="label.invalid &amp;&amp; label.touched"
+            class="form-label"
+            >Menu Label <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="label"
+            #label="ngModel"
+            [(ngModel)]="obj.label"
+            [class.is-invalid]="label.invalid &amp;&amp; label.touched"
+            placeholder="Enter Menu Label"
+            required
+          />
+          <small>
+            <a
+              *ngIf="showParentMenu1 == false"
+              class="text-md font-medium text-primary-100"
+              style="cursor: pointer"
+              (click)="toggleParentMenu1()"
+              >Add parent menu?</a
+            >
+            <a
+              *ngIf="showParentMenu1 === true"
+              style="text-decoration: none"
+              class="text-md font-medium text-warning-500"
+              (click)="toggleParentMenu1()"
+              style="cursor: 'pointer'"
+              >Remove parent menu(s)?</a
+            >
+          </small>
+
+          <div *ngIf="label.invalid &amp;&amp; label.touched">
+            <small *ngIf="label.errors?.required" class="text-danger"
+              >Menu Label is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="showParentMenu1" class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="parentMenu1"
+            [class.text-danger]="parentMenu1.invalid &amp;&amp; parentMenu1.touched"
+            class="form-label"
+            >Parent Menu 1 <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="MenuList"
+            bindValue="id"
+            bindLabel="label"
+            name="parentMenu1"
+            #parentMenu1="ngModel"
+            [(ngModel)]="obj.parentMenu1"
+            [class.is-invalid]="parentMenu1.invalid &amp;&amp; parentMenu1.touched"
+            placeholder="--Select Parent Menu--"
+            (change)="filterMenuList2($event)"
+            required
+          ></ng-select>
+          <small>
+            <a
+              *ngIf="showParentMenu2 == false"
+              style="text-decoration: none"
+              class="text-md font-medium text-primary-500"
+              style="cursor: 'pointer'"
+              (click)="toggleParentMenu2()"
+              >Add parent menu?</a
+            >
+            <a
+              *ngIf="showParentMenu2 === true"
+              style="text-decoration: none"
+              class="text-md font-medium text-warning-500"
+              style="cursor: 'pointer'"
+              (click)="toggleParentMenu2()"
+              >Remove parent menu?</a
+            >
+          </small>
+
+          <div *ngIf="parentMenu1.invalid &amp;&amp; parentMenu1.touched">
+            <small *ngIf="parentMenu1.errors?.required" class="text-danger"
+              >Parent menu is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="showParentMenu2" class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="parentMenu2"
+            [class.text-danger]="parentMenu2.invalid &amp;&amp; parentMenu2.touched"
+            class="form-label"
+            >Parent Menu 2 <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="MenuList2"
+            bindValue="id"
+            bindLabel="label"
+            name="parentMenu2"
+            #parentMenu2="ngModel"
+            [(ngModel)]="obj.parentMenu2Id"
+            [class.is-invalid]="parentMenu2.invalid &amp;&amp; parentMenu2.touched"
+            placeholder="--Select Parent Menu--"
+            (change)="filterMenuList3($event)"
+            required
+          ></ng-select>
+          <small>
+            <a
+              *ngIf="showParentMenu3 == false"
+              style="text-decoration: none"
+              class="text-md font-medium text-primary-500"
+              style="cursor: 'pointer'"
+              (click)="toggleParentMenu3()"
+              >Add parent menu?</a
+            >
+            <a
+              *ngIf="showParentMenu3 === true"
+              style="text-decoration: none"
+              class="text-md font-medium text-warning-500"
+              style="cursor: 'pointer'"
+              (click)="toggleParentMenu3()"
+              >Remove parent menu?</a
+            >
+          </small>
+
+          <div *ngIf="parentMenu2.invalid &amp;&amp; parentMenu2.touched">
+            <small *ngIf="parentMenu2.errors?.required" class="text-danger"
+              >Secondary parent menu is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="showParentMenu3" class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="parentMenu3"
+            [class.text-danger]="parentMenu3.invalid &amp;&amp; parentMenu3.touched"
+            class="form-label"
+            >Parent Menu 3 <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="MenuList3"
+            bindValue="id"
+            bindLabel="label"
+            name="parentMenu3"
+            #parentMenu3="ngModel"
+            [(ngModel)]="obj.parentMenu3"
+            [class.is-invalid]="parentMenu3.invalid &amp;&amp; parentMenu3.touched"
+            placeholder="--Select Parent Menu--"
+            (change)="filterMenuList3($event)"
+            required
+          ></ng-select>
+
+          <div *ngIf="parentMenu3.invalid &amp;&amp; parentMenu3.touched">
+            <small *ngIf="parentMenu3.errors?.required" class="text-danger"
+              >Secondary parent menu is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="link"
+            [class.text-danger]="link.invalid &amp;&amp; link.touched"
+            class="form-label"
+            >Link <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="link"
+            #link="ngModel"
+            [(ngModel)]="obj.link"
+            [class.is-invalid]="link.invalid &amp;&amp; link.touched"
+            placeholder="Enter Link"
+            required
+          />
+
+          <div *ngIf="link.invalid &amp;&amp; link.touched">
+            <small *ngIf="link.errors?.required" class="text-danger"
+              >Link is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="icon"
+            [class.text-danger]="icon.invalid &amp;&amp; icon.touched"
+            class="form-label"
+            >Icon <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="icon"
+            #icon="ngModel"
+            [(ngModel)]="obj.icon"
+            [class.is-invalid]="icon.invalid &amp;&amp; icon.touched"
+            placeholder="Enter Icon"
+          />
+
+          <div *ngIf="icon.invalid &amp;&amp; icon.touched">
+            <small *ngIf="icon.errors?.required" class="text-danger"
+              >Icon is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button
+        *ngIf="!isLoading"
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        (click)="onSubmit()"
+      >
+        Submit
+      </button>
+      <button *ngIf="!isLoading" class="btn btn-danger" (click)="closeModal()">
+        Cancel
+      </button>
+      <button
+        *ngIf="isLoading"
+        class="btn"
+        style="background-color: #2a3042; color: #ffffff"
+        disabled
+      >
+        Processing <span><i class="bx bx-loader bx-spin"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>

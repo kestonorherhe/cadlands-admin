@@ -42,51 +42,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   };
 
   requestedApis: any = [];
-  accounts = [
-    {
-      id: 1,
-      name: "All Face Features",
-      age: 15,
-      child: { state: "Face Capture" },
-    },
-    {
-      id: 2,
-      name: "Spoofing",
-      age: 10,
-      child: { state: "Face Capture" },
-    },
-    {
-      id: 3,
-      name: "Face Detection",
-      age: 7,
-      child: { state: "Face Capture" },
-    },
-    {
-      id: 4,
-      name: "Background Removal",
-      age: 12,
-      child: { state: "Face Capture" },
-    },
-    {
-      id: 5,
-      name: "Liveness Check",
-      age: 47,
-      child: { state: "Face Capture" },
-    },
-    {
-      id: 6,
-      name: "Face Object Detection",
-      age: 30,
-      child: { state: "Face Capture" },
-    },
-    {
-      id: 7,
-      name: "Hand Detection",
-      age: 30,
-      child: { state: "Finger Capture" },
-    },
-  ];
-
   totalAmount = 0;
 
   groupByFn = (item) => item.child.state;
@@ -115,8 +70,9 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     this.initialize();
-    this.menuItems = MENU;
-    // this.menuItems = JSON.parse(localStorage.getItem('menuList'));
+    // this.menuItems = MENU;
+    this.menuItems = JSON.parse(localStorage.getItem('menuList'));
+    // console.log("🚀 ~ SidebarComponent ~ ngOnInit ~ menuItems:", this.menuItems);
     this._scrollElement();
   }
 

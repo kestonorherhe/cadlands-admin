@@ -10,6 +10,10 @@ export class AffiliateService {
     return this.httpService.get(`admins?role=${role}`);
   }
 
+  getProfile() {
+    return this.httpService.get(`admins/my-profile`);
+  }
+
   createRecord(data: any) {
     return this.httpService.post(`admins`, data);
   }
@@ -17,11 +21,11 @@ export class AffiliateService {
   processApplication(data: any) {
     return this.httpService.put(`admins/process-affiliate-application`, data);
   }
-  createAgent(data: any) {
-    return this.httpService.post(`admins/create-agent`, data);
+  addBankAccount(data: any) {
+    return this.httpService.post(`admins/add-bank-account`, data);
   }
 
-  getRecords(payload: { staffId?: string, role?: string, status?: string }) {
+  getRecords(payload: { staffId?: string; role?: string; status?: string }) {
     // Initialize URLSearchParams
     const params = new URLSearchParams();
 

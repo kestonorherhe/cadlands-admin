@@ -1,0 +1,83 @@
+<div class="container-fluid">
+  <div class="row">
+    <div *ngFor="let menu of treeData" class="col-md-4 mb-4">
+      <h5>{{ menu.text }}</h5>
+      <ul class="list-unstyled">
+        <li>
+          <div
+            class="form-check"
+            style="display: flex; flex-direction: row; align-items: center"
+          >
+            <input
+              class="form-check-input fs-4"
+              type="checkbox"
+              [id]="'node-' + menu.value"
+              [(ngModel)]="menu.checked"
+              [indeterminate]="menu.indeterminate"
+              (change)="onCheckboxChange(menu)"
+            />
+            <label
+              class="form-check-label mt-2"
+              style="margin-left: 0.5rem"
+              [for]="'node-' + menu.value"
+            >
+              {{ menu.text }}
+            </label>
+          </div>
+        </li>
+        <ul *ngIf="menu.children" class="list-unstyled ml-5">
+          <li *ngFor="let node of menu.children">
+            <div
+              class="form-check ml-4"
+              style="display: flex; flex-direction: row; align-items: center"
+            >
+              <input
+                class="form-check-input fs-4"
+                type="checkbox"
+                [id]="'node-' + node.value"
+                [(ngModel)]="node.checked"
+                [indeterminate]="node.indeterminate"
+                (change)="onCheckboxChange(node)"
+              />
+              <label
+                class="form-check-label mt-2"
+                style="margin-left: 0.5rem"
+                [for]="'node-' + node.value"
+              >
+                {{ node.text }}
+              </label>
+            </div>
+            <ul *ngIf="node.children" class="list-unstyled ml-5">
+              <li *ngFor="let subNode of node.children">
+                <div
+                  class="form-check"
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                  "
+                >
+                  <input
+                    class="form-check-input fs-4"
+                    type="checkbox"
+                    [id]="'node-' + subNode.value"
+                    [(ngModel)]="subNode.checked"
+                    [indeterminate]="subNode.indeterminate"
+                    (change)="onCheckboxChange(subNode)"
+                  />
+                  <label
+                    class="form-check-label mt-2"
+                    style="margin-left: 0.5rem"
+                    [for]="'node-' + subNode.value"
+                  >
+                    {{ subNode.text }}
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </div>
+  </div>
+</div>

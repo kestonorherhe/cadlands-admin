@@ -20,7 +20,11 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  constructor(private http: HttpClient, private readonly _httpService: HttpService, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private readonly _httpService: HttpService,
+    private router: Router
+  ) {
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem("currentUser"))
     );
@@ -48,6 +52,10 @@ export class AuthenticationService {
           console.log("user__service__response ::", user);
           if (user?.data && user?.data?.accessToken) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem(
+              "menuList",
+              JSON.stringify(user?.data?.menuList)
+            );
             localStorage.setItem("currentUser", JSON.stringify(user?.data));
             localStorage.setItem(
               "token",
@@ -95,6 +103,7 @@ export class AuthenticationService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem("currentUser");
+    localStorage.removeItem("menuList");
     localStorage.removeItem("token");
     this.currentUserSubject.next(null);
     this.router.navigate(["/account/login"]);

@@ -24,6 +24,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: "access-control",
+    loadChildren: () =>
+      import("./access-control/access-control.module").then(
+        (m) => m.AccessControlModule
+      ),
+  },
+  {
     path: "estate",
     loadChildren: () =>
       import("./estate/estate.module").then((m) => m.EstateModule),

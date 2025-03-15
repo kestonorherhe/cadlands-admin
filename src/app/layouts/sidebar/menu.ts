@@ -158,8 +158,26 @@ export const MENU: MenuItem[] = [
     subItems: [
       {
         id: 37,
-        label: "Gender",
-        link: "/settings/categories",
+        label: "Feature",
+        link: "/access-control/features",
+        parentId: 36,
+      },
+      {
+        id: 37,
+        label: "Menu",
+        link: "/access-control/menu-listing",
+        parentId: 36,
+      },
+      {
+        id: 37,
+        label: "Menu Authorization",
+        link: "/access-control/menu-authorization-listing",
+        parentId: 36,
+      },
+      {
+        id: 37,
+        label: "Roles",
+        link: "/access-control/roles",
         parentId: 36,
       },
     ],

@@ -27,7 +27,7 @@ export class StaffListComponent implements OnInit {
     phone: null,
     email: null,
     address: null,
-    privilegeId: null,
+    designation: null,
     // state: null,
     // city: null,
     role: "admin",
@@ -52,11 +52,11 @@ export class StaffListComponent implements OnInit {
     private readonly _router: Router,
     private readonly staffService: StaffService
   ) {
-    this.viewRecord = this.viewRecord.bind(this);
+    // this.viewRecord = this.viewRecord.bind(this);
   }
 
   viewRecord(evt: any) {
-    const id = evt.row.data.id;
+    const id = evt.id;
     this._router.navigate(["staff", id]);
   }
 
@@ -127,7 +127,7 @@ export class StaffListComponent implements OnInit {
       phone: null,
       email: null,
       address: null,
-      privilegeId: null,
+      designation: null,
       // state: null,
       // city: null,
       role: null,

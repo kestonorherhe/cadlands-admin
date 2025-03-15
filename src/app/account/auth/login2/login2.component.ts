@@ -44,10 +44,7 @@ export class Login2Component implements OnInit {
   ngOnInit(): void {
     document.body.classList.add("auth-body-bg");
     this.loginForm = this.formBuilder.group({
-      email: [
-        "",
-        [Validators.required, Validators.email],
-      ],
+      email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required]],
     });
 
@@ -80,7 +77,7 @@ export class Login2Component implements OnInit {
    * Form submit
    */
   onSubmit() {
-    this.showErr = false
+    this.showErr = false;
     this.isLoggingIn = true;
     this.submitted = true;
 
@@ -93,8 +90,14 @@ export class Login2Component implements OnInit {
         .pipe(first())
         .subscribe(
           (data) => {
+            console.log("🚀 ~ Login2Component ~ onSubmit ~ data:", data);
             this.isLoggingIn = false;
-            window.location.replace("/dashboard");
+
+            if (data.data.role && data.data.role == "admin") {
+              window.location.replace("/dashboard");
+            } else if (data.data.role && data.data.role == "affiliate") {
+              window.location.replace("/my-dashboard");
+            }
             // if (data.verxid.status == 1) {
             //   console.log("we are here!!!!");
             //   // this.router.navigate([""]);
@@ -107,7 +110,7 @@ export class Login2Component implements OnInit {
           },
           (error) => {
             this.isLoggingIn = false;
-            console.log("error ::", error)
+            console.log("error ::", error);
             this.error = error ? error : "";
           }
         );

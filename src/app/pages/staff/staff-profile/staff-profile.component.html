@@ -120,78 +120,88 @@
             class="nav-pills bg-light rounded"
           >
             <li [ngbNavItem]="1">
-              <a ngbNavLink>Farmer</a>
+              <a ngbNavLink>User Access</a>
               <ng-template ngbNavContent>
-                <ngx-simplebar style="height: 250px">
-                  <!-- table goes here -->
-                  <dx-data-grid
-                    id="gridContainer"
-                    [dataSource]="staff.farmers"
-                    keyExpr="id"
-                    [showBorders]="true"
-                    [showColumnLines]="true"
-                    [showRowLines]="true"
-                    [rowAlternationEnabled]="true"
-                    [columnAutoWidth]="true"
-                    [allowColumnResizing]="true"
-                  >
-                    <dxo-paging [pageSize]="10"> </dxo-paging>
-                    <dxo-selection mode="single"></dxo-selection>
-                    <div>
-                      <dx-button
-                        stylingMode="contained"
-                        text="Contained"
-                        type="normal"
-                        [width]="120"
-                      >
-                      </dx-button>
+                <ngx-simplebar>
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="card">
+                          <div class="row p-4">
+                            <div class="col-6">
+                              <h4
+                                class="card-title"
+                                style="padding: 0px; font-size: 1.5rem"
+                              >
+                                My Access
+                              </h4>
+                              <p style="font-size: 1rem">
+                                List available features.
+                              </p>
+                            </div>
+                            <div class="col-6">
+                              <button
+                                [disabled]="selectedItems.length == 0"
+                                class="btn btn-primary text-right"
+                                style="
+                                  display: flex;
+                                  flex-direction: row;
+                                  align-items: center;
+                                  float: right;
+                                "
+                                *ngIf="!isLoading"
+                                (click)="assignMenuAccessFn()"
+                              >
+                                <span style="margin-left: 6px">
+                                  Submit & Save</span
+                                >
+                              </button>
+
+                              <button
+                                class="btn btn-primary"
+                                style="
+                                  display: flex;
+                                  flex-direction: row;
+                                  align-items: center;
+                                  float: right;
+                                "
+                                disabled
+                                *ngIf="isLoading"
+                              >
+                                Please wait...
+                                <span
+                                  class="spinner-border spinner-border-sm"
+                                ></span>
+                              </button>
+                            </div>
+                          </div>
+
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-12">
+                                <div class="row">
+                                  <div class="col-lg-12 col-sm-12">
+                                    <div class="form-group">
+                                      <app-menu-tree
+                                        [treeData]="menuItems"
+                                        (nodeChecked)="updateSelectedItems()"
+                                      ></app-menu-tree>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <dxo-export
-                      [enabled]="true"
-                      [allowExportSelectedData]="true"
-                    ></dxo-export>
-
-                    <dxo-search-panel
-                      [visible]="true"
-                      [width]="350"
-                    ></dxo-search-panel>
-
-                    <dxi-column
-                      dataField="firstName"
-                      caption="First Name"
-                    ></dxi-column>
-                    <dxi-column
-                      dataField="lastName"
-                      caption="Last Name"
-                    ></dxi-column>
-                    <dxi-column dataField="phone" caption="Phone"></dxi-column>
-                    <dxi-column dataField="email" caption="Email"></dxi-column>
-                    <dxi-column
-                      dataField="dob"
-                      caption="Date of Birth"
-                    ></dxi-column>
-                    <dxi-column
-                      dataField="address"
-                      caption="address"
-                    ></dxi-column>
-
-                    <dxi-column caption="View" name="delistBtn" type="buttons">
-                      <dxi-button
-                        text="View"
-                        [onClick]="viewRecord"
-                      ></dxi-button>
-                    </dxi-column>
-
-                    <dxo-summary>
-                      <dxi-total-item column="id" summaryType="count">
-                      </dxi-total-item>
-                    </dxo-summary>
-                  </dx-data-grid>
+                  </div>
+                  <!-- table goes here -->
                 </ngx-simplebar>
               </ng-template>
             </li>
             <li [ngbNavItem]="2">
-              <a ngbNavLink>Tractor Requests</a>
+              <a ngbNavLink>My Applications</a>
               <ng-template ngbNavContent>
                 <ngx-simplebar style="height: 250px">
                   <dx-data-grid

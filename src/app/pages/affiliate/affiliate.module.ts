@@ -23,6 +23,10 @@ import { AffiliateListComponent } from "./affiliate-list/affiliate-list.componen
 import { AffiliateProfileComponent } from "./affiliate-profile/affiliate-profile.component";
 import { VerifiedAffiliateListComponent } from "./verified-affiliate-list/verified-affiliate-list.component";
 import { PendingAffiliateListComponent } from "./pending-affiliate-list/pending-affiliate-list.component";
+import { MyProfileComponent } from "./my-profile/my-profile.component";
+import { MyWithdrawalComponent } from "./my-withdrawal/my-withdrawal.component";
+import { MyReferralsComponent } from "./my-referrals/my-referrals.component";
+import { MySalesHistoryComponent } from "./my-sales-history/my-sales-history.component";
 
 @NgModule({
   declarations: [
@@ -30,6 +34,10 @@ import { PendingAffiliateListComponent } from "./pending-affiliate-list/pending-
     VerifiedAffiliateListComponent,
     PendingAffiliateListComponent,
     AffiliateProfileComponent,
+    MyProfileComponent,
+    MyWithdrawalComponent,
+    MyReferralsComponent,
+    MySalesHistoryComponent,
   ],
   imports: [
     CommonModule,

@@ -23,6 +23,7 @@ import { StaffProfileComponent } from "./staff-profile/staff-profile.component";
 import { SimplebarAngularModule } from "simplebar-angular";
 import { AgentListComponent } from "./agent-list/agent-list.component";
 import { AgentProfileComponent } from "./agent-profile/agent-profile.component";
+import { MenuTreeComponent } from "./menu-tree/menu-tree.component";
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { AgentProfileComponent } from "./agent-profile/agent-profile.component";
     StaffProfileComponent,
     AgentListComponent,
     AgentProfileComponent,
+    MenuTreeComponent,
   ],
   imports: [
     CommonModule,

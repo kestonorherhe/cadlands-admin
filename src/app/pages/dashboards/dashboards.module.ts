@@ -24,12 +24,11 @@ import {
   DxLoadIndicatorModule,
   DxLoadPanelModule,
   DxTemplateModule,
-} from 'devextreme-angular';
+} from "devextreme-angular";
+import { AffiliateDashboardComponent } from "./affiliate-dashboard/affiliate-dashboard.component";
 
 @NgModule({
-  declarations: [
-    DefaultComponent,
-  ],
+  declarations: [DefaultComponent, AffiliateDashboardComponent],
   imports: [
     CommonModule,
     FormsModule,

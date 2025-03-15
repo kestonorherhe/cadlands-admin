@@ -1,0 +1,1022 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="row p-4">
+          <div class="col-6">
+            <h4 class="card-title" style="padding: 0px; font-size: 1.5rem">
+              My Profile
+            </h4>
+            <p style="font-size: 1rem">List available features.</p>
+          </div>
+
+          <div
+            class="col-6"
+          >
+            <button
+              class="btn btn-primary btn-rounded text-right"
+              style="
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                float: right;
+              "
+              (click)="upgradeAccountModal(upgradeAccountTemplate)"
+            >
+              <span style="margin-left: 6px">Upgrade Account</span>
+            </button>
+
+            <p class="text-primary" style="float: right; margin-right: 2rem; margin-top: 0.5rem;">
+              <strong>Referral Code:</strong> {{ affiliate.referralCode }}
+            </p>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row">
+            <div class="row mt-4 mb-2">
+              <h4 class="text-primary" style="font-weight: bold">
+                Personal Information
+              </h4>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >First Name</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.firstName }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Last Name</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.lastName }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Othername</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.otherName || "---" }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Phone</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.phone }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Email</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.email }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Date of Birth</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.email }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Gender</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.email }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Means of Identification</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.email }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Address</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.address || "---" }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Country</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.country || "---" }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >State</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.state || "---" }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >City</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.city || "---" }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6">
+              <h4 class="text-primary" style="font-weight: bold">
+                Next of Kin's Information
+              </h4>
+            </div>
+            <div class="col-6">
+              <button
+                class="btn btn-primary btn-rounded text-right"
+                style="
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  float: right;
+                "
+                (click)="editNokModal(editNokTemplate)"
+              >
+                <span style="margin-left: 6px">Edit</span>
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Title</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.nok[0]?.title || "---" }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >First Name</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.nok[0]?.firstName }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Last Name</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.nok[0]?.lastName }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Othername</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.nok[0]?.otherName || "---" }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Phone</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.nok[0]?.phone }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Email</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.nok[0]?.email }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Address</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.nok[0]?.address || "---" }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Country</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.nok[0]?.country || "---" }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >State</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.nok[0]?.state || "---" }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >City</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.nok[0]?.city || "---" }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="row mt-4 mb-2">
+            <div class="col-6">
+              <h4 class="text-primary" style="font-weight: bold">
+                Bank Details
+              </h4>
+            </div>
+
+            <div class="col-6">
+              <button
+                class="btn btn-primary btn-rounded text-right"
+                style="
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  float: right;
+                "
+                (click)="addBankModal(addBankTemplate)"
+              >
+                <span style="margin-left: 6px">Add Bank</span>
+              </button>
+            </div>
+          </div>
+
+          <div *ngFor="let bank of affiliate?.banks; index as i" class="row">
+            <h5 class="text-primary text-bold">Account {{ 1 + i }}</h5>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Bank</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ bank?.bankName || "---" }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Account Name</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ bank?.accountName }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Account Number</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ bank?.accountNumber }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="row mt-4 mb-2">
+            <div class="col-6">
+              <h4 class="text-primary" style="font-weight: bold">
+                Password Settings
+              </h4>
+            </div>
+
+            <div class="col-6">
+              <button
+                class="btn btn-primary btn-rounded text-right"
+                style="
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  float: right;
+                "
+                (click)="changePasswordModal(changePasswordTemplate)"
+              >
+                <span style="margin-left: 6px">Change Password</span>
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
+                  >Current Password</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.nok[0]?.title || "---" }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #editNokTemplate let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title text-primary fs-bold" id="exampleModalLabel">
+      Edit Next of Kin Info
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="title"
+            [class.text-danger]="title.invalid &amp;&amp; title.touched"
+            class="form-label"
+            >Title <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="titleList"
+            bindValue="name"
+            bindLabel="name"
+            name="title"
+            #title="ngModel"
+            [(ngModel)]="nok.title"
+            [class.is-invalid]="title.invalid &amp;&amp; title.touched"
+            placeholder="--Select Title--"
+            required
+          ></ng-select>
+
+          <div *ngIf="title.invalid &amp;&amp; title.touched">
+            <small *ngIf="title.errors?.required" class="text-danger"
+              >Title is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="firstName"
+            [class.text-danger]="firstName.invalid &amp;&amp; firstName.touched"
+            class="form-label"
+            >First Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="firstName"
+            #firstName="ngModel"
+            [(ngModel)]="nok.firstName"
+            [class.is-invalid]="firstName.invalid &amp;&amp; firstName.touched"
+            placeholder="Enter First Name"
+            required
+          />
+
+          <div *ngIf="firstName.invalid &amp;&amp; firstName.touched">
+            <small *ngIf="firstName.errors?.required" class="text-danger"
+              >First name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="lastName"
+            [class.text-danger]="lastName.invalid &amp;&amp; lastName.touched"
+            class="form-label"
+            >Last Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="lastName"
+            #lastName="ngModel"
+            [(ngModel)]="nok.lastName"
+            [class.is-invalid]="lastName.invalid &amp;&amp; lastName.touched"
+            placeholder="Enter Last Name"
+            required
+          />
+
+          <div *ngIf="lastName.invalid &amp;&amp; lastName.touched">
+            <small *ngIf="lastName.errors?.required" class="text-danger"
+              >Last name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="otherName"
+            [class.text-danger]="otherName.invalid &amp;&amp; otherName.touched"
+            class="form-label"
+            >Other Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="otherName"
+            #otherName="ngModel"
+            [(ngModel)]="nok.otherName"
+            [class.is-invalid]="otherName.invalid &amp;&amp; otherName.touched"
+            placeholder="Enter Other Name"
+            required
+          />
+
+          <div *ngIf="otherName.invalid &amp;&amp; otherName.touched">
+            <small *ngIf="otherName.errors?.required" class="text-danger"
+              >Other name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="phone"
+            [class.text-danger]="phone.invalid &amp;&amp; phone.touched"
+            class="form-label"
+            >Phone <span class="text-danger">*</span></label
+          >
+          <input
+            type="tel"
+            class="form-control"
+            name="phone"
+            #phone="ngModel"
+            [(ngModel)]="nok.phone"
+            [class.is-invalid]="phone.invalid &amp;&amp; phone.touched"
+            placeholder="Enter Phone"
+            required
+          />
+
+          <div *ngIf="phone.invalid &amp;&amp; phone.touched">
+            <small *ngIf="phone.errors?.required" class="text-danger"
+              >Phone is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="email"
+            [class.text-danger]="email.invalid &amp;&amp; email.touched"
+            class="form-label"
+            >Email <span class="text-danger">*</span></label
+          >
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            #email="ngModel"
+            [(ngModel)]="nok.email"
+            [class.is-invalid]="email.invalid &amp;&amp; email.touched"
+            placeholder="Enter Email"
+            required
+          />
+
+          <div *ngIf="email.invalid &amp;&amp; email.touched">
+            <small *ngIf="email.errors?.required" class="text-danger"
+              >Email is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="address"
+            [class.text-danger]="address.invalid &amp;&amp; address.touched"
+            class="form-label"
+            >Address <span class="text-danger">*</span></label
+          >
+          <textarea
+            type="text"
+            class="form-control"
+            name="address"
+            #address="ngModel"
+            [(ngModel)]="nok.address"
+            [class.is-invalid]="address.invalid &amp;&amp; address.touched"
+            placeholder="Enter Address"
+            required
+          ></textarea>
+
+          <div *ngIf="address.invalid &amp;&amp; address.touched">
+            <small *ngIf="address.errors?.required" class="text-danger"
+              >Address is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="countryId"
+            [class.text-danger]="countryId.invalid &amp;&amp; countryId.touched"
+            class="form-label"
+            >Country <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="countryList"
+            bindValue="id"
+            bindLabel="name"
+            name="countryId"
+            #countryId="ngModel"
+            [(ngModel)]="nok.countryId"
+            [class.is-invalid]="countryId.invalid &amp;&amp; countryId.touched"
+            placeholder="--Select Country--"
+            required
+          ></ng-select>
+
+          <div *ngIf="countryId.invalid &amp;&amp; countryId.touched">
+            <small *ngIf="countryId.errors?.required" class="text-danger"
+              >Country is Required</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="stateId"
+            [class.text-danger]="stateId.invalid &amp;&amp; stateId.touched"
+            class="form-label"
+            >State <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="countryList"
+            bindValue="id"
+            bindLabel="name"
+            name="stateId"
+            #stateId="ngModel"
+            [(ngModel)]="nok.stateId"
+            [class.is-invalid]="stateId.invalid &amp;&amp; stateId.touched"
+            placeholder="--Select State--"
+            required
+          ></ng-select>
+
+          <div *ngIf="stateId.invalid &amp;&amp; stateId.touched">
+            <small *ngIf="stateId.errors?.required" class="text-danger"
+              >State is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="cityId"
+            [class.text-danger]="cityId.invalid &amp;&amp; cityId.touched"
+            class="form-label"
+            >City <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="countryList"
+            bindValue="id"
+            bindLabel="name"
+            name="cityId"
+            #cityId="ngModel"
+            [(ngModel)]="nok.cityId"
+            [class.is-invalid]="cityId.invalid &amp;&amp; cityId.touched"
+            placeholder="--Select City--"
+            required
+          ></ng-select>
+
+          <div *ngIf="cityId.invalid &amp;&amp; cityId.touched">
+            <small *ngIf="cityId.errors?.required" class="text-danger"
+              >City is Required</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-primary btn-rounded"
+        (click)="onSubmit()"
+      >
+        Update Info
+      </button>
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-danger btn-rounded"
+        (click)="closeModal()"
+      >
+        Cancel
+      </button>
+      <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
+        Processing <span><i class="bx bx-loader bx-spin"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #addBankTemplate let-modal>
+  <div class="modal-header">
+    <div>
+      <h5 class="modal-title" id="exampleModalLabel">Bank Details</h5>
+      <p>
+        Use the form below to update your Bank Information. Make sure to use an
+        accurate information.
+      </p>
+    </div>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="bankName"
+            [class.text-danger]="bankName.invalid &amp;&amp; bankName.touched"
+            class="form-label"
+            >Bank Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="bankName"
+            #bankName="ngModel"
+            [(ngModel)]="bank.bankName"
+            [class.is-invalid]="bankName.invalid &amp;&amp; bankName.touched"
+            placeholder="Enter Bank Name"
+            required
+          />
+
+          <div *ngIf="bankName.invalid &amp;&amp; bankName.touched">
+            <small *ngIf="bankName.errors?.required" class="text-danger"
+              >Bank Name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="accountName"
+            [class.text-danger]="accountName.invalid &amp;&amp; accountName.touched"
+            class="form-label"
+            >Account Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="accountName"
+            #accountName="ngModel"
+            [(ngModel)]="bank.accountName"
+            [class.is-invalid]="accountName.invalid &amp;&amp; accountName.touched"
+            placeholder="Enter Account Name"
+            required
+          />
+
+          <div *ngIf="accountName.invalid &amp;&amp; accountName.touched">
+            <small *ngIf="accountName.errors?.required" class="text-danger"
+              >Account Name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="accountNumber"
+            [class.text-danger]="accountNumber.invalid &amp;&amp; accountNumber.touched"
+            class="form-label"
+            >Account Number <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="accountNumber"
+            #accountNumber="ngModel"
+            [(ngModel)]="bank.accountNumber"
+            [class.is-invalid]="accountNumber.invalid &amp;&amp; accountNumber.touched"
+            placeholder="Enter Account Number"
+            required
+          />
+
+          <div *ngIf="accountNumber.invalid &amp;&amp; accountNumber.touched">
+            <small *ngIf="accountNumber.errors?.required" class="text-danger"
+              >Account Number is Required</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        *ngIf="!isAddingBank"
+        class="btn btn-primary btn-rounded"
+        (click)="addBank()"
+      >
+        Add Bank
+      </button>
+      <button
+        *ngIf="!isAddingBank"
+        class="btn btn-danger btn-rounded"
+        (click)="closeModal()"
+      >
+        Cancel
+      </button>
+      <button
+        *ngIf="isAddingBank"
+        class="btn"
+        class="btn btn-primary btn-rounded"
+        disabled
+      >
+        Processing <span><i class="bx bx-loader bx-spin"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #changePasswordTemplate let-modal>
+  <div class="modal-header">
+    <div>
+      <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+      <p>
+        Use the form below to edit your password Information. Make sure to use
+        an accurate information.
+      </p>
+    </div>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="currentPassword"
+            [class.text-danger]="currentPassword.invalid &amp;&amp; currentPassword.touched"
+            class="form-label"
+            >Current Password <span class="text-danger">*</span></label
+          >
+          <input
+            type="password"
+            class="form-control"
+            name="currentPassword"
+            #currentPassword="ngModel"
+            [(ngModel)]="changePassword.currentPassword"
+            [class.is-invalid]="currentPassword.invalid &amp;&amp; currentPassword.touched"
+            placeholder="Enter Current Password"
+            required
+          />
+
+          <div
+            *ngIf="currentPassword.invalid &amp;&amp; currentPassword.touched"
+          >
+            <small *ngIf="currentPassword.errors?.required" class="text-danger"
+              >Current Password is Required</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="newPassword"
+            [class.text-danger]="newPassword.invalid &amp;&amp; newPassword.touched"
+            class="form-label"
+            >New Password <span class="text-danger">*</span></label
+          >
+          <input
+            type="password"
+            class="form-control"
+            name="newPassword"
+            #newPassword="ngModel"
+            [(ngModel)]="changePassword.newPassword"
+            [class.is-invalid]="newPassword.invalid &amp;&amp; newPassword.touched"
+            placeholder="Enter New Password"
+            required
+          />
+
+          <div *ngIf="newPassword.invalid &amp;&amp; newPassword.touched">
+            <small *ngIf="newPassword.errors?.required" class="text-danger"
+              >New Password is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="confirmPassword"
+            [class.text-danger]="confirmPassword.invalid &amp;&amp; confirmPassword.touched"
+            class="form-label"
+            >Confirm Password <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="confirmPassword"
+            #confirmPassword="ngModel"
+            [(ngModel)]="changePassword.confirmPassword"
+            [class.is-invalid]="confirmPassword.invalid &amp;&amp; confirmPassword.touched"
+            placeholder="Enter Confirm Password"
+            required
+          />
+
+          <div
+            *ngIf="confirmPassword.invalid &amp;&amp; confirmPassword.touched"
+          >
+            <small *ngIf="confirmPassword.errors?.required" class="text-danger"
+              >Confirm Password is Required</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-primary btn-rounded"
+        (click)="onSubmit()"
+      >
+        Change Password
+      </button>
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-danger btn-rounded"
+        (click)="closeModal()"
+      >
+        Cancel
+      </button>
+      <button
+        *ngIf="isLoading"
+        class="btn"
+        class="btn btn-primary btn-rounded"
+        disabled
+      >
+        Processing <span><i class="bx bx-loader bx-spin"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #upgradeAccountTemplate let-modal>
+  <div class="modal-header">
+    <div>
+      <h5 class="modal-title" id="exampleModalLabel">Upgrade Account</h5>
+      <!-- <p>
+        Use the form below to edit your password Information. Make sure to use
+        an accurate information.
+      </p> -->
+    </div>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <p>
+            To complete your transaction, please make a payment of ₦100,000 via
+            our secure payment platform:
+          </p>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: row; justify-content: center">
+        <div class="col-4">
+          <button class="btn btn-primary btn-rounded" (click)="closeModal2()">
+            Close Modal
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
