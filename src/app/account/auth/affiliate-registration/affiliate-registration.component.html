@@ -129,26 +129,23 @@
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="mb-3">
-                        <label for="email">First Name</label>
+                        <label for="firstName">First Name</label>
                         <input
-                          type="email"
+                          type="text"
                           class="form-control"
-                          id="email"
-                          formControlName="email"
+                          id="firstName"
+                          formControlName="firstName"
                           [ngClass]="{
-                            'is-invalid': submitted && f.email.errors
+                            'is-invalid': submitted && f.firstName.errors
                           }"
-                          placeholder="Enter email"
+                          placeholder="Enter First Name"
                         />
                         <div
-                          *ngIf="submitted && f.email.errors"
+                          *ngIf="submitted && f.firstName.errors"
                           class="invalid-feedback"
                         >
-                          <div *ngIf="f.email.errors.required">
-                            Email is required
-                          </div>
-                          <div *ngIf="f.email.errors.email">
-                            Email must be a valid email address
+                          <div *ngIf="f.firstName.errors.required">
+                            First Name is required
                           </div>
                         </div>
                       </div>
@@ -156,26 +153,23 @@
 
                     <div class="col-lg-6">
                       <div class="mb-3">
-                        <label for="email">Last Name</label>
+                        <label for="lastName">Last Name</label>
                         <input
-                          type="email"
+                          type="text"
                           class="form-control"
-                          id="email"
-                          formControlName="email"
+                          id="lastName"
+                          formControlName="lastName"
                           [ngClass]="{
-                            'is-invalid': submitted && f.email.errors
+                            'is-invalid': submitted && f.lastName.errors
                           }"
-                          placeholder="Enter email"
+                          placeholder="Enter Last Name"
                         />
                         <div
-                          *ngIf="submitted && f.email.errors"
+                          *ngIf="submitted && f.lastName.errors"
                           class="invalid-feedback"
                         >
-                          <div *ngIf="f.email.errors.required">
-                            Email is required
-                          </div>
-                          <div *ngIf="f.email.errors.email">
-                            Email must be a valid email address
+                          <div *ngIf="f.lastName.errors.required">
+                            Last Name is required
                           </div>
                         </div>
                       </div>
@@ -183,26 +177,23 @@
 
                     <div class="col-lg-6">
                       <div class="mb-3">
-                        <label for="email">Phone Number</label>
+                        <label for="phone">Phone Number</label>
                         <input
-                          type="email"
+                          type="phone"
                           class="form-control"
-                          id="email"
-                          formControlName="email"
+                          id="phone"
+                          formControlName="phone"
                           [ngClass]="{
-                            'is-invalid': submitted && f.email.errors
+                            'is-invalid': submitted && f.phone.errors
                           }"
-                          placeholder="Enter email"
+                          placeholder="Enter Phone Number"
                         />
                         <div
-                          *ngIf="submitted && f.email.errors"
+                          *ngIf="submitted && f.phone.errors"
                           class="invalid-feedback"
                         >
-                          <div *ngIf="f.email.errors.required">
-                            Email is required
-                          </div>
-                          <div *ngIf="f.email.errors.email">
-                            Email must be a valid email address
+                          <div *ngIf="f.phone.errors.required">
+                            Phone Number is required
                           </div>
                         </div>
                       </div>
@@ -237,26 +228,23 @@
 
                     <div class="col-lg-6">
                       <div class="mb-3">
-                        <label for="email">Create Password</label>
+                        <label for="password">Create Password</label>
                         <input
-                          type="email"
+                          type="password"
                           class="form-control"
-                          id="email"
-                          formControlName="email"
+                          id="password"
+                          formControlName="password"
                           [ngClass]="{
-                            'is-invalid': submitted && f.email.errors
+                            'is-invalid': submitted && f.password.errors
                           }"
-                          placeholder="Enter email"
+                          placeholder="Enter Password"
                         />
                         <div
-                          *ngIf="submitted && f.email.errors"
+                          *ngIf="submitted && f.password.errors"
                           class="invalid-feedback"
                         >
-                          <div *ngIf="f.email.errors.required">
-                            Email is required
-                          </div>
-                          <div *ngIf="f.email.errors.email">
-                            Email must be a valid email address
+                          <div *ngIf="f.password.errors.required">
+                            Password is required
                           </div>
                         </div>
                       </div>
@@ -264,26 +252,23 @@
 
                     <div class="col-lg-6">
                       <div class="mb-3">
-                        <label for="email">Confirm Password</label>
+                        <label for="confirmPassword">Confirm Password</label>
                         <input
                           type="password"
                           class="form-control"
-                          id="email"
-                          formControlName="email"
+                          id="confirmPassword"
+                          formControlName="confirmPassword"
                           [ngClass]="{
-                            'is-invalid': submitted && f.email.errors
+                            'is-invalid': submitted && f.confirmPassword.errors
                           }"
-                          placeholder="Enter email"
+                          placeholder="Confirm Password"
                         />
                         <div
-                          *ngIf="submitted && f.email.errors"
+                          *ngIf="submitted && f.confirmPassword.errors"
                           class="invalid-feedback"
                         >
-                          <div *ngIf="f.email.errors.required">
-                            Email is required
-                          </div>
-                          <div *ngIf="f.email.errors.email">
-                            Email must be a valid email address
+                          <div *ngIf="f.confirmPassword.errors.required">
+                            Confirm password is required
                           </div>
                         </div>
                       </div>
@@ -291,26 +276,23 @@
 
                     <div class="col-lg-12">
                       <div class="mb-3">
-                        <label for="email">Referral Code</label>
+                        <label for="referralCode">Referral Code</label>
                         <input
-                          type="password"
+                          type="text"
                           class="form-control"
-                          id="email"
-                          formControlName="email"
+                          id="referralCode"
+                          formControlName="referralCode"
                           [ngClass]="{
-                            'is-invalid': submitted && f.email.errors
+                            'is-invalid': submitted && f.referralCode.errors
                           }"
-                          placeholder="Enter email"
+                          placeholder="Enter Referral Code"
                         />
                         <div
-                          *ngIf="submitted && f.email.errors"
+                          *ngIf="submitted && f.referralCode.errors"
                           class="invalid-feedback"
                         >
-                          <div *ngIf="f.email.errors.required">
+                          <div *ngIf="f.email.errors.minLength">
                             Email is required
-                          </div>
-                          <div *ngIf="f.email.errors.email">
-                            Email must be a valid email address
                           </div>
                         </div>
                       </div>

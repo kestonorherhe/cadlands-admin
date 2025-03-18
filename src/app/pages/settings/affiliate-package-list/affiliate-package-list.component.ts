@@ -1,12 +1,5 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Router } from "@angular/router";
 import Swal from "sweetalert2";
 import { SettingsService } from "../settings.service";
 import { Observable } from "rxjs";
@@ -30,43 +23,50 @@ export class AffiliatePackageListComponent implements OnInit {
   isLoading = false;
 
   obj = {
+    id: null,
     packageName: null,
     description: null,
     default: false,
   };
 
-  propertySubType = {
-    name: null,
-    description: null,
+  packagePrice = {
+    amount: null,
   };
 
-  propertyTypes$: Observable<any>;
-  propertyType: any;
-  propertySubTypes$: Observable<any>;
-  tabType = "property-sub-type";
+  directSaleCommission = {
+    commission: null,
+  };
+
+  indirectSaleCommission = {
+    commission: null,
+  };
+
+  affiliatePackages$: Observable<any>;
+  affiliatePackage: any;
+  packagePrices$: Observable<any>;
+  directSaleCommissions$: Observable<any>;
+  indirectSaleCommissions$: Observable<any>;
+  tabType = "price-history";
   showDetail = false;
   constructor(
     private modalService: NgbModal,
-    private readonly _router: Router,
     private cdr: ChangeDetectorRef,
     private readonly settingsService: SettingsService
-  ) {
-    this.viewRecord = this.viewRecord.bind(this);
-  }
+  ) {}
 
   viewRecord(data: any) {
     console.log("we are editing ::", data);
     this.showDetail = true;
-    this.propertyType = data;
-    this.getPropertyType();
-    this.propertySubTypes$ = this.settingsService.propertySubTypes$;
+    this.affiliatePackage = data;
+    this.getAffiliatePackages();
+    this.packagePrices$ = this.settingsService.prices$;
     this.cdr.detectChanges();
   }
 
-  getPropertyType() {
+  getAffiliatePackages() {
     this.settingsService
-      .getAllPropertyTypes({
-        propertyTypeId: this.propertyType.id,
+      .getAllAffiliatePackages({
+        affiliatePackageId: this.affiliatePackage.id,
       })
       .subscribe(
         (response: any) => {
@@ -74,10 +74,18 @@ export class AffiliatePackageListComponent implements OnInit {
             "🚀 ~ MealTypeComponent ~ viewRecord ~ response:",
             response
           );
-          this.settingsService.setPropertySubTypes(
-            response?.data?.propertySubTypes
+          this.settingsService.setPackagePrices(response?.data?.prices);
+          this.settingsService.setDirectSaleCommissions(
+            response?.data?.directCommissions
           );
-          this.propertySubTypes$ = this.settingsService.propertySubTypes$;
+          this.settingsService.setIndirectSaleCommissions(
+            response?.data?.indirectCommissions
+          );
+          this.packagePrices$ = this.settingsService.prices$;
+          this.directSaleCommissions$ =
+            this.settingsService.directSaleCommissions$;
+          this.indirectSaleCommissions$ =
+            this.settingsService.indirectSaleCommissions$;
           this.cdr.detectChanges();
         },
         (error) => {
@@ -105,15 +113,15 @@ export class AffiliatePackageListComponent implements OnInit {
   }
 
   toggleTab(tabItem: string) {
-    if (tabItem === "property-sub-type")
-      this.propertySubTypes$ = this.settingsService.propertySubTypes$;
+    if (tabItem === "direct-sale-commission")
+      this.directSaleCommissions$ = this.settingsService.directSaleCommissions$;
     this.cdr.detectChanges();
     this.tabType = tabItem;
   }
 
   closeDetail() {
     this.showDetail = false;
-    this.propertyType = null;
+    this.affiliatePackage = null;
     this.cdr.detectChanges();
   }
 
@@ -124,8 +132,32 @@ export class AffiliatePackageListComponent implements OnInit {
       size: "lg",
     });
   }
+  async updateRecordModal(content: any) {
+    this.obj = this.affiliatePackage;
+    this.modalService.open(content, {
+      backdrop: "static",
+      centered: true,
+      size: "lg",
+    });
+  }
 
-  async showCreatePropertySubTypeModal(content: any) {
+  async showCreatePakagePriceModal(content: any) {
+    this.modalService.open(content, {
+      backdrop: "static",
+      centered: true,
+      size: "lg",
+    });
+  }
+
+  async showCreateDirectSaleCommissionModal(content: any) {
+    this.modalService.open(content, {
+      backdrop: "static",
+      centered: true,
+      size: "lg",
+    });
+  }
+
+  async showCreateIndirectSaleCommissionModal(content: any) {
     this.modalService.open(content, {
       backdrop: "static",
       centered: true,
@@ -139,66 +171,165 @@ export class AffiliatePackageListComponent implements OnInit {
       { label: "Profile", active: true },
     ];
 
-    this.getAllPropertyTypes();
+    this.getAllAffiliatePackages();
   }
 
-  getAllPropertyTypes() {
-    this.propertyTypes$ = this.settingsService.getAllPropertyTypes({});
+  getAllAffiliatePackages() {
+    this.affiliatePackages$ = this.settingsService.getAllAffiliatePackages({});
   }
 
   resetForm() {
     this.obj = {
+      id: null,
       packageName: null,
       description: null,
       default: false,
     };
-    this.propertySubType = {
-      name: null,
-      description: null,
+    this.packagePrice = {
+      amount: null,
+    };
+    this.directSaleCommission = {
+      commission: null,
+    };
+    this.indirectSaleCommission = {
+      commission: null,
     };
   }
 
   onSubmit() {
     this.isLoading = true;
-    this.settingsService.createPropertyType(this.obj).subscribe(
+    this.settingsService.createAffiliatePackage(this.obj).subscribe(
       (response: any) => {
         this.isLoading = false;
         Swal.fire(
           "Process Successful!",
-          "Property type successfully created!",
+          "Successfully created affiliate package!",
           "success"
         );
         this.modalService.dismissAll();
         this.resetForm();
-        this.getAllPropertyTypes();
+        this.getAllAffiliatePackages();
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to capture farmer", "error");
+        Swal.fire(
+          "Process Failed!",
+          "Failed to create affiliate package",
+          "error"
+        );
       }
     );
   }
-  onSubmitPropertySubType() {
+  onUpdate() {
     this.isLoading = true;
     const data = {
-      propertyTypeId: this.propertyType.id,
-      name: this.propertySubType.name,
+      id: this.obj.id,
+      packageName: this.obj.packageName,
+      description: this.obj.description,
+      default: this.obj.default,
     };
-    this.settingsService.createPropertySubType(data).subscribe(
+    this.settingsService.updateAffiliatePackage(data).subscribe(
       (response: any) => {
         this.isLoading = false;
         Swal.fire(
           "Process Successful!",
-          "Property sub-type successfully created!",
+          "Successfully updated affiliate package!",
           "success"
         );
         this.modalService.dismissAll();
         this.resetForm();
-        this.getPropertyType();
+        this.getAllAffiliatePackages();
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to capture farmer", "error");
+        Swal.fire(
+          "Process Failed!",
+          "Failed to update affiliate package",
+          "error"
+        );
+      }
+    );
+  }
+
+  onSubmitPackagePrice() {
+    this.isLoading = true;
+    const data = {
+      affiliatePackageId: this.affiliatePackage.id,
+      amount: this.packagePrice.amount,
+    };
+    this.settingsService.createPackagePrice(data).subscribe(
+      (response: any) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Successful!",
+          "Successfully updated package price!",
+          "success"
+        );
+        this.modalService.dismissAll();
+        this.resetForm();
+        this.getAffiliatePackages();
+      },
+      (error) => {
+        this.isLoading = false;
+        Swal.fire("Process Failed!", "Failed to update package price", "error");
+      }
+    );
+  }
+
+  onSubmitDirectSaleCommission() {
+    this.isLoading = true;
+    const data = {
+      affiliatePackageId: this.affiliatePackage.id,
+      commission: this.directSaleCommission.commission,
+    };
+    this.settingsService.createDirectSaleCommission(data).subscribe(
+      (response: any) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Successful!",
+          "Successfully updated direct sale commission!",
+          "success"
+        );
+        this.modalService.dismissAll();
+        this.resetForm();
+        this.getAffiliatePackages();
+      },
+      (error) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Failed!",
+          "Failed to update direct sale commission",
+          "error"
+        );
+      }
+    );
+  }
+
+  onSubmitIndirectSaleCommission() {
+    this.isLoading = true;
+    const data = {
+      affiliatePackageId: this.affiliatePackage.id,
+      commission: this.indirectSaleCommission.commission,
+    };
+    this.settingsService.createIndirectSaleCommission(data).subscribe(
+      (response: any) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Successful!",
+          "Successfully updated indirect sale commission!",
+          "success"
+        );
+        this.modalService.dismissAll();
+        this.resetForm();
+        this.getAffiliatePackages();
+      },
+      (error) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Failed!",
+          "Failed to update indirect sale commission",
+          "error"
+        );
       }
     );
   }

@@ -51,6 +51,13 @@ const routes: Routes = [
       import("./affiliate/affiliate.module").then((m) => m.AffiliateModule),
   },
   {
+    path: "sales-commission",
+    loadChildren: () =>
+      import("./sales-commission/sales-commission.module").then(
+        (m) => m.SalesCommissionModule
+      ),
+  },
+  {
     path: "settings",
     loadChildren: () =>
       import("./settings/settings.module").then((m) => m.SettingsModule),

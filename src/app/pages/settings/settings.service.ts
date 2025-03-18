@@ -28,6 +28,33 @@ export class SettingsService {
     this.propertySubTypesSubject.next(propertySubTypes);
   }
 
+  // pakage prices observable
+  private pricesSubject = new BehaviorSubject<any | []>([]);
+  get prices$() {
+    return this.pricesSubject.asObservable();
+  }
+  setPackagePrices(prices: any) {
+    this.pricesSubject.next(prices);
+  }
+
+  // direct sale commission observable
+  private directSaleCommissionsSubject = new BehaviorSubject<any | []>([]);
+  get directSaleCommissions$() {
+    return this.directSaleCommissionsSubject.asObservable();
+  }
+  setDirectSaleCommissions(directSaleCommissions: any) {
+    this.directSaleCommissionsSubject.next(directSaleCommissions);
+  }
+
+  // indirect sale commission observable
+  private indirectSaleCommissionsSubject = new BehaviorSubject<any | []>([]);
+  get indirectSaleCommissions$() {
+    return this.indirectSaleCommissionsSubject.asObservable();
+  }
+  setIndirectSaleCommissions(indirectSaleCommissions: any) {
+    this.indirectSaleCommissionsSubject.next(indirectSaleCommissions);
+  }
+
   //   gender
   createGender(data: any) {
     return this.httpService.post(`gender`, data);
@@ -99,6 +126,50 @@ export class SettingsService {
 
     return this.httpService.get(url);
   }
+  // affiliate package routes
+  createAffiliatePackage(data: any) {
+    return this.httpService.post(`affiliate-package`, data);
+  }
+
+  createPackagePrice(data: any) {
+    return this.httpService.post(
+      `affiliate-package/package-price`,
+      data
+    );
+  }
+
+  createDirectSaleCommission(data: any) {
+    return this.httpService.post(
+      `affiliate-package/direct-sale-commission`,
+      data
+    );
+  }
+
+  createIndirectSaleCommission(data: any) {
+    return this.httpService.post(
+      `affiliate-package/indirect-sale-commission`,
+      data
+    );
+  }
+
+  updateAffiliatePackage(data: any) {
+    return this.httpService.put(`affiliate-package`, data);
+  }
+
+  getAllAffiliatePackages(payload: { affiliatePackageId?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.affiliatePackageId) {
+      params.set("affiliate_package_id", payload.affiliatePackageId);
+    }
+
+    // Construct final URL
+    const url = `affiliate-package?${params.toString()}`;
+
+    return this.httpService.get(url);
+  }
 
   //   nationality
   createNegotiationStatus(data: any) {
@@ -143,7 +214,7 @@ export class SettingsService {
 
   getAllPaymentPlans(payload: { paymentPlanId?: string }) {
     // Initialize URLSearchParams
-    const params = new URLSearchParams()
+    const params = new URLSearchParams();
 
     // Add the availability parameter conditionally
     if (payload?.paymentPlanId) {

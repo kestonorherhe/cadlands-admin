@@ -4,15 +4,10 @@ import {
   UntypedFormGroup,
   Validators,
 } from "@angular/forms";
-
 import { AuthenticationService } from "../../../core/services/auth.service";
-import { AuthfakeauthenticationService } from "../../../core/services/authfake.service";
-
 import { OwlOptions } from "ngx-owl-carousel-o";
-import { ActivatedRoute, Router } from "@angular/router";
 import { first } from "rxjs/operators";
-
-import { environment } from "../../../../environments/environment";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-affiliate-registration",
@@ -25,10 +20,7 @@ import { environment } from "../../../../environments/environment";
 export class AffiliateRegistrationComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private authenticationService: AuthenticationService,
-    private authFackservice: AuthfakeauthenticationService
+    private authenticationService: AuthenticationService
   ) {}
   loginForm: UntypedFormGroup;
   submitted = false;
@@ -44,18 +36,15 @@ export class AffiliateRegistrationComponent implements OnInit {
   ngOnInit(): void {
     document.body.classList.add("auth-body-bg");
     this.loginForm = this.formBuilder.group({
-      email: [
-        "",
-        [Validators.required, Validators.email],
-      ],
-      password: ["", [Validators.required]],
+      firstName: [null, [Validators.required]],
+      lastName: [null, [Validators.required]],
+      phone: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
+      address: [null, []],
+      password: [null, [Validators.required, Validators.minLength(6)]],
+      confirmPassword: [null, [Validators.required, Validators.minLength(6)]],
+      referralCode: [null, [Validators.minLength(11)]],
     });
-
-    // reset login status
-    // this.authenticationService.logout();
-    // get return url from route parameters or default to '/'
-    // tslint:disable-next-line: no-string-literal
-    // this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "";
   }
 
   carouselOption: OwlOptions = {
@@ -80,7 +69,7 @@ export class AffiliateRegistrationComponent implements OnInit {
    * Form submit
    */
   onSubmit() {
-    this.showErr = false
+    this.showErr = false;
     this.isLoggingIn = true;
     this.submitted = true;
 
@@ -89,25 +78,16 @@ export class AffiliateRegistrationComponent implements OnInit {
       return;
     } else {
       this.authenticationService
-        .login(this.loginForm.value)
+        .affiliateRegistration(this.loginForm.value)
         .pipe(first())
         .subscribe(
           (data) => {
             this.isLoggingIn = false;
-            window.location.replace("/dashboard");
-            // if (data.verxid.status == 1) {
-            //   console.log("we are here!!!!");
-            //   // this.router.navigate([""]);
-            //   window.location.replace('');
-            // } else if (data.verxid.status == 0) {
-            //   console.log("error message ::", data.verxid.message)
-            //   this.error = data.verxid.message;
-            //   this.showErr = true;
-            // }
+            Swal.fire("success", "Registration successful");
           },
           (error) => {
             this.isLoggingIn = false;
-            console.log("error ::", error)
+            console.log("error ::", error);
             this.error = error ? error : "";
           }
         );

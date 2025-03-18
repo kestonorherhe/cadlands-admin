@@ -67,6 +67,21 @@ export class AuthenticationService {
         })
       );
   }
+  affiliateRegistration(credential) {
+    console.log("affiliate registration...");
+    return this.http
+      .post<any>(
+        `${environment.apiUrl}/admins/affiliate-registration`,
+        credential
+      )
+      .pipe(
+        map((user) => {
+          // login successful if there's a jwt token in the response
+          console.log("user__service__response ::", user);
+          return user;
+        })
+      );
+  }
 
   /**
    * Performs the register
