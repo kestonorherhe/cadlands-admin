@@ -1,27 +1,30 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Observable } from "rxjs";
-import { AffiliateService } from "../affiliate.service";
 import Swal from "sweetalert2";
+import { SalesCommissionService } from "../../sales-commission/sales-commission.service";
+import { AffiliateService } from "../affiliate.service";
 
 @Component({
   selector: "app-my-withdrawal",
   templateUrl: "./my-withdrawal.component.html",
   styleUrls: ["./my-withdrawal.component.scss"],
-  // providers: [AdvancedService, DecimalPipe],
 })
 export class MyWithdrawalComponent implements OnInit {
   isLoading = false;
   transactions$: Observable<any>;
+  withdrawals$: Observable<any>;
   affiliate: any;
 
   obj = {
     amount: null,
   };
+  activeBankDetails: any[] = [];
 
   constructor(
     private modalService: NgbModal,
-    private affiliateService: AffiliateService
+    private readonly affiliateService: AffiliateService,
+    private readonly salesCommissionService: SalesCommissionService
   ) {}
 
   edit(item: any) {}
@@ -53,25 +56,71 @@ export class MyWithdrawalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getProfileInfo();
-  }
+    this.getCommissions();
+    this.getMyWithdrawals();
 
-  getProfileInfo() {
-    this.affiliateService.getProfile().subscribe(
+    this.affiliateService.getAffiliateBanks().subscribe(
       (response: any) => {
         console.log(
-          "🚀 ~ MyProfileComponent ~ getFeatures ~ response:",
+          "🚀 ~ MyWithdrawalComponent ~ this.affiliateService.getAffiliateBanks ~ response:",
           response
         );
-        this.affiliate = response;
+        this.activeBankDetails = response.filter(
+          (account: any) => account.status == true
+        );
       },
       (error) => {
         console.log(
-          "🚀 ~ MyProfileComponent ~ this.affiliateService.getProfile ~ error:",
+          "🚀 ~ MyWithdrawalComponent ~ this.affiliateService.getAffiliateBanks ~ error:",
           error
         );
       }
     );
+  }
+
+  getCommissions() {
+    this.transactions$ = this.salesCommissionService.getMyCommissions({});
+  }
+
+  getMyWithdrawals() {
+    this.withdrawals$ = this.salesCommissionService.getMyWithdrawals({});
+  }
+
+  getPaidWithdrawals(data: any[]) {
+    const filteredWithdrawals = data.filter(
+      (item: any) => item.paymentStatus === "PAID"
+    );
+    return {
+      totalAmount: filteredWithdrawals.reduce(
+        (acc, item) => acc + Number(item.amount),
+        0
+      ),
+      count: filteredWithdrawals.length,
+    };
+  }
+
+  getPendingWithdrawals(data: any[]) {
+    const filteredWithdrawals = data.filter(
+      (item: any) => item.paymentStatus === "NOT_PAID"
+    );
+    return {
+      totalAmount: filteredWithdrawals.reduce(
+        (acc, item) => acc + Number(item.amount),
+        0
+      ),
+      count: filteredWithdrawals.length,
+    };
+  }
+
+  getPendingSales(data: any[]) {
+    const filteredSales = data.filter((item: any) => item.status === "PENDING");
+    this.obj.amount = Number(
+      filteredSales.reduce((acc, item) => acc + item.amount, 0)
+    );
+    return {
+      totalAmount: filteredSales.reduce((acc, item) => acc + item.amount, 0),
+      count: filteredSales.length,
+    };
   }
 
   resetForm() {
@@ -80,5 +129,49 @@ export class MyWithdrawalComponent implements OnInit {
     };
   }
 
-  onSubmit() {}
+  onSubmit() {
+    this.isLoading = true;
+    const withdrawalDto = {
+      amount: this.obj.amount,
+    };
+    this.salesCommissionService.createWithdrawal(withdrawalDto).subscribe(
+      (response: any) => {
+        this.isLoading = false;
+        Swal.fire({
+          text: "Feature was created successfully!",
+          icon: "success",
+          confirmButtonText: "Ok, got it!",
+          confirmButtonColor: "#1B84FF",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.modalService.dismissAll();
+            this.resetForm();
+            this.isLoading = false;
+            this.getCommissions();
+          }
+        });
+      },
+      (error) => {
+        console.log("🚀 ~ MyWithdrawalComponent ~ onSubmit ~ error:", error);
+        this.isLoading = false;
+        Swal.fire({
+          // text: `${
+          //   error.error.statusCode === 401
+          //     ? "User not authorized!"
+          //     : error
+          // }`,
+          text: `${error}`,
+          icon: "error",
+          confirmButtonText: "Ok, got it!",
+          confirmButtonColor: "#1B84FF",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.isLoading = false;
+            this.modalService.dismissAll();
+            this.resetForm();
+          }
+        });
+      }
+    );
+  }
 }

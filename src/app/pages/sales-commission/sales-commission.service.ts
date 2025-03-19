@@ -11,13 +11,6 @@ export class SalesCommissionService {
     private readonly envService: EnvService
   ) {}
 
-  // feature
-  // getSalesCommissions(): Observable<any> {
-  //   return this.http.get(
-  //     `${this.envService.httpService}/application-request/sales-commissions`
-  //   );
-  // }
-
   getSalesCommissions(payload: { status?: string }) {
     // Initialize URLSearchParams
     const params = new URLSearchParams();
@@ -52,24 +45,116 @@ export class SalesCommissionService {
     return this.http.get(url);
   }
 
-  getFeatureById(id: any): Observable<any> {
-    return this.http.get(`${this.envService.httpService}/feature/${id}`);
+  // createFeature(data: any) {
+  //   return this.http.post(`${this.envService.httpService}/feature`, data).pipe(
+  //     map((res: any) => {
+  //       console.log("create user ::", res);
+  //       return res.data;
+  //     })
+  //   );
+  // }
+
+  getMyCommissions(payload: { status?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.status) {
+      params.set("status", payload.status);
+    }
+
+    // Construct final URL
+    const url = `${
+      this.envService.httpService
+    }/application-request/my-commissions?${params.toString()}`;
+
+    return this.http.get(url);
   }
 
-  createFeature(data: any) {
-    return this.http.post(`${this.envService.httpService}/feature`, data).pipe(
-      map((res: any) => {
-        console.log("create user ::", res);
-        return res.data;
-      })
-    );
+  getWithdrawalRequests(payload: { status?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.status) {
+      params.set("status", payload.status);
+    }
+
+    // Construct final URL
+    const url = `${
+      this.envService.httpService
+    }/affiliate-commission-withdrawal?${params.toString()}`;
+
+    return this.http.get(url);
   }
 
-  updateFeature(data: any) {
-    return this.http.put(`${this.envService.httpService}/feature`, data).pipe(
-      map((res: any) => {
-        return res.data;
-      })
-    );
+  getMyWithdrawals(payload: { status?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.status) {
+      params.set("status", payload.status);
+    }
+
+    // Construct final URL
+    const url = `${
+      this.envService.httpService
+    }/affiliate-commission-withdrawal/my-withdrawals?${params.toString()}`;
+
+    return this.http.get(url);
+  }
+
+  createWithdrawal(data: any) {
+    return this.http
+      .post(
+        `${this.envService.httpService}/affiliate-commission-withdrawal`,
+        data
+      )
+      .pipe(
+        map((res: any) => {
+          console.log("create user ::", res);
+          return res.data;
+        })
+      );
+  }
+
+  updateWithdrawal(data: any) {
+    return this.http
+      .put(
+        `${this.envService.httpService}/affiliate-commission-withdrawal`,
+        data
+      )
+      .pipe(
+        map((res: any) => {
+          return res.data;
+        })
+      );
+  }
+
+  processWithdrawal(requestId: any) {
+    return this.http
+      .put(
+        `${this.envService.httpService}/affiliate-commission-withdrawal/process-application`,
+        { id: requestId }
+      )
+      .pipe(
+        map((res: any) => {
+          return res.data;
+        })
+      );
+  }
+
+  cancelWithdrawal(requestId: any) {
+    return this.http
+      .put(
+        `${this.envService.httpService}/affiliate-commission-withdrawal/cancel-withdrawal`,
+        { id: requestId }
+      )
+      .pipe(
+        map((res: any) => {
+          return res.data;
+        })
+      );
   }
 }

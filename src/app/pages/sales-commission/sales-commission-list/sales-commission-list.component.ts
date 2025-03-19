@@ -94,40 +94,40 @@ export class SalesCommissionListComponent implements OnInit {
       description: this.obj.description,
     };
 
-    this.salesCommissionService.createFeature(createRoomTypeDto).subscribe(
-      (response: any) => {
-        Swal.fire({
-          text: "Feature was created successfully!",
-          icon: "success",
-          confirmButtonText: "Ok, got it!",
-          confirmButtonColor: "#1B84FF",
-        }).then((res) => {
-          if (res.isConfirmed) {
-            this.modalService.dismissAll();
-            this.resetForm();
-            this.isLoading = false;
-            this.getFeatures();
-          }
-        });
-      },
-      (error) => {
-        Swal.fire({
-          text: `Failed to create feature! ${
-            error.error.statusCode === 401
-              ? "User not authorized!"
-              : error.error.message
-          }`,
-          icon: "error",
-          confirmButtonText: "Ok, got it!",
-          confirmButtonColor: "#1B84FF",
-        }).then((res) => {
-          if (res.isConfirmed) {
-            this.isLoading = false;
-            // this.getRoomTypes();
-          }
-        });
-      }
-    );
+    // this.salesCommissionService.createFeature(createRoomTypeDto).subscribe(
+    //   (response: any) => {
+    //     Swal.fire({
+    //       text: "Feature was created successfully!",
+    //       icon: "success",
+    //       confirmButtonText: "Ok, got it!",
+    //       confirmButtonColor: "#1B84FF",
+    //     }).then((res) => {
+    //       if (res.isConfirmed) {
+    //         this.modalService.dismissAll();
+    //         this.resetForm();
+    //         this.isLoading = false;
+    //         this.getFeatures();
+    //       }
+    //     });
+    //   },
+    //   (error) => {
+    //     Swal.fire({
+    //       text: `Failed to create feature! ${
+    //         error.error.statusCode === 401
+    //           ? "User not authorized!"
+    //           : error.error.message
+    //       }`,
+    //       icon: "error",
+    //       confirmButtonText: "Ok, got it!",
+    //       confirmButtonColor: "#1B84FF",
+    //     }).then((res) => {
+    //       if (res.isConfirmed) {
+    //         this.isLoading = false;
+    //         // this.getRoomTypes();
+    //       }
+    //     });
+    //   }
+    // );
   }
 
   onUpdate() {
@@ -139,39 +139,39 @@ export class SalesCommissionListComponent implements OnInit {
       description: this.obj.description,
     };
 
-    this.salesCommissionService.updateFeature(updateRoomTypeDto).subscribe(
-      (response: any) => {
-        Swal.fire({
-          text: "Feature was updated successfully!",
-          icon: "success",
-          confirmButtonText: "Ok, got it!",
-          confirmButtonColor: "#1B84FF",
-        }).then((res) => {
-          if (res.isConfirmed) {
-            this.modalService.dismissAll();
-            this.resetForm();
-            this.isLoading = false;
-            this.getFeatures();
-          }
-        });
-      },
-      (error) => {
-        Swal.fire({
-          text: `Failed to update feature! ${
-            error.error.statusCode === 401
-              ? "User not authorized!"
-              : error.error.message
-          }`,
-          icon: "error",
-          confirmButtonText: "Ok, got it!",
-          confirmButtonColor: "#1B84FF",
-        }).then((res) => {
-          if (res.isConfirmed) {
-            this.isLoading = false;
-            // this.getRoomTypes();
-          }
-        });
-      }
-    );
+    // this.salesCommissionService.updateFeature(updateRoomTypeDto).subscribe(
+    //   (response: any) => {
+    //     Swal.fire({
+    //       text: "Feature was updated successfully!",
+    //       icon: "success",
+    //       confirmButtonText: "Ok, got it!",
+    //       confirmButtonColor: "#1B84FF",
+    //     }).then((res) => {
+    //       if (res.isConfirmed) {
+    //         this.modalService.dismissAll();
+    //         this.resetForm();
+    //         this.isLoading = false;
+    //         this.getFeatures();
+    //       }
+    //     });
+    //   },
+    //   (error) => {
+    //     Swal.fire({
+    //       text: `Failed to update feature! ${
+    //         error.error.statusCode === 401
+    //           ? "User not authorized!"
+    //           : error.error.message
+    //       }`,
+    //       icon: "error",
+    //       confirmButtonText: "Ok, got it!",
+    //       confirmButtonColor: "#1B84FF",
+    //     }).then((res) => {
+    //       if (res.isConfirmed) {
+    //         this.isLoading = false;
+    //         // this.getRoomTypes();
+    //       }
+    //     });
+    //   }
+    // );
   }
 }

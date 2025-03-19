@@ -27,7 +27,23 @@
           <div class="media">
             <div class="media-body">
               <p class="text-muted fs-5 fw-medium">Pending Withdrawal</p>
-              <h2 class="mb-0 text-danger">NGN {{ 0 | number }}</h2>
+              <h2 class="mb-0 text-danger">
+                NGN
+                {{
+                  getPendingWithdrawals(
+                    (withdrawals$ | async)?.data?.withdrawals || []
+                  )?.totalAmount ?? 0 | number
+                }}
+              </h2>
+
+              <h6 class="mb-0 mt-2">
+                Total Requests:
+                {{
+                  getPendingWithdrawals(
+                    (withdrawals$ | async)?.data?.withdrawals || []
+                  )?.count ?? 0 | number
+                }}
+              </h6>
             </div>
           </div>
         </div>
@@ -39,19 +55,51 @@
           <div class="media">
             <div class="media-body">
               <p class="text-muted fs-5 fw-medium">Paid Withdrawal</p>
-              <h2 class="mb-0 text-success">NGN {{ 0 | number }}</h2>
+              <h2 class="mb-0 text-success">
+                NGN
+                {{
+                  getPaidWithdrawals(
+                    (withdrawals$ | async)?.data?.withdrawals || []
+                  )?.totalAmount | number
+                }}
+              </h2>
+
+              <h6 class="mb-0 mt-2">
+                Total Requests:
+                {{
+                  getPaidWithdrawals(
+                    (withdrawals$ | async)?.data?.withdrawals || []
+                  )?.count | number
+                }}
+              </h6>
             </div>
           </div>
         </div>
       </div>
     </div>
+    
     <div class="col-md-3" style="width: 25% !important">
       <div class="card mini-stats-wid">
         <div class="card-body">
           <div class="media">
             <div class="media-body">
               <p class="text-muted fs-5 fw-medium">Total Amount Withdrawable</p>
-              <h2 class="mb-0 text-info">NGN {{ 0 | number }}</h2>
+              <h2 class="mb-0 text-info">
+                NGN
+                {{
+                  getPendingSales(
+                    (transactions$ | async)?.data?.affiliateCommissions || []
+                  ).totalAmount | number
+                }}
+              </h2>
+              <h6 class="mb-0 mt-2">
+                Total Commission:
+                {{
+                  getPendingSales(
+                    (transactions$ | async)?.data?.affiliateCommissions || []
+                  ).count | number
+                }}
+              </h6>
             </div>
           </div>
         </div>
@@ -100,7 +148,7 @@
             >
             <br />
             <p style="font-size: 14px">
-              {{ affiliate?.nok[0]?.title || "---" }}
+              {{ activeBankDetails[0]?.bankName || "---" }}
             </p>
           </div>
         </div>
@@ -111,7 +159,7 @@
             >
             <br />
             <p style="font-size: 14px">
-              {{ affiliate?.nok[0]?.firstName }}
+              {{ activeBankDetails[0]?.accountNumber || "---" }}
             </p>
           </div>
         </div>
@@ -122,7 +170,7 @@
             >
             <br />
             <p style="font-size: 14px">
-              {{ affiliate?.nok[0]?.lastName }}
+              {{ activeBankDetails[0]?.accountName || "---" }}
             </p>
           </div>
         </div>
@@ -144,48 +192,111 @@
               <p style="font-size: 1rem">This list all withdrawal requests.</p>
             </div>
 
-            <div class="table-responsive">
+            <div class="table-responsive" style="margin-bottom: 5rem;">
               <table class="table align-middle gs-0 gy-4">
                 <thead>
                   <tr class="fw-bolder text-white bg-primary">
                     <th
                       class="min-w-10px text-gray-900 text-end text-center"
                     ></th>
-                    <th class="min-w-250px text-gray-900">Feature</th>
-                    <th class="min-w-300px text-gray-900">Description</th>
-                    <th class="min-w-150px text-gray-900">Status</th>
-                    <th class="min-w-150px text-gray-900">Created At</th>
+                    <th class="min-w-250px text-gray-900">Date</th>
+                    <th class="min-w-250px text-gray-900">Narration</th>
+                    <th class="min-w-300px text-gray-900 text-center">Amount</th>
+                    <th class="min-w-150px text-gray-900 text-center">Status</th>
+                    <th class="min-w-150px text-gray-900 text-center">Payment Status</th>
+                    <th class="min-w-150px text-gray-900 text-center">Payment Date</th>
                     <th class="min-w-100px text-gray-900"></th>
                   </tr>
                 </thead>
-                <tbody>
-                  <ng-container *ngIf="(transactions$ | async)?.data != null">
-                    <tr *ngFor="let item of (transactions$ | async)?.data">
+                <tbody style="margin-bottom: 3rem;">
+                  <ng-container
+                    *ngIf="(withdrawals$ | async)?.data?.withdrawals != null"
+                  >
+                    <tr
+                      *ngFor="
+                        let item of (withdrawals$ | async)?.data?.withdrawals
+                      "
+                    >
                       <td class="text-center">
                         {{ item.id }}
                       </td>
                       <td>
-                        {{ item.name }}
-                      </td>
-                      <td>
-                        {{ item.description }}
-                      </td>
-                      <td>
-                        <span class="badge badge-light-primary fs-7 fw-bold"
-                          >Active</span
-                        >
-                      </td>
-                      <td>
                         {{ item.createdAt | date }}
                       </td>
-                      <td class="text-end">
-                        <a
-                          (click)="edit(item)"
-                          class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                        >
-                          View
-                        </a>
+                      <td>
+                        {{ item.narration }}
                       </td>
+                      <td class="text-center">
+                        {{ item.amount | number }}
+                      </td>
+                      <td class="text-center">
+                        <span class="fs-7 fw-bold">{{ item.status }}</span>
+                      </td>
+                      <td class="text-center">
+                        <span class="fs-7 fw-bold">{{
+                          item.paymentStatus
+                        }}</span>
+                      </td>
+                      <td class="text-center">
+                        {{ item.paymentDate | date }}
+                      </td>
+
+                      <!-- <td class="text-end">
+                        <div class="dropdown d-inline-block" ngbDropdown>
+                          <button
+                            type="button"
+                            class="btn header-item"
+                            ngbDropdownToggle
+                            id="page-header-user-dropdown"
+                            style="
+                              display: flex;
+                              flex-direction: row;
+                              align-items: center;
+                            "
+                          >
+                            <i
+                              class="bx bx-pen"
+                              style="color: #000; font-size: 16px"
+                            ></i>
+                            <span
+                              class="d-none d-xl-inline-block ms-1"
+                              style="
+                                color: #000;
+                                font-size: 14px;
+                                font-weight: 500;
+                              "
+                              >Action</span
+                            >
+                            <i
+                              class="mdi mdi-chevron-down d-none d-xl-inline-block"
+                              style="color: #000; font-size: 15px"
+                            ></i>
+                          </button>
+                          <div
+                            class="dropdown-menu dropdown-menu-end"
+                            ngbDropdownMenu
+                          >
+                            <a
+                              class="dropdown-item"
+                              routerLink="/clients/client-profile"
+                              ><i
+                                class="bx bx-check-square font-size-16 text-success align-middle me-1"
+                              ></i>
+                              Approve</a
+                            >
+                            <div class="dropdown-divider"></div>
+                            <a
+                              class="dropdown-item text-danger"
+                              href="javascript: void(0);"
+                              (click)="edit(item)"
+                              ><i
+                                class="bx bx-x-square font-size-16 text-danger align-middle me-1 text-danger"
+                              ></i>
+                              Cancel</a
+                            >
+                          </div>
+                        </div>
+                      </td> -->
                     </tr>
                   </ng-container>
                 </tbody>
@@ -224,7 +335,7 @@
             >Bank Name <span class="text-danger">*</span></label
           >
           <br />
-          GT Bank
+          {{ activeBankDetails[0]?.bankName }}
         </div>
       </div>
 
@@ -234,7 +345,7 @@
             >Account Name <span class="text-danger">*</span></label
           >
           <br />
-          GT Bank
+          {{ activeBankDetails[0]?.accountName }}
         </div>
       </div>
 
@@ -244,7 +355,7 @@
             >Account Number <span class="text-danger">*</span></label
           >
           <br />
-          GT Bank
+          {{ activeBankDetails[0]?.accountNumber }}
         </div>
       </div>
 
@@ -265,6 +376,7 @@
             [class.is-invalid]="amount.invalid &amp;&amp; amount.touched"
             placeholder="Enter Withdrawal Amount"
             required
+            disabled
           />
 
           <div *ngIf="amount.invalid &amp;&amp; amount.touched">
@@ -281,7 +393,7 @@
         class="btn btn-primary btn-rounded"
         (click)="onSubmit()"
       >
-        Change Password
+        Make Withdrawal
       </button>
       <button
         *ngIf="!isLoading"
