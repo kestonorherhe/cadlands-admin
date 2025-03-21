@@ -10,9 +10,7 @@
             <p style="font-size: 1rem">List available features.</p>
           </div>
 
-          <div
-            class="col-6"
-          >
+          <div class="col-6">
             <button
               class="btn btn-primary btn-rounded text-right"
               style="
@@ -26,8 +24,11 @@
               <span style="margin-left: 6px">Upgrade Account</span>
             </button>
 
-            <p class="text-primary" style="float: right; margin-right: 2rem; margin-top: 0.5rem;">
-              <strong>Referral Code:</strong> {{ affiliate.referralCode }}
+            <p
+              class="text-primary"
+              style="float: right; margin-right: 2rem; margin-top: 0.5rem"
+            >
+              <strong>Referral Code:</strong> {{ affiliate?.referralCode }}
             </p>
           </div>
         </div>
@@ -1012,8 +1013,19 @@
 
       <div style="display: flex; flex-direction: row; justify-content: center">
         <div class="col-4">
-          <button class="btn btn-primary btn-rounded" (click)="closeModal2()">
-            Close Modal
+          <button
+            *ngIf="!submittingUpgradeRequest"
+            class="btn btn-primary btn-rounded"
+            (click)="upgradeAccount()"
+          >
+            Upgrade Account
+          </button>
+          <button
+            *ngIf="submittingUpgradeRequest"
+            class="btn btn-primary btn-rounded"
+            (click)="upgradeAccount()"
+          >
+            Please wait...
           </button>
         </div>
       </div>

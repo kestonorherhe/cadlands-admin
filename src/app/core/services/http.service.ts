@@ -15,10 +15,12 @@ export class HttpService {
     let errorMessage = "An error occurred";
     if (error.error instanceof ErrorEvent) {
       // Client-side error
-      errorMessage = `Client-side error: ${error.error.message}`;
+      // errorMessage = `Client-side error: ${error.error.message}`;
+      errorMessage = `Client-side error: ${error}`;
     } else {
       // Server-side error
-      errorMessage = `Server-side error: ${error.status} - ${error.error.message}`;
+      // errorMessage = `Server-side error: ${error.status} - ${error.error.message}`;
+      errorMessage = `${error}`;
     }
     console.error(errorMessage);
     return throwError(errorMessage);

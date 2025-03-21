@@ -51,6 +51,11 @@ const routes: Routes = [
       import("./affiliate/affiliate.module").then((m) => m.AffiliateModule),
   },
   {
+    path: "subscription",
+    loadChildren: () =>
+      import("./subscription/subscription.module").then((m) => m.SubscriptionModule),
+  },
+  {
     path: "sales-commission",
     loadChildren: () =>
       import("./sales-commission/sales-commission.module").then(

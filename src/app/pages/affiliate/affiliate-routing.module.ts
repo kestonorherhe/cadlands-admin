@@ -8,6 +8,7 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { MyWithdrawalComponent } from './my-withdrawal/my-withdrawal.component';
 import { MyReferralsComponent } from './my-referrals/my-referrals.component';
 import { MySalesHistoryComponent } from './my-sales-history/my-sales-history.component';
+import { MySubscriptionComponent } from './my-subscription/my-subscription.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: "my-sales-history",
     component: MySalesHistoryComponent,
+  },
+  {
+    path: "my-subscriptions",
+    component: MySubscriptionComponent,
   },
   {
     path: ":id",

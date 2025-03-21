@@ -1,0 +1,255 @@
+<div class="container-fluid">
+  <app-loader></app-loader>
+  <!-- start page title -->
+  <div class="row">
+    <div class="col-12">
+      <div
+        class="page-title-box d-flex align-items-center justify-content-between"
+      >
+        <div>
+          <h4 class="mb-0 font-size-18">My Subscriptions</h4>
+          <p class="font-size-15">Overview of my subscription history</p>
+        </div>
+        <div class="page-title-right">
+          <ol class="breadcrumb m-0">
+            <!-- <li class="breadcrumb-item active">Welcome to Dashboard</li> -->
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end page title -->
+
+  <div class="row">
+    <div class="col-md-3" style="width: 25% !important">
+      <div class="card mini-stats-wid">
+        <div class="card-body">
+          <div class="media">
+            <div class="media-body">
+              <p class="text-muted fs-5 fw-medium">Total Subscription Amount</p>
+              <h2 class="mb-0">
+                NGN
+                {{
+                  getTotalAmount(
+                    (subscriptions$ | async)?.data?.affiliateCommissions || []
+                  ).totalAmount | number
+                }}
+              </h2>
+              <h6 class="mb-0 mt-2">
+                Total Subscriptions:
+                {{
+                  getTotalAmount(
+                    (subscriptions$ | async)?.data?.affiliateCommissions || []
+                  ).count | number
+                }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card" style="box-shadow: 0 0 3px #cecbcb">
+        <div class="card-body">
+          <ul
+            ngbNav
+            #nav1="ngbNav"
+            [activeId]="1"
+            class="nav-pills bg-light rounded"
+          >
+            <li [ngbNavItem]="1">
+              <a ngbNavLink>Subscription Request History</a>
+              <ng-template ngbNavContent>
+                <ngx-simplebar style="height: 250px">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row mt-4 mb-2">
+                        <h4 class="text-primary" style="font-weight: bold">
+                          Subscription Request History
+                        </h4>
+                      </div>
+                      <p style="font-size: 1rem">
+                        My subscription request history.
+                      </p>
+                    </div>
+
+                    <div class="table-responsive" style="margin-bottom: 5rem">
+                      <table class="table align-middle gs-0 gy-4">
+                        <thead>
+                          <tr class="fw-bolder text-white bg-primary">
+                            <th
+                              class="min-w-10px text-gray-900 text-end text-center"
+                            ></th>
+                            <th class="min-w-250px text-gray-900">Date</th>
+                            <th class="min-w-250px text-gray-900">Narration</th>
+                            <th class="min-w-300px text-gray-900 text-center">
+                              Amount
+                            </th>
+                            <th class="min-w-150px text-gray-900 text-center">
+                              Status
+                            </th>
+                            <th class="min-w-150px text-gray-900 text-center">
+                              Payment Status
+                            </th>
+                            <th class="min-w-150px text-gray-900 text-center">
+                              Payment Date
+                            </th>
+                            <th class="min-w-100px text-gray-900"></th>
+                          </tr>
+                        </thead>
+                        <tbody style="margin-bottom: 3rem">
+                          <ng-container
+                            *ngIf="
+                              (subscriptionRequests$ | async)?.data
+                                ?.subscriptionRequests != null
+                            "
+                          >
+                            <tr
+                              *ngFor="
+                                let item of (subscriptionRequests$ | async)
+                                  ?.data?.subscriptionRequests
+                              "
+                            >
+                              <td class="text-center">
+                                {{ item.id }}
+                              </td>
+                              <td>
+                                {{ item.createdAt | date }}
+                              </td>
+                              <td>
+                                {{ item.narration }}
+                              </td>
+                              <td class="text-center">
+                                {{ item.amount | number }}
+                              </td>
+                              <td class="text-center">
+                                <span class="fs-7 fw-bold">{{
+                                  item.approvalStatus
+                                }}</span>
+                              </td>
+                              <td class="text-center">
+                                <span class="fs-7 fw-bold">{{
+                                  item.paymentStatus
+                                }}</span>
+                              </td>
+                              <td class="text-center">
+                                {{ item.paymentDate | date }}
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </ngx-simplebar>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+              <a ngbNavLink>Subscription History</a>
+              <ng-template ngbNavContent>
+                <ngx-simplebar style="height: 250px">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row mt-4 mb-2">
+                        <h4 class="text-primary" style="font-weight: bold">
+                          Subscription History
+                        </h4>
+                      </div>
+                      <p style="font-size: 1rem">My subscription history.</p>
+                    </div>
+
+                    <div class="table-responsive" style="margin-bottom: 5rem">
+                      <table class="table align-middle gs-0 gy-4">
+                        <thead>
+                          <tr class="fw-bolder text-white bg-primary">
+                            <th
+                              class="min-w-10px text-gray-900 text-end text-center"
+                            ></th>
+                            <th class="min-w-250px text-gray-900">Date</th>
+                            <th class="min-w-250px text-gray-900 text-center">
+                              Subscription Type
+                            </th>
+                            <th class="min-w-250px text-gray-900">Package</th>
+                            <th class="min-w-250px text-gray-900">Affiliate</th>
+                            <th class="min-w-250px text-gray-900">Phone</th>
+                            <th class="min-w-300px text-gray-900 text-center">
+                              Amount
+                            </th>
+                            <th class="min-w-300px text-gray-900 text-center">
+                              Start Date
+                            </th>
+                            <th class="min-w-300px text-gray-900 text-center">
+                              End Date
+                            </th>
+                            <th class="min-w-150px text-gray-900 text-center">
+                              Subscription Status
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody style="margin-bottom: 3rem">
+                          <ng-container
+                            *ngIf="
+                              (subscriptions$ | async)?.data?.subscriptions !=
+                              null
+                            "
+                          >
+                            <tr
+                              *ngFor="
+                                let item of (subscriptions$ | async)?.data
+                                  ?.subscriptions
+                              "
+                            >
+                              <td class="text-center">
+                                {{ item.id }}
+                              </td>
+                              <td>
+                                {{ item.createdAt | date }}
+                              </td>
+                              <td class="text-center">
+                                {{ item.subscriptionType }}
+                              </td>
+                              <td>
+                                {{ item.affiliatePackage?.packageName }}
+                              </td>
+                              <td>
+                                {{ item?.affiliate?.firstName }}
+                                {{ item?.affiliate?.lastName }}
+                              </td>
+                              <td>
+                                {{ item?.affiliate?.phone }}
+                              </td>
+                              <td class="text-center">
+                                {{
+                                  (item.currentPrice?.amount | number) ?? "---"
+                                }}
+                              </td>
+                              <td class="text-center">
+                                {{ item?.startDate | date }}
+                              </td>
+                              <td class="text-center">
+                                {{ item?.endDate | date }}
+                              </td>
+                              <td class="text-center">
+                                <span class="fs-7 fw-bold">{{
+                                  item.subscriptionStatus
+                                }}</span>
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </ngx-simplebar>
+              </ng-template>
+            </li>
+          </ul>
+          <div [ngbNavOutlet]="nav1" class="mt-4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

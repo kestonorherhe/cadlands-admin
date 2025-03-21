@@ -48,4 +48,70 @@ export class AffiliateService {
 
     return this.httpService.get(url);
   }
+  upgradeAccount() {
+    return this.httpService.post(`subscription-request/upgrade-account`, {});
+  }
+
+  getAllSubscriptionRequests(payload: {
+    approvalStatus?: string;
+    paymentStatus?: string;
+  }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.approvalStatus) {
+      params.set("approval_status", payload.approvalStatus);
+    }
+    if (payload?.paymentStatus) {
+      params.set("payment_status", payload.paymentStatus);
+    }
+
+    // Construct final URL
+    const url = `subscription-request?${params.toString()}`;
+
+    return this.httpService.get(url);
+  }
+
+  getAllSubscriptions(payload: {
+    approvalStatus?: string;
+    paymentStatus?: string;
+  }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.approvalStatus) {
+      params.set("approval_status", payload.approvalStatus);
+    }
+    if (payload?.paymentStatus) {
+      params.set("payment_status", payload.paymentStatus);
+    }
+
+    // Construct final URL
+    const url = `subscription?${params.toString()}`;
+
+    return this.httpService.get(url);
+  }
+
+  getMySubscriptionRequests() {
+    return this.httpService.get(
+      `subscription-request/my-subscription-requests`
+    );
+  }
+  getMySubscriptions() {
+    return this.httpService.get(`subscription/my-subscriptions`);
+  }
+
+  confirmPayment(requestId: number) {
+    return this.httpService.put(`subscription-request/confirm-payment`, {
+      id: requestId,
+    });
+  }
+
+  cancelRequest(requestId: number) {
+    return this.httpService.put(`subscription-request/cancel-request`, {
+      id: requestId,
+    });
+  }
 }

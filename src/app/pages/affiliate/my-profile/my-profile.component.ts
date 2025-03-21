@@ -11,6 +11,7 @@ import { AffiliateService } from "../affiliate.service";
 export class MyProfileComponent implements OnInit {
   affiliate: any;
   isLoading = false;
+  submittingUpgradeRequest = false;
   isAddingBank = false;
   titleList = [{ name: "Mr." }, { name: "Mrs." }];
   countryList = [];
@@ -187,6 +188,62 @@ export class MyProfileComponent implements OnInit {
     //     });
     //   }
     // );
+  }
+
+  upgradeAccount() {
+    Swal.fire({
+      icon: "warning",
+      text: "Are you sure you want to submit an upgrade account request?",
+      showDenyButton: true,
+      allowOutsideClick: false,
+      confirmButtonText: "Yes, submit request!",
+      confirmButtonColor: "#1B84FF",
+      denyButtonText: `No, cancel`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.upgradeAccountFn();
+      }
+    });
+  }
+
+  upgradeAccountFn() {
+    this.submittingUpgradeRequest = true;
+
+    this.affiliateService.upgradeAccount().subscribe(
+      (response: any) => {
+        Swal.fire({
+          text: "Account upgrate request was created successfully!",
+          icon: "success",
+          confirmButtonText: "Ok, got it!",
+          confirmButtonColor: "#1B84FF",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.modalService.dismissAll();
+            this.submittingUpgradeRequest = false;
+            // this.resetForm();
+            // this.getFeatures();
+          }
+        });
+      },
+      (error) => {
+        console.log(
+          "🚀 ~ MyProfileComponent ~ upgradeAccountFn ~ error:",
+          error
+        );
+        Swal.fire({
+          text: `${error}`,
+          icon: "error",
+          confirmButtonText: "Ok, got it!",
+          confirmButtonColor: "#1B84FF",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.submittingUpgradeRequest = false;
+            // this.getRoomTypes();
+          }
+        });
+      }
+    );
   }
 
   addBank() {

@@ -1,0 +1,97 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="row p-4">
+          <div class="col-6">
+            <h4 class="card-title" style="padding: 0px; font-size: 1.5rem">
+              All Subscriptions
+            </h4>
+            <p style="font-size: 1rem">List all subscriptions.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-12">
+              <!-- search field goes here -->
+            </div>
+          </div>
+
+          <div class="table-responsive" style="max-width: 100%">
+            <table class="table align-middle gs-0 gy-4">
+              <thead>
+                <tr class="fw-bolder text-white bg-primary">
+                  <th
+                    class="min-w-10px text-gray-900 text-end text-center"
+                  ></th>
+                  <th class="min-w-250px text-gray-900">Date</th>
+                  <th class="min-w-250px text-gray-900 text-center">
+                    Subscription Type
+                  </th>
+                  <th class="min-w-250px text-gray-900">Package</th>
+                  <th class="min-w-250px text-gray-900">Affiliate</th>
+                  <th class="min-w-250px text-gray-900">Phone</th>
+                  <th class="min-w-300px text-gray-900 text-center">Amount</th>
+                  <th class="min-w-300px text-gray-900 text-center">
+                    Start Date
+                  </th>
+                  <th class="min-w-300px text-gray-900 text-center">
+                    End Date
+                  </th>
+                  <th class="min-w-150px text-gray-900 text-center">
+                    Subscription Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody style="margin-bottom: 3rem">
+                <ng-container
+                  *ngIf="(subscriptions$ | async)?.data?.subscriptions != null"
+                >
+                  <tr
+                    *ngFor="
+                      let item of (subscriptions$ | async)?.data?.subscriptions
+                    "
+                  >
+                    <td class="text-center">
+                      {{ item.id }}
+                    </td>
+                    <td>
+                      {{ item.createdAt | date }}
+                    </td>
+                    <td class="text-center">
+                      {{ item.subscriptionType }}
+                    </td>
+                    <td>
+                      {{ item.affiliatePackage?.packageName }}
+                    </td>
+                    <td>
+                      {{ item?.affiliate?.firstName }}
+                      {{ item?.affiliate?.lastName }}
+                    </td>
+                    <td>
+                      {{ item?.affiliate?.phone }}
+                    </td>
+                    <td class="text-center">
+                      {{ (item.currentPrice?.amount | number) ?? "---" }}
+                    </td>
+                    <td class="text-center">
+                      {{ item?.startDate | date }}
+                    </td>
+                    <td class="text-center">
+                      {{ item?.endDate | date }}
+                    </td>
+                    <td class="text-center">
+                      <span class="fs-7 fw-bold">{{
+                        item.subscriptionStatus
+                      }}</span>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
