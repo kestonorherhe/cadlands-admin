@@ -1,39 +1,43 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import Swal from "sweetalert2";
-import { AffiliateService } from "../../affiliate/affiliate.service";
+import { SalesCommissionService } from "../../sales-commission/sales-commission.service";
 
 @Component({
-  selector: "app-pending-subscription-request-list",
-  templateUrl: "./pending-subscription-request-list.component.html",
-  styleUrls: ["./pending-subscription-request-list.component.scss"],
+  selector: "app-pending-withdrawal-request-list",
+  templateUrl: "./pending-withdrawal-request-list.component.html",
+  styleUrls: ["./pending-withdrawal-request-list.component.scss"],
 })
-export class PendingSubscriptionRequestListComponent implements OnInit {
-  subscriptionRequests$: Observable<any>;
+export class PendingWithdrawalRequestListComponent implements OnInit {
+  withdrawalRequests$: Observable<any>;
   isLoading = false;
 
   constructor(
-    private readonly affiliateService: AffiliateService
+    private readonly salesCommissionService: SalesCommissionService
   ) {}
 
   ngOnInit(): void {
-    this.getAllSubscriptionRequests();
+    this.getAllWithdrawalRequest();
   }
 
-  getAllSubscriptionRequests() {
-    this.subscriptionRequests$ =
-      this.affiliateService.getAllSubscriptionRequests({
-        approvalStatus: "Pending",
+  getAllWithdrawalRequest() {
+    this.withdrawalRequests$ =
+      this.salesCommissionService.getAllBonusWithdrawalRequests({
+        status: "Pending",
       });
   }
 
   approveRequest(item: any) {
+    console.log(
+      "🚀 ~ PendingWithdrawalRequestListComponent ~ approveRequest ~ item:",
+      item
+    );
     Swal.fire({
       icon: "warning",
-      text: "Are you sure you want to confirm payment and approve this subscription request?",
+      text: "Are you sure you want to approve this withdrawal request and make payment?",
       showDenyButton: true,
       allowOutsideClick: false,
-      confirmButtonText: "Yes, confirm & approve!",
+      confirmButtonText: "Yes, approve & pay!",
       confirmButtonColor: "#1B84FF",
       denyButtonText: `No, return`,
     }).then((result) => {
@@ -47,17 +51,17 @@ export class PendingSubscriptionRequestListComponent implements OnInit {
   approveRequestFn(requestId: number) {
     this.isLoading = true;
 
-    this.affiliateService.confirmPayment(requestId).subscribe(
+    this.salesCommissionService.processBonusWithdrawal(requestId).subscribe(
       (response: any) => {
         Swal.fire({
-          text: "Subscription request was approved successfully!",
+          text: "Process successful!",
           icon: "success",
           confirmButtonText: "Ok, got it!",
           confirmButtonColor: "#1B84FF",
         }).then((res) => {
           if (res.isConfirmed) {
             this.isLoading = false;
-            this.getAllSubscriptionRequests();
+            this.getAllWithdrawalRequest();
           }
         });
       },
@@ -100,27 +104,23 @@ export class PendingSubscriptionRequestListComponent implements OnInit {
   cancelRequestFn(requestId: number) {
     this.isLoading = true;
 
-    this.affiliateService.cancelRequest(requestId).subscribe(
+    this.salesCommissionService.cancelBonusWithdrawal(requestId).subscribe(
       (response: any) => {
         Swal.fire({
-          text: "Feature was created successfully!",
+          text: "Process successful!",
           icon: "success",
           confirmButtonText: "Ok, got it!",
           confirmButtonColor: "#1B84FF",
         }).then((res) => {
           if (res.isConfirmed) {
             this.isLoading = false;
-            this.getAllSubscriptionRequests();
+            this.getAllWithdrawalRequest();
           }
         });
       },
       (error) => {
         Swal.fire({
-          text: `Failed to create feature! ${
-            error.error.statusCode === 401
-              ? "User not authorized!"
-              : error.error.message
-          }`,
+          text: `${error}`,
           icon: "error",
           confirmButtonText: "Ok, got it!",
           confirmButtonColor: "#1B84FF",

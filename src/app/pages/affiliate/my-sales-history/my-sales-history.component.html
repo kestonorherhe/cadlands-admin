@@ -31,14 +31,14 @@
                 NGN
                 {{
                   getPaidSales(
-                    (transactions$ | async)?.data?.applicationRequests
-                  ).totalAmount | number
+                    (transactions$ | async)?.data?.applicationRequests || []
+                  )?.totalAmount | number
                 }}
               </h2>
               <h6 class="mb-0 mt-2">Land Sold: {{
                   getPaidSales(
-                    (transactions$ | async)?.data?.applicationRequests
-                  ).count | number
+                    (transactions$ | async)?.data?.applicationRequests || []
+                  )?.count | number
                 }}</h6>
             </div>
           </div>
@@ -53,13 +53,13 @@
               <p class="text-muted fs-5 fw-medium">Total Pending Land Sales</p>
               <h2 class="mb-0">NGN {{
                   getPendingSales(
-                    (transactions$ | async)?.data?.applicationRequests
-                  ).totalAmount | number
+                    (transactions$ | async)?.data?.applicationRequests || []
+                  )?.totalAmount | number
                 }}</h2>
               <h6 class="mb-0 mt-2">Pending Sales: {{
                   getPendingSales(
-                    (transactions$ | async)?.data?.applicationRequests
-                  ).count | number
+                    (transactions$ | async)?.data?.applicationRequests || []
+                  )?.count | number
                 }}</h6>
             </div>
           </div>
@@ -72,8 +72,16 @@
           <div class="media">
             <div class="media-body">
               <p class="text-muted fs-5 fw-medium">Total Affiliate Sales</p>
-              <h2 class="mb-0">NGN {{ 0 | number }}</h2>
-              <h6 class="mb-0 mt-2">Land Sold: {{ 0 | number }}</h6>
+              <h2 class="mb-0">NGN {{
+                  getPaidSales(
+                    (affiliateSales$ | async)?.data?.applicationRequests || []
+                  )?.totalAmount | number
+                }}</h2>
+              <h6 class="mb-0 mt-2">Pending Sales: {{
+                  getPaidSales(
+                    (affiliateSales$ | async)?.data?.applicationRequests || []
+                  )?.count | number
+                }}</h6>
             </div>
           </div>
         </div>

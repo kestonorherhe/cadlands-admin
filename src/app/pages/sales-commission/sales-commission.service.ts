@@ -45,6 +45,23 @@ export class SalesCommissionService {
     return this.http.get(url);
   }
 
+  getMyAffiliateSalesHistory(payload: { status?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.status) {
+      params.set("status", payload.status);
+    }
+
+    // Construct final URL
+    const url = `${
+      this.envService.httpService
+    }/application-request/my-affiliate-sales-history?${params.toString()}`;
+
+    return this.http.get(url);
+  }
+
   // createFeature(data: any) {
   //   return this.http.post(`${this.envService.httpService}/feature`, data).pipe(
   //     map((res: any) => {
@@ -149,6 +166,124 @@ export class SalesCommissionService {
     return this.http
       .put(
         `${this.envService.httpService}/affiliate-commission-withdrawal/cancel-withdrawal`,
+        { id: requestId }
+      )
+      .pipe(
+        map((res: any) => {
+          return res.data;
+        })
+      );
+  }
+
+  getAllSubscriptionBonuses(payload: { status?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.status) {
+      params.set("approval_status", payload.status);
+    }
+
+    // Construct final URL
+    const url = `${
+      this.envService.httpService
+    }/subscription-request/subscription-bonuses?${params.toString()}`;
+
+    return this.http.get(url);
+  }
+
+  getMySubscriptionBonuses(payload: { status?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.status) {
+      params.set("status", payload.status);
+    }
+
+    // Construct final URL
+    const url = `${
+      this.envService.httpService
+    }/subscription-request/my-subscription-bonuses?${params.toString()}`;
+
+    return this.http.get(url);
+  }
+
+  getAllBonusWithdrawalRequests(payload: { status?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.status) {
+      params.set("approval_status", payload.status);
+    }
+
+    // Construct final URL
+    const url = `${
+      this.envService.httpService
+    }/subscription-bonus-withdrawal?${params.toString()}`;
+
+    return this.http.get(url);
+  }
+
+  getMyBonusWithdrawals(payload: { status?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.status) {
+      params.set("status", payload.status);
+    }
+
+    // Construct final URL
+    const url = `${
+      this.envService.httpService
+    }/subscription-bonus-withdrawal/my-withdrawals?${params.toString()}`;
+
+    return this.http.get(url);
+  }
+
+  createBonusWithdrawalRequest(data: any) {
+    return this.http
+      .post(
+        `${this.envService.httpService}/subscription-bonus-withdrawal`,
+        data
+      )
+      .pipe(
+        map((res: any) => {
+          console.log("create user ::", res);
+          return res.data;
+        })
+      );
+  }
+
+  updateBonusWithdrawal(data: any) {
+    return this.http
+      .put(`${this.envService.httpService}/subscription-bonus-withdrawal`, data)
+      .pipe(
+        map((res: any) => {
+          return res.data;
+        })
+      );
+  }
+
+  processBonusWithdrawal(requestId: any) {
+    return this.http
+      .put(
+        `${this.envService.httpService}/subscription-bonus-withdrawal/process-application`,
+        { id: requestId }
+      )
+      .pipe(
+        map((res: any) => {
+          return res.data;
+        })
+      );
+  }
+
+  cancelBonusWithdrawal(requestId: any) {
+    return this.http
+      .put(
+        `${this.envService.httpService}/subscription-bonus-withdrawal/cancel-withdrawal`,
         { id: requestId }
       )
       .pipe(

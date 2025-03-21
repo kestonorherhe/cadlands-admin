@@ -53,13 +53,22 @@ const routes: Routes = [
   {
     path: "subscription",
     loadChildren: () =>
-      import("./subscription/subscription.module").then((m) => m.SubscriptionModule),
+      import("./subscription/subscription.module").then(
+        (m) => m.SubscriptionModule
+      ),
   },
   {
     path: "sales-commission",
     loadChildren: () =>
       import("./sales-commission/sales-commission.module").then(
         (m) => m.SalesCommissionModule
+      ),
+  },
+  {
+    path: "referral-bonus",
+    loadChildren: () =>
+      import("./referral-bonus/referral-bonus.module").then(
+        (m) => m.ReferralBonusModule
       ),
   },
   {

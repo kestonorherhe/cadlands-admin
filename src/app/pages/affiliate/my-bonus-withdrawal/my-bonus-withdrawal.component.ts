@@ -6,11 +6,11 @@ import { SalesCommissionService } from "../../sales-commission/sales-commission.
 import { AffiliateService } from "../affiliate.service";
 
 @Component({
-  selector: "app-my-withdrawal",
-  templateUrl: "./my-withdrawal.component.html",
-  styleUrls: ["./my-withdrawal.component.scss"],
+  selector: "app-my-bonus-withdrawal",
+  templateUrl: "./my-bonus-withdrawal.component.html",
+  styleUrls: ["./my-bonus-withdrawal.component.scss"],
 })
-export class MyWithdrawalComponent implements OnInit {
+export class MyBonusWithdrawalComponent implements OnInit {
   isLoading = false;
   transactions$: Observable<any>;
   withdrawals$: Observable<any>;
@@ -56,7 +56,7 @@ export class MyWithdrawalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCommissions();
+    this.getSubscriptionBonuses();
     this.getMyWithdrawals();
 
     this.affiliateService.getAffiliateBanks().subscribe(
@@ -78,17 +78,20 @@ export class MyWithdrawalComponent implements OnInit {
     );
   }
 
-  getCommissions() {
-    this.transactions$ = this.salesCommissionService.getMyCommissions({});
+  getSubscriptionBonuses() {
+    this.transactions$ = this.salesCommissionService.getMySubscriptionBonuses(
+      {}
+    );
   }
 
   getMyWithdrawals() {
-    this.withdrawals$ = this.salesCommissionService.getMyWithdrawals({});
+    this.withdrawals$ = this.salesCommissionService.getMyBonusWithdrawals({});
   }
 
   getPaidWithdrawals(data: any[]) {
+    // console.log("data :: ", data);
     const filteredWithdrawals = data.filter(
-      (item: any) => item.paymentStatus === "PAID"
+      (item: any) => item.paymentStatus === "Paid"
     );
     return {
       totalAmount: filteredWithdrawals.reduce(
@@ -101,7 +104,7 @@ export class MyWithdrawalComponent implements OnInit {
 
   getPendingWithdrawals(data: any[]) {
     const filteredWithdrawals = data.filter(
-      (item: any) => item.paymentStatus === "NOT_PAID"
+      (item: any) => item.paymentStatus === "Not_Paid"
     );
     return {
       totalAmount: filteredWithdrawals.reduce(
@@ -113,7 +116,9 @@ export class MyWithdrawalComponent implements OnInit {
   }
 
   getPendingSales(data: any[]) {
-    const filteredSales = data.filter((item: any) => item.status === "PENDING");
+    const filteredSales = data.filter(
+      (item: any) => item.approvalStatus === "Pending"
+    );
     this.obj.amount = Number(
       filteredSales.reduce((acc, item) => acc + item.amount, 0)
     );
@@ -134,44 +139,46 @@ export class MyWithdrawalComponent implements OnInit {
     const withdrawalDto = {
       amount: this.obj.amount,
     };
-    this.salesCommissionService.createWithdrawal(withdrawalDto).subscribe(
-      (response: any) => {
-        this.isLoading = false;
-        Swal.fire({
-          text: "Feature was created successfully!",
-          icon: "success",
-          confirmButtonText: "Ok, got it!",
-          confirmButtonColor: "#1B84FF",
-        }).then((res) => {
-          if (res.isConfirmed) {
-            this.modalService.dismissAll();
-            this.resetForm();
-            this.isLoading = false;
-            this.getCommissions();
-          }
-        });
-      },
-      (error) => {
-        console.log("🚀 ~ MyWithdrawalComponent ~ onSubmit ~ error:", error);
-        this.isLoading = false;
-        Swal.fire({
-          // text: `${
-          //   error.error.statusCode === 401
-          //     ? "User not authorized!"
-          //     : error
-          // }`,
-          text: `${error}`,
-          icon: "error",
-          confirmButtonText: "Ok, got it!",
-          confirmButtonColor: "#1B84FF",
-        }).then((res) => {
-          if (res.isConfirmed) {
-            this.isLoading = false;
-            this.modalService.dismissAll();
-            this.resetForm();
-          }
-        });
-      }
-    );
+    this.salesCommissionService
+      .createBonusWithdrawalRequest(withdrawalDto)
+      .subscribe(
+        (response: any) => {
+          this.isLoading = false;
+          Swal.fire({
+            text: "Feature was created successfully!",
+            icon: "success",
+            confirmButtonText: "Ok, got it!",
+            confirmButtonColor: "#1B84FF",
+          }).then((res) => {
+            if (res.isConfirmed) {
+              this.modalService.dismissAll();
+              this.resetForm();
+              this.isLoading = false;
+              this.getSubscriptionBonuses();
+            }
+          });
+        },
+        (error) => {
+          console.log("🚀 ~ MyWithdrawalComponent ~ onSubmit ~ error:", error);
+          this.isLoading = false;
+          Swal.fire({
+            // text: `${
+            //   error.error.statusCode === 401
+            //     ? "User not authorized!"
+            //     : error
+            // }`,
+            text: `${error}`,
+            icon: "error",
+            confirmButtonText: "Ok, got it!",
+            confirmButtonColor: "#1B84FF",
+          }).then((res) => {
+            if (res.isConfirmed) {
+              this.isLoading = false;
+              this.modalService.dismissAll();
+              this.resetForm();
+            }
+          });
+        }
+      );
   }
 }

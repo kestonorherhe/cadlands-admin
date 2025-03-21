@@ -11,6 +11,7 @@ import { SalesCommissionService } from "../../sales-commission/sales-commission.
 export class MySalesHistoryComponent implements OnInit {
   isLoading = false;
   transactions$: Observable<any>;
+  affiliateSales$: Observable<any>;
   first_name = "";
 
   @ViewChild("appointmentDetailModal")
@@ -27,12 +28,21 @@ export class MySalesHistoryComponent implements OnInit {
     ).first_name;
 
     this.getSales();
+    this.getAffiliateSales();
   }
 
   getSales() {
     this.transactions$ = this.salesCommissionService.getMySalesHistory({
       // status: "PENDING",
     });
+  }
+
+  getAffiliateSales() {
+    this.affiliateSales$ = this.salesCommissionService.getMyAffiliateSalesHistory(
+      {
+        // status: "PENDING",
+      }
+    );
   }
 
   getPaidSales(data: any[]) {

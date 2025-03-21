@@ -5,10 +5,11 @@ import { AffiliateProfileComponent } from './affiliate-profile/affiliate-profile
 import { VerifiedAffiliateListComponent } from './verified-affiliate-list/verified-affiliate-list.component';
 import { PendingAffiliateListComponent } from './pending-affiliate-list/pending-affiliate-list.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
-import { MyWithdrawalComponent } from './my-withdrawal/my-withdrawal.component';
 import { MyReferralsComponent } from './my-referrals/my-referrals.component';
 import { MySalesHistoryComponent } from './my-sales-history/my-sales-history.component';
 import { MySubscriptionComponent } from './my-subscription/my-subscription.component';
+import { MyCommissionWithdrawalComponent } from './my-commission-withdrawal/my-commission-withdrawal.component';
+import { MyBonusWithdrawalComponent } from './my-bonus-withdrawal/my-bonus-withdrawal.component';
 
 const routes: Routes = [
   {
@@ -28,8 +29,12 @@ const routes: Routes = [
     component: MyProfileComponent,
   },
   {
-    path: "my-withdrawal",
-    component: MyWithdrawalComponent,
+    path: "my-commission-withdrawal",
+    component: MyCommissionWithdrawalComponent,
+  },
+  {
+    path: "my-bonus-withdrawal",
+    component: MyBonusWithdrawalComponent,
   },
   {
     path: "my-referrals",

@@ -1,79 +1,23 @@
 <div class="container-fluid">
-  <app-loader></app-loader>
-  <!-- start page title -->
-  <div class="row">
-    <div class="col-12">
-      <div
-        class="page-title-box d-flex align-items-center justify-content-between"
-      >
-        <div>
-          <h4 class="mb-0 font-size-18">My Referrals</h4>
-          <p class="font-size-15">Overview of all earnings and withdrawals</p>
-        </div>
-        <div class="page-title-right">
-          <ol class="breadcrumb m-0">
-            <!-- <li class="breadcrumb-item active">Welcome to Dashboard</li> -->
-          </ol>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end page title -->
-
-  <div class="row">
-    <div class="col-md-3" style="width: 25% !important">
-      <div class="card mini-stats-wid">
-        <div class="card-body">
-          <div class="media">
-            <div class="media-body">
-              <p class="text-muted fs-5 fw-medium">
-                Total Referral Subscriptions
-              </p>
-              <h2 class="mb-0 text-danger">{{
-                  getTotalAmount(
-                    (transactions$ | async)?.data?.subscriptionBonuses || []
-                  ).count | number
-                }}</h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3" style="width: 25% !important">
-      <div class="card mini-stats-wid">
-        <div class="card-body">
-          <div class="media">
-            <div class="media-body">
-              <p class="text-muted fs-5 fw-medium">
-                Total Referral Subscriptions Bonus
-              </p>
-              <h2 class="mb-0 text-success">NGN {{
-                  getTotalAmount(
-                    (transactions$ | async)?.data?.subscriptionBonuses || []
-                  ).totalAmount | number
-                }}</h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="row">
     <div class="col-lg-12">
-      <div class="card" style="box-shadow: 0 0 3px #cecbcb">
+      <div class="card">
+        <div class="row p-4">
+          <div class="col-6">
+            <h4 class="card-title" style="padding: 0px; font-size: 1.5rem">
+              Paid Referral Bonus
+            </h4>
+            <p style="font-size: 1rem">List paid referral bonus.</p>
+          </div>
+        </div>
         <div class="card-body">
-          <div class="row">
+          <div class="row mb-3">
             <div class="col-12">
-              <div class="row mt-4 mb-2">
-                <h4 class="text-primary" style="font-weight: bold">
-                  My Referrals
-                </h4>
-              </div>
-              <p style="font-size: 1rem">This list all referrals.</p>
+              <!-- search field goes here -->
             </div>
+          </div>
 
-            <div
+          <div
               class="table-responsive"
               style="overflow-x: auto; max-width: 100%"
             >
@@ -222,7 +166,6 @@
                 </tbody>
               </table>
             </div>
-          </div>
         </div>
       </div>
     </div>
