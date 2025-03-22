@@ -27,6 +27,7 @@ import { PropertyFacilityListComponent } from "./property-facility-list/property
 import { PropertyPurposeListComponent } from "./property-purpose-list/property-purpose-list.component";
 import { RelationshipListComponent } from "./relationship-list/relationship-list.component";
 import { AffiliatePackageListComponent } from "./affiliate-package-list/affiliate-package-list.component";
+import { PropertyLocationListComponent } from "./property-location-list/property-location-list.component";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { AffiliatePackageListComponent } from "./affiliate-package-list/affiliat
     PropertyPurposeListComponent,
     RelationshipListComponent,
     AffiliatePackageListComponent,
+    PropertyLocationListComponent,
   ],
   imports: [
     CommonModule,

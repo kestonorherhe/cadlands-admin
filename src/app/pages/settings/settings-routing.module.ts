@@ -10,6 +10,7 @@ import { PropertyFacilityListComponent } from "./property-facility-list/property
 import { PropertyPurposeListComponent } from "./property-purpose-list/property-purpose-list.component";
 import { RelationshipListComponent } from "./relationship-list/relationship-list.component";
 import { AffiliatePackageListComponent } from "./affiliate-package-list/affiliate-package-list.component";
+import { PropertyLocationListComponent } from "./property-location-list/property-location-list.component";
 
 const routes: Routes = [
   {
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path: "relationship",
     component: RelationshipListComponent,
+  },
+  {
+    path: "property-locations",
+    component: PropertyLocationListComponent,
   },
 ];
 

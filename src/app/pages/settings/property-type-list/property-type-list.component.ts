@@ -139,15 +139,6 @@ export class PropertyTypeListComponent implements OnInit {
   }
 
   getAllPropertyTypes() {
-    // this.settingsService.getAllPropertyTypes({}).subscribe(
-    //   (response: any) => {
-    //     this.data = response.data;
-    //     this.isLoading = false;
-    //   },
-    //   (error) => {
-    //     this.isLoading = false;
-    //   }
-    // );
     this.propertyTypes$ = this.settingsService.getAllPropertyTypes({})
   }
 

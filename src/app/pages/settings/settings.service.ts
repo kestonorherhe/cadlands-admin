@@ -19,6 +19,16 @@ export class SettingsService {
     this.paymentSubPlansSubject.next(paymentSubPlans);
   }
 
+  // register payment sub-plan observable
+  private paymentSubPlanCommissionsSubject = new BehaviorSubject<any | []>([]);
+  get paymentSubPlanCommissions$() {
+    return this.paymentSubPlanCommissionsSubject.asObservable();
+  }
+
+  setPaymentSubPlanCommissions(paymentSubPlanCommissions: any) {
+    this.paymentSubPlanCommissionsSubject.next(paymentSubPlanCommissions);
+  }
+
   // meal sub-types observable
   private propertySubTypesSubject = new BehaviorSubject<any | []>([]);
   get propertySubTypes$() {
@@ -53,6 +63,26 @@ export class SettingsService {
   }
   setIndirectSaleCommissions(indirectSaleCommissions: any) {
     this.indirectSaleCommissionsSubject.next(indirectSaleCommissions);
+  }
+
+  // property location commissions observables
+  private propertyLocationCommissionsSubject = new BehaviorSubject<any | []>(
+    []
+  );
+  get propertyLocationCommissions$() {
+    return this.propertyLocationCommissionsSubject.asObservable();
+  }
+  setPropertyLocationCommissions(propertyLocationCommissions: any) {
+    this.propertyLocationCommissionsSubject.next(propertyLocationCommissions);
+  }
+
+  // property purpose commissions observables
+  private propertyPurposeCommissionsSubject = new BehaviorSubject<any | []>([]);
+  get propertyPurposeCommissions$() {
+    return this.propertyPurposeCommissionsSubject.asObservable();
+  }
+  setPropertyPurposeCommissions(propertyPurposeCommissions: any) {
+    this.propertyPurposeCommissionsSubject.next(propertyPurposeCommissions);
   }
 
   //   gender
@@ -132,10 +162,7 @@ export class SettingsService {
   }
 
   createPackagePrice(data: any) {
-    return this.httpService.post(
-      `affiliate-package/package-price`,
-      data
-    );
+    return this.httpService.post(`affiliate-package/package-price`, data);
   }
 
   createDirectSaleCommission(data: any) {
@@ -212,6 +239,10 @@ export class SettingsService {
     return this.httpService.post(`payment-plan/payment-sub-plan`, data);
   }
 
+  createPaymentSubPlanCommission(data: any) {
+    return this.httpService.post(`payment-plan/payment-commission`, data);
+  }
+
   getAllPaymentPlans(payload: { paymentPlanId?: string }) {
     // Initialize URLSearchParams
     const params = new URLSearchParams();
@@ -223,6 +254,21 @@ export class SettingsService {
 
     // Construct final URL
     const url = `payment-plan?${params.toString()}`;
+
+    return this.httpService.get(url);
+  }
+
+  getAllPaymentSubPlans(payload: { paymentSubPlanId?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.paymentSubPlanId) {
+      params.set("payment_sub_plan_id", payload.paymentSubPlanId);
+    }
+
+    // Construct final URL
+    const url = `payment-plan/payment-sub-plan?${params.toString()}`;
 
     return this.httpService.get(url);
   }
@@ -280,17 +326,24 @@ export class SettingsService {
     return this.httpService.post(`property-purpose`, data);
   }
 
+  createPropertyPurposeCommission(data: any) {
+    return this.httpService.post(
+      `property-purpose/update-property-purpose-commission`,
+      data
+    );
+  }
+
   updatePropertyPurpose(data: any) {
     return this.httpService.post(`property-purpose`, data);
   }
 
-  getAllPropertyPurpose(payload: { propertyTypeId?: string }) {
+  getAllPropertyPurpose(payload: { propertyPurposeId?: string }) {
     // Initialize URLSearchParams
     const params = new URLSearchParams();
 
     // Add the availability parameter conditionally
-    if (payload?.propertyTypeId) {
-      params.set("property_type_id", payload.propertyTypeId);
+    if (payload?.propertyPurposeId) {
+      params.set("property_purpose_id", payload.propertyPurposeId);
     }
 
     // Construct final URL
@@ -319,6 +372,35 @@ export class SettingsService {
 
     // Construct final URL
     const url = `relationship?${params.toString()}`;
+
+    return this.httpService.get(url);
+  }
+
+  // property location routes
+  createPropertyLocation(data: any) {
+    return this.httpService.post(`property-location`, data);
+  }
+  createPropertyLocationCommission(data: any) {
+    return this.httpService.post(
+      `property-location/update-property-location-commission`,
+      data
+    );
+  }
+  updatePropertyLocation(data: any) {
+    return this.httpService.put(`property-location`, data);
+  }
+
+  getAllPropertyLocations(payload: { propertyLocationId?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.propertyLocationId) {
+      params.set("property_location_id", payload.propertyLocationId);
+    }
+
+    // Construct final URL
+    const url = `property-location?${params.toString()}`;
 
     return this.httpService.get(url);
   }

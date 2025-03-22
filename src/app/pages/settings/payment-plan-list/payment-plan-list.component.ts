@@ -19,6 +19,7 @@ export class PaymentPlanListComponent implements OnInit {
   data = [];
 
   isLoading = false;
+  showPaymentPlanDetail = true;
 
   obj = {
     paymentPlan: null,
@@ -31,17 +32,27 @@ export class PaymentPlanListComponent implements OnInit {
     description: null,
   };
 
+  paymentSubPlanCommission = {
+    paymentSubPlanId: null,
+    commission: null,
+  };
+
   paymentPlans$: Observable<any>;
   paymentPlan: any;
   paymentSubPlans$: Observable<any>;
   tabType = "payment-sub-plan";
+
+  paymentSubPlan: any;
+  paymentSubPlanCommissions$: Observable<any>;
+  tabType2 = "commissions";
+
   showDetail = false;
   constructor(
     private modalService: NgbModal,
     private cdr: ChangeDetectorRef,
     private readonly settingsService: SettingsService
   ) {
-    this.viewRecord = this.viewRecord.bind(this);
+    // this.viewRecord = this.viewRecord.bind(this);
   }
 
   viewRecord(data: any) {
@@ -66,6 +77,38 @@ export class PaymentPlanListComponent implements OnInit {
             response?.data?.paymentSubPlans
           );
           this.paymentSubPlans$ = this.settingsService.paymentSubPlans$;
+          this.cdr.detectChanges();
+        },
+        (error) => {
+          console.log("🚀 ~ MealTypeComponent ~ viewRecord ~ error:", error);
+        }
+      );
+  }
+
+  viewPaymentSubTypeRecord(data: any) {
+    console.log("we are editing ::", data);
+    this.paymentSubPlan = data;
+    this.getPaymentSubTypeInfo();
+    this.paymentSubPlanCommissions$ =
+      this.settingsService.paymentSubPlanCommissions$;
+    this.showPaymentPlanDetail = false;
+    this.cdr.detectChanges();
+  }
+
+  getPaymentSubTypeInfo() {
+    this.settingsService
+      .getAllPaymentSubPlans({ paymentSubPlanId: this.paymentSubPlan.id })
+      .subscribe(
+        (response: any) => {
+          console.log(
+            "🚀 ~ PaymentPlanListComponent ~ getAllPaymentPlans ~ response:",
+            response
+          );
+          this.settingsService.setPaymentSubPlanCommissions(
+            response?.data?.commissions
+          );
+          this.paymentSubPlanCommissions$ =
+            this.settingsService.paymentSubPlanCommissions$;
           this.cdr.detectChanges();
         },
         (error) => {
@@ -105,6 +148,11 @@ export class PaymentPlanListComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  goBck() {
+    this.showPaymentPlanDetail = true;
+    this.cdr.detectChanges();
+  }
+
   async createRecordModal(content: any) {
     this.modalService.open(content, {
       backdrop: "static",
@@ -114,6 +162,14 @@ export class PaymentPlanListComponent implements OnInit {
   }
 
   async showCreatePaymentSubPlanModal(content: any) {
+    this.modalService.open(content, {
+      backdrop: "static",
+      centered: true,
+      size: "lg",
+    });
+  }
+
+  async showCreatePaymentSubPlanCommissionModal(content: any) {
     this.modalService.open(content, {
       backdrop: "static",
       centered: true,
@@ -144,6 +200,10 @@ export class PaymentPlanListComponent implements OnInit {
       duration: null,
       description: null,
     };
+    this.paymentSubPlanCommission = {
+      paymentSubPlanId: null,
+      commission: null,
+    };
   }
 
   onSubmit() {
@@ -169,6 +229,7 @@ export class PaymentPlanListComponent implements OnInit {
       }
     );
   }
+
   onSubmitPaymentSubPlan() {
     this.isLoading = true;
     const data = {
@@ -192,6 +253,36 @@ export class PaymentPlanListComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         Swal.fire("Process Failed!", "Failed to capture farmer", "error");
+      }
+    );
+  }
+
+  onSubmitPaymentSubPlanCommission() {
+    this.isLoading = true;
+    const data = {
+      paymentSubPlanId: this.paymentSubPlan.id,
+      commission: this.paymentSubPlanCommission.commission,
+    };
+    this.settingsService.createPaymentSubPlanCommission(data).subscribe(
+      (response: any) => {
+        this.isLoading = false;
+        Swal.fire(
+          // "Process Successful!",
+          "Successfully updated payment commission!",
+          "success"
+        );
+        this.modalService.dismissAll();
+        this.resetForm();
+        this.getAllPaymentPlan();
+        this.getPaymentSubTypeInfo();
+      },
+      (error) => {
+        this.isLoading = false;
+        Swal.fire(
+          // "Process Failed!",
+          `${error}`,
+          "error"
+        );
       }
     );
   }

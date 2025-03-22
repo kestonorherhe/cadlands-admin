@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Router } from "@angular/router";
 import Swal from "sweetalert2";
 import { SettingsService } from "../settings.service";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-property-purpose-list",
@@ -14,26 +15,142 @@ import { SettingsService } from "../settings.service";
  * Contacts-profile component
  */
 export class PropertyPurposeListComponent implements OnInit {
-  breadCrumbItems: Array<{}>;
-  data = [];
-
   isLoading = false;
 
   obj = {
+    id: null,
     purpose: null,
   };
 
+  propertyPurposeCommission = {
+    propertyPurposeId: null,
+    commission: null,
+  };
+
+  propertyPurpose$: Observable<any>;
+  propertyPurpose: any;
+  commissions$: Observable<any>;
+  tabType = "commissions";
+  showDetail = false;
+
   constructor(
     private modalService: NgbModal,
-    private readonly _router: Router,
+    private cdr: ChangeDetectorRef,
     private readonly settingsService: SettingsService
-  ) {
-    this.viewRecord = this.viewRecord.bind(this);
+  ) {}
+
+  // viewRecord(evt: any) {
+  //   const id = evt.row.data.id;
+  //   this._router.navigate(["staff", id]);
+  // }
+
+  // closeModal() {
+  //   Swal.fire({
+  //     icon: "warning",
+  //     text: "Are you sure you would like to cancel?",
+  //     showDenyButton: true,
+  //     allowOutsideClick: false,
+  //     confirmButtonText: "Yes, cancel it!",
+  //     confirmButtonColor: "#1B84FF",
+  //     denyButtonText: `No, return`,
+  //   }).then((result) => {
+  //     /* Read more about isConfirmed, isDenied below */
+  //     if (result.isConfirmed) {
+  //       this.resetForm();
+  //       this.modalService.dismissAll();
+  //     }
+  //   });
+  // }
+
+  // async createRecordModal(content: any) {
+  //   this.modalService.open(content, {
+  //     backdrop: "static",
+  //     centered: true,
+  //     size: "lg",
+  //   });
+  // }
+
+  // ngOnInit() {
+  //   this.breadCrumbItems = [
+  //     { label: "Contacts" },
+  //     { label: "Profile", active: true },
+  //   ];
+
+  //   this.getAllPropertyPurpose();
+  // }
+
+  // getAllPropertyPurpose() {
+  //   this.isLoading = true;
+  //   this.settingsService.getAllPropertyPurpose({}).subscribe(
+  //     (response: any) => {
+  //       console.log(
+  //         "🚀 ~ PropertyPurposeListComponent ~ getAllPropertyPurpose ~ response:",
+  //         response
+  //       );
+  //       this.data = response.data;
+  //       this.isLoading = false;
+  //     },
+  //     (error) => {
+  //       this.isLoading = false;
+  //     }
+  //   );
+  // }
+
+  // resetForm() {
+  //   this.obj = {
+  //     purpose: null,
+  //   };
+  // }
+
+  // onSubmit() {
+  //   this.isLoading = true;
+  //   const data = {
+  //     purpose: this.obj.purpose,
+  //   };
+  //   this.settingsService.createPropertyPurpose(data).subscribe(
+  //     (response: any) => {
+  //       this.isLoading = false;
+  //       Swal.fire(
+  //         "Process Successful!",
+  //         "Property Purpose successfully created!",
+  //         "success"
+  //       );
+  //       this.modalService.dismissAll();
+  //       this.resetForm();
+  //       this.getAllPropertyPurpose();
+  //     },
+  //     (error) => {
+  //       this.isLoading = false;
+  //       Swal.fire("Process Failed!", "Failed to capture farmer", "error");
+  //     }
+  //   );
+  // }
+
+  viewRecord(data: any) {
+    this.showDetail = true;
+    this.propertyPurpose = data;
+    this.getPropertyPurposeInfo();
+    this.commissions$ = this.settingsService.prices$;
+    this.cdr.detectChanges();
   }
 
-  viewRecord(evt: any) {
-    const id = evt.row.data.id;
-    this._router.navigate(["staff", id]);
+  getPropertyPurposeInfo() {
+    this.settingsService
+      .getAllPropertyPurpose({
+        propertyPurposeId: this.propertyPurpose.id,
+      })
+      .subscribe(
+        (response: any) => {
+          this.settingsService.setPropertyPurposeCommissions(
+            response?.data?.commissions
+          );
+          this.commissions$ = this.settingsService.propertyPurposeCommissions$;
+          this.cdr.detectChanges();
+        },
+        (error) => {
+          console.log("🚀 ~ MealTypeComponent ~ viewRecord ~ error:", error);
+        }
+      );
   }
 
   closeModal() {
@@ -54,7 +171,36 @@ export class PropertyPurposeListComponent implements OnInit {
     });
   }
 
+  toggleTab(tabItem: string) {
+    if (tabItem === "commissions")
+      this.commissions$ = this.settingsService.propertyLocationCommissions$;
+    this.cdr.detectChanges();
+    this.tabType = tabItem;
+  }
+
+  closeDetail() {
+    this.showDetail = false;
+    this.propertyPurpose = null;
+    this.cdr.detectChanges();
+  }
+
   async createRecordModal(content: any) {
+    this.modalService.open(content, {
+      backdrop: "static",
+      centered: true,
+      size: "lg",
+    });
+  }
+  async updateRecordModal(content: any) {
+    this.obj = this.propertyPurpose;
+    this.modalService.open(content, {
+      backdrop: "static",
+      centered: true,
+      size: "lg",
+    });
+  }
+
+  async showCreatePropertyPurposeCommissionModal(content: any) {
     this.modalService.open(content, {
       backdrop: "static",
       centered: true,
@@ -63,48 +209,32 @@ export class PropertyPurposeListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.breadCrumbItems = [
-      { label: "Contacts" },
-      { label: "Profile", active: true },
-    ];
-
     this.getAllPropertyPurpose();
   }
 
   getAllPropertyPurpose() {
-    this.isLoading = true;
-    this.settingsService.getAllPropertyPurpose({}).subscribe(
-      (response: any) => {
-        console.log(
-          "🚀 ~ PropertyPurposeListComponent ~ getAllPropertyPurpose ~ response:",
-          response
-        );
-        this.data = response.data;
-        this.isLoading = false;
-      },
-      (error) => {
-        this.isLoading = false;
-      }
-    );
+    this.propertyPurpose$ = this.settingsService.getAllPropertyPurpose({});
   }
 
   resetForm() {
     this.obj = {
+      id: null,
       purpose: null,
+    };
+    this.propertyPurposeCommission = {
+      propertyPurposeId: null,
+      commission: null,
     };
   }
 
   onSubmit() {
     this.isLoading = true;
-    const data = {
-      purpose: this.obj.purpose,
-    };
-    this.settingsService.createPropertyPurpose(data).subscribe(
+    this.settingsService.createPropertyPurpose(this.obj).subscribe(
       (response: any) => {
         this.isLoading = false;
         Swal.fire(
           "Process Successful!",
-          "Property Purpose successfully created!",
+          "Successfully created property purpose!",
           "success"
         );
         this.modalService.dismissAll();
@@ -113,7 +243,65 @@ export class PropertyPurposeListComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to capture farmer", "error");
+        Swal.fire(
+          "Process Failed!",
+          "Failed to create affiliate package",
+          "error"
+        );
+      }
+    );
+  }
+  onUpdate() {
+    this.isLoading = true;
+    const data = {
+      id: this.obj.id,
+      purpose: this.obj.purpose,
+    };
+    this.settingsService.updatePropertyPurpose(data).subscribe(
+      (response: any) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Successful!",
+          "Successfully updated property purpose!",
+          "success"
+        );
+        this.modalService.dismissAll();
+        this.resetForm();
+        this.getAllPropertyPurpose();
+        this.getPropertyPurposeInfo();
+      },
+      (error) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Failed!",
+          "Failed to update affiliate package",
+          "error"
+        );
+      }
+    );
+  }
+
+  onSubmitPropertyPurposeCommission() {
+    this.isLoading = true;
+    const data = {
+      propertyPurposeId: this.propertyPurpose.id,
+      commission: this.propertyPurposeCommission.commission,
+    };
+    this.settingsService.createPropertyPurposeCommission(data).subscribe(
+      (response: any) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Successful!",
+          "Successfully updated property purpose commission!",
+          "success"
+        );
+        this.modalService.dismissAll();
+        this.resetForm();
+        this.getPropertyPurposeInfo();
+      },
+      (error) => {
+        this.isLoading = false;
+        Swal.fire("Process Failed!", "Failed to update package price", "error");
       }
     );
   }

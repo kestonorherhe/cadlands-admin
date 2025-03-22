@@ -11,19 +11,20 @@
           <div class="row">
             <div class="col-8">
               <div class="text-primary p-3">
-                <h5 class="text-primary">Agent Profile</h5>
+                <h5 class="text-primary">Estate Profile</h5>
                 <p class="mb-4">View and Edit Profile</p>
               </div>
             </div>
 
-            <div class="col-4 mr-2">
+            <div class="col-4">
               <div class="row mt-4">
                 <div
-                  class="align-self-end"
+                  
                   style="
                     display: flex;
                     flex-direction: row;
                     align-items: center;
+                    float: right;
                   "
                 >
                   <button class="btn btn-primary btn-sm">Edit Estate</button>
@@ -55,11 +56,18 @@
                     <p class="text-muted mb-0 text-center">
                       Total Property Templates
                     </p>
-                    <h5 class="font-size-13 text-center">{{ estate?.propertyTemplates.length | number }}</h5>
+                    <h5 class="font-size-13 text-center">
+                      {{ estate?.propertyTemplates.length | number }}
+                    </h5>
                   </div>
                   <div class="col-6">
-                    <p class="text-muted mb-0 text-center">Total Properties</p><br/>
-                    <h5 class="font-size-13 text-center">{{ (properties$ |async)?.data?.properties.length | number }}</h5>
+                    <p class="text-muted mb-0 text-center">Total Properties</p>
+                    <br />
+                    <h5 class="font-size-13 text-center">
+                      {{
+                        (properties$ | async)?.data?.properties.length | number
+                      }}
+                    </h5>
                   </div>
                 </div>
               </div>
@@ -175,7 +183,9 @@
                           </thead>
                           <tbody>
                             <ng-container *ngIf="data != null">
-                              <tr *ngFor="let item of estate?.propertyTemplates">
+                              <tr
+                                *ngFor="let item of estate?.propertyTemplates"
+                              >
                                 <td class="text-end">
                                   <a
                                     (click)="viewRecord(item)"
@@ -256,10 +266,16 @@
                                 class="min-w-10px text-gray-900 text-end rounded-end"
                               ></th>
                               <th class="min-w-100px text-gray-900">Estate</th>
-                              <th class="min-w-100px text-gray-900">Property</th>
+                              <th class="min-w-100px text-gray-900">
+                                Property
+                              </th>
                               <th class="min-w-100px text-gray-900">Plot</th>
-                              <th class="min-w-100px text-gray-900">Property Type</th>
-                              <th class="min-w-100px text-gray-900">Property Sub-Type</th>
+                              <th class="min-w-100px text-gray-900">
+                                Property Type
+                              </th>
+                              <th class="min-w-100px text-gray-900">
+                                Property Sub-Type
+                              </th>
                               <th class="min-w-50px text-gray-900">Status</th>
                               <th class="min-w-100px text-gray-900">
                                 Created At
@@ -269,8 +285,17 @@
                           </thead>
                           <tbody>
                             <!-- {{ (properties$ |async)?.data?.properties | json }} -->
-                            <ng-container *ngIf="(properties$ |async)?.data?.properties != null">
-                              <tr *ngFor="let item of (properties$ |async)?.data?.properties">
+                            <ng-container
+                              *ngIf="
+                                (properties$ | async)?.data?.properties != null
+                              "
+                            >
+                              <tr
+                                *ngFor="
+                                  let item of (properties$ | async)?.data
+                                    ?.properties
+                                "
+                              >
                                 <td class="text-end">
                                   <a
                                     (click)="viewRecord(item)"
@@ -289,10 +314,10 @@
                                 <td>
                                   {{ item?.name }}
                                 </td>
-                                 <td>
+                                <td>
                                   {{ item?.propertyTemplate?.type?.name }}
                                 </td>
-                                 <td>
+                                <td>
                                   {{ item?.propertyTemplate?.subType?.name }}
                                 </td>
                                 <td>
@@ -754,8 +779,12 @@
             required
           ></ng-select>
 
-          <div *ngIf="propertyTemplateId.invalid &amp;&amp; propertyTemplateId.touched">
-            <small *ngIf="propertyTemplateId.errors?.required" class="text-danger"
+          <div
+            *ngIf="propertyTemplateId.invalid &amp;&amp; propertyTemplateId.touched"
+          >
+            <small
+              *ngIf="propertyTemplateId.errors?.required"
+              class="text-danger"
               >Property Template is Required</small
             >
           </div>
@@ -786,8 +815,11 @@
         </button>
       </div>
     </div>
-    <div class="row" *ngFor="let property of propertyObj.properties; index as i">
-      <div class="col-lg-11 col-md-11">
+    <div
+      class="row"
+      *ngFor="let property of propertyObj.properties; index as i"
+    >
+      <div class="col-lg-12 col-md-12">
         <div class="mb-3">
           <label
             for="propertyName"
@@ -814,9 +846,90 @@
         </div>
       </div>
 
-      <div class="col-lg-1 col-md-1">
-        <div style="margin-top: 2.2rem">
-          <i class="bx bx-trash fs-2 text-danger" (click)="removeItem(i)"></i>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="propertyPurposeId"
+            [class.text-danger]="propertyPurposeId.invalid &amp;&amp; propertyPurposeId.touched"
+            class="form-label"
+            >Property Purpose <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="(propertyPurpose$ | async)?.data"
+            bindValue="id"
+            bindLabel="purpose"
+            name="propertyPurposeId"
+            #propertyPurposeId="ngModel"
+            [(ngModel)]="propertyObj.propertyPurposeId"
+            [class.is-invalid]="propertyPurposeId.invalid &amp;&amp; propertyPurposeId.touched"
+            placeholder="--Select Property Purpose--"
+            (change)="onSelectPropertyType($event)"
+            required
+          ></ng-select>
+
+          <div
+            *ngIf="propertyPurposeId.invalid &amp;&amp; propertyPurposeId.touched"
+          >
+            <small
+              *ngIf="propertyPurposeId.errors?.required"
+              class="text-danger"
+              >Property Purpose is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="propertyLocationId"
+            [class.text-danger]="propertyLocationId.invalid &amp;&amp; propertyLocationId.touched"
+            class="form-label"
+            >Property Location <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="(propertyLocations$ | async)?.data"
+            bindValue="id"
+            bindLabel="name"
+            name="propertyLocationId"
+            #propertyLocationId="ngModel"
+            [(ngModel)]="propertyObj.propertyLocationId"
+            [class.is-invalid]="propertyLocationId.invalid &amp;&amp; propertyLocationId.touched"
+            placeholder="--Select Property Location--"
+            (change)="onSelectPropertyType($event)"
+            required
+          ></ng-select>
+
+          <div
+            *ngIf="propertyLocationId.invalid &amp;&amp; propertyLocationId.touched"
+          >
+            <small
+              *ngIf="propertyLocationId.errors?.required"
+              class="text-danger"
+              >Property Location is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="propertyObj.properties.length > 1" class="row mb-4">
+        <div class="col-6"></div>
+        <div class="col-6">
+          <a
+            class="text-danger"
+            style="
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              float: right;
+              cursor: pointer;
+            "
+          >
+            Remove Item<i
+              class="bx bx-trash fs-4 text-danger"
+              (click)="removeItem(i)"
+            ></i>
+          </a>
         </div>
       </div>
     </div>

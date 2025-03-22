@@ -38,6 +38,8 @@ export class EstateProfileComponent implements OnInit {
   facilities$: Observable<any>;
   propertyTitles$: Observable<any>;
   propertyTemplates$: Observable<any>;
+  propertyLocations$: Observable<any>;
+  propertyPurpose$: Observable<any>;
   properties$: Observable<any>;
 
   files: File[] = [];
@@ -61,6 +63,8 @@ export class EstateProfileComponent implements OnInit {
 
   propertyObj = {
     propertyTemplateId: null,
+    propertyPurposeId: null,
+    propertyLocationId: null,
     properties: [{ propertyName: null }],
   };
 
@@ -137,6 +141,8 @@ export class EstateProfileComponent implements OnInit {
     this.propertyTemplates$ = this.propertyService.getAllPropertyTemplates({
       estateId: this.estateId,
     });
+    this.propertyLocations$ = this.settingsService.getAllPropertyLocations({});
+    this.propertyPurpose$ = this.settingsService.getAllPropertyPurpose({});
 
     this.getAllProperties();
   }
@@ -189,6 +195,8 @@ export class EstateProfileComponent implements OnInit {
 
     this.propertyObj = {
       propertyTemplateId: null,
+      propertyPurposeId: null,
+      propertyLocationId: null,
       properties: [{ propertyName: null }],
     };
   }
