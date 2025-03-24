@@ -92,7 +92,7 @@
                       {{ item.propertyTemplate?.size }} sqm
                     </td>
                     <td class="text-center">
-                      {{ item.propertyTemplate?.prices[0]?.price | number }}
+                      {{ item.currentPrice?.price | number }}
                     </td>
                     <td>
                       {{ item.customer?.title || "" }}
@@ -189,7 +189,7 @@
           >
           <br />
           <p style="font-size: 14px">
-            {{ obj?.propertyTemplate?.prices[0]?.price | number }}
+            {{ obj?.currentPrice?.price | number }}
           </p>
         </div>
       </div>
@@ -226,7 +226,7 @@
             >Payment Plan <span class="text-danger">*</span></label
           >
           <br />
-          <p style="font-size: 14px">{{ obj?.PaymentPlan?.name }}</p>
+          <p style="font-size: 14px">{{ obj?.paymentPlan?.name }}</p>
         </div>
       </div>
 

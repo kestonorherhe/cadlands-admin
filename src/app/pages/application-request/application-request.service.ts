@@ -80,6 +80,10 @@ export class ApplicationRequestService {
     );
   }
 
+  allocatePlot(data: any) {
+    return this.httpService.post(`application-request/allocate-plot`, data);
+  }
+
   makePartPayment(data: any) {
     return this.httpService.put(
       `application-request/confirm-part-payment`,
@@ -105,6 +109,24 @@ export class ApplicationRequestService {
 
     // Construct final URL
     const url = `application-request?${params.toString()}`;
+
+    return this.httpService.get(url);
+  }
+
+  getApplicationPendingAllocation(payload: {
+    status?: string;
+    paymentStatus?: string;
+  }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.status) {
+      params.set("status", payload.status);
+    }
+
+    // Construct final URL
+    const url = `application-request/applications-pending-allocation?${params.toString()}`;
 
     return this.httpService.get(url);
   }

@@ -1,0 +1,328 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="row p-4">
+          <div class="col-6">
+            <h4 class="card-title" style="padding: 0px; font-size: 1.5rem">
+              Pending Allocations
+            </h4>
+            <p style="font-size: 1rem">
+              List all paid applications pending allocation.
+            </p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-12">
+              <!-- search field goes here -->
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-middle gs-0 gy-4">
+              <thead>
+                <tr class="fw-bolder text-muted bg-light">
+                  <th
+                    class="min-w-10px text-gray-900 text-end rounded-end"
+                  ></th>
+                  <th class="min-w-100px text-gray-900">Estate</th>
+                  <th class="min-w-100px text-gray-900">Property Type</th>
+                  <th class="min-w-50px text-gray-900 text-center">
+                    Plot Size
+                  </th>
+                  <th class="min-w-50px text-gray-900 text-center">
+                    Price (per plot)
+                  </th>
+                  <th class="min-w-50px text-gray-900">Customer</th>
+                  <th class="min-w-50px text-gray-900">Phone</th>
+                  <th class="min-w-50px text-gray-900 text-center">
+                    Total Plots
+                  </th>
+                  <th class="min-w-50px text-gray-900 text-center">
+                    Total Amount
+                  </th>
+                  <th class="min-w-50px text-gray-900 text-center">
+                    Payment Status
+                  </th>
+                  <th class="min-w-50px text-gray-900 text-center">
+                    Payment Date
+                  </th>
+                  <th class="min-w-50px text-gray-900 text-center">Status</th>
+                  <th class="min-w-100px text-gray-900">Created At</th>
+                  <!-- <th class="min-w-100px text-gray-900"></th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="data?.applications != null">
+                  <ng-container
+                    *ngFor="let item of data?.applications; let i = index"
+                  >
+                    <tr>
+                      <td class="text-end">
+                        <a
+                          (click)="toggleDetails(i)"
+                          class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                        >
+                          <i
+                            *ngIf="!detailsVisible[i]"
+                            class="fas fa-chevron-down"
+                          ></i>
+                          <i
+                            *ngIf="detailsVisible[i]"
+                            class="fas fa-chevron-up"
+                          ></i>
+                        </a>
+                      </td>
+                      <td>{{ item?.propertyTemplate?.estate?.name }}</td>
+                      <td>{{ item.propertyTemplate?.templateName }}</td>
+                      <td class="text-center">
+                        {{ item.propertyTemplate?.size }} sqm
+                      </td>
+                      <td class="text-center">
+                        {{ item.currentPrice?.price | number }}
+                      </td>
+                      <td>
+                        {{ item.customer?.title || "" }}
+                        {{ item.customer?.firstName || "" }}
+                        {{ item.customer?.lastName || "" }}
+                      </td>
+                      <td>{{ item.customer?.phone }}</td>
+                      <td class="text-center">{{ item?.units }}</td>
+                      <td class="text-center">{{ item?.amount | number }}</td>
+                      <td class="text-center">{{ item?.paymentStatus }}</td>
+                      <td class="text-center">
+                        {{ (item?.paymentDate | date) ?? "---" }}
+                      </td>
+                      <td class="text-center">{{ item?.status }}</td>
+                      <td>{{ item?.createdAt | date }}</td>
+                      <!-- <td>
+                        <a
+                          (click)="viewRecord(item)"
+                          class="btn btn-sm btn-light btn-active-light-primary"
+                        >
+                          Actions
+                          <i class="fas fa-chevron-down ms-2"></i>
+                        </a>
+                      </td> -->
+                    </tr>
+                    <!-- Detail row -->
+                    <tr *ngIf="detailsVisible[i]">
+                      <td colspan="14" class="p-0">
+                        <div class="bg-light-primary p-4">
+                          <h6 class="text-primary mb-4">Request Details</h6>
+                          <div class="table-responsive">
+                            <table
+                              class="table table-bordered table-striped mb-0"
+                            >
+                              <thead>
+                                <tr class="fw-bold">
+                                  <th>ID</th>
+                                  <th>Approval Status</th>
+                                  <th>Processing Notes</th>
+                                  <th>Allocation Date</th>
+                                  <th>Created At</th>
+                                  <th>Updated At</th>
+                                  <th>Select Plot</th>
+                                  <th>Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <ng-container
+                                  *ngIf="
+                                    item.requestDetails?.length;
+                                    else noDetails
+                                  "
+                                >
+                                  <tr
+                                    *ngFor="
+                                      let detail of item.requestDetails;
+                                      let detailIndex = index
+                                    "
+                                  >
+                                    <td>{{ detail.id }}</td>
+                                    <td>
+                                      <span
+                                        class="badge"
+                                        [ngClass]="{
+                                          'badge-success':
+                                            detail.approvalStatus ===
+                                            'Approved',
+                                          'badge-warning':
+                                            detail.approvalStatus === 'PENDING',
+                                          'badge-danger':
+                                            detail.approvalStatus === 'Rejected'
+                                        }"
+                                      >
+                                        {{ detail.approvalStatus }} 2
+                                      </span>
+                                    </td>
+                                    <td>
+                                      <span [title]="detail.processingNotes">
+                                        {{
+                                          detail.processingNotes?.length > 30
+                                            ? (detail.processingNotes
+                                                | slice : 0 : 30) + "..."
+                                            : detail.processingNotes ||
+                                              "No notes"
+                                        }}
+                                      </span>
+                                    </td>
+                                    <td>
+                                      {{
+                                        (detail.allocationDate | date) ??
+                                          "Not allocated"
+                                      }}
+                                    </td>
+                                    <td>
+                                      {{ detail.createdAt | date : "medium" }}
+                                    </td>
+                                    <td>
+                                      {{ detail.updatedAt | date : "medium" }}
+                                    </td>
+                                    <td>
+                                      <ng-select
+                                        [items]="
+                                          getFilteredPropertiesForItem(item)
+                                        "
+                                        bindValue="id"
+                                        bindLabel="name"
+                                        name="selectedPropertyId{{
+                                          detailIndex
+                                        }}"
+                                        #selectedPropertyId="ngModel"
+                                        [(ngModel)]="detail.selectedPropertyId"
+                                        [disabled]="
+                                          detail.approvalStatus !==
+                                            'Approved' ||
+                                          !!detail.allocationDate
+                                        "
+                                        [placeholder]="
+                                          getPropertyPlaceholder(item, detail)
+                                        "
+                                        [loading]="isLoadingProperties"
+                                        [typeahead]="propertyInput$"
+                                        [clearable]="true"
+                                        appendTo="body"
+                                      >
+                                        <ng-template
+                                          ng-label-tmp
+                                          let-item="item"
+                                        >
+                                          {{ item?.name || "Select Plot" }}
+                                        </ng-template>
+                                        <ng-template
+                                          ng-option-tmp
+                                          let-item="item"
+                                        >
+                                          <div
+                                            class="d-flex justify-content-between align-items-center"
+                                          >
+                                            <span>{{ item.name }}</span>
+                                            <small class="text-muted"
+                                              >Plot #{{
+                                                item.plotNumber
+                                              }}</small
+                                            >
+                                          </div>
+                                        </ng-template>
+                                        <ng-template ng-notfound-tmp>
+                                          <div class="p-2 text-center">
+                                            No matching properties available
+                                          </div>
+                                        </ng-template>
+                                      </ng-select>
+                                      <div
+                                        *ngIf="detail.propertySelectionError"
+                                        class="text-danger small mt-1"
+                                      >
+                                        {{ detail.propertySelectionError }}
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <button
+                                        *ngIf="
+                                          detail.approvalStatus ===
+                                            'Approved' &&
+                                          !detail.allocationDate &&
+                                          detail.selectedPropertyId
+                                        "
+                                        (click)="allocatePlot(detail)"
+                                        class="btn btn-sm btn-primary"
+                                        [disabled]="isAllocating(detail.id)"
+                                      >
+                                        {{
+                                          isAllocating(detail.id)
+                                            ? "Please wait..."
+                                            : "Allocate Plot"
+                                        }}
+                                        <span
+                                          *ngIf="isAllocating(detail.id)"
+                                          class="spinner-border spinner-border-sm me-1" style="font-size: 12px;"
+                                        ></span>
+                                      </button>
+                                      <button
+                                        *ngIf="
+                                          detail.approvalStatus ===
+                                            'Approved' &&
+                                          !detail.allocationDate &&
+                                          !detail.selectedPropertyId
+                                        "
+                                        class="btn btn-sm btn-primary"
+                                        disabled
+                                      >
+                                        Select Property First
+                                      </button>
+                                      <span
+                                        *ngIf="detail.allocationDate"
+                                        class="text-success"
+                                      >
+                                        <i class="fas fa-check-circle me-1"></i>
+                                        Already allocated
+                                      </span>
+                                    </td>
+                                  </tr>
+                                  <tr
+                                    *ngIf="
+                                      !item.requestDetails ||
+                                      item.requestDetails.length === 0
+                                    "
+                                  >
+                                    <td colspan="7" class="text-center">
+                                      No request details found
+                                    </td>
+                                  </tr>
+                                </ng-container>
+                                <ng-template #noDetails>
+                                  <tr>
+                                    <td colspan="8" class="text-center py-3">
+                                      <i
+                                        class="fas fa-info-circle me-2 text-muted"
+                                      ></i>
+                                      No request details found
+                                    </td>
+                                  </tr>
+                                </ng-template>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+                <tr
+                  *ngIf="!data?.applications || data.applications.length === 0"
+                >
+                  <td colspan="14" class="text-center py-4">
+                    No applications found
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,6 +5,7 @@ import { PendingApplicationRequestListComponent } from './pending-application-re
 import { ApprovedApplicationRequestListComponent } from './approved-application-request-list/approved-application-request-list.component';
 import { PaidApplicationRequestListComponent } from './paid-application-request-list/paid-application-request-list.component';
 import { OnGoingApplicationRequestListComponent } from './on-going-application-request-list/on-going-application-request-list.component';
+import { PendingAllocationListComponent } from './pending-allocation-list/pending-allocation-list.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: "paid-applications",
     component: PaidApplicationRequestListComponent,
+  },
+  {
+    path: "pending-allocation",
+    component: PendingAllocationListComponent,
   },
 ];
 

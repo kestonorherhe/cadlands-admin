@@ -265,17 +265,19 @@
                               <th
                                 class="min-w-10px text-gray-900 text-end rounded-end"
                               ></th>
-                              <th class="min-w-100px text-gray-900">Estate</th>
+                              <!-- <th class="min-w-100px text-gray-900">Estate</th> -->
                               <th class="min-w-100px text-gray-900">
                                 Property
                               </th>
                               <th class="min-w-100px text-gray-900">Plot</th>
-                              <th class="min-w-100px text-gray-900">
+                              <th class="min-w-100px text-gray-900">Purpose</th>
+                              <th class="min-w-100px text-gray-900">Location</th>
+                              <!-- <th class="min-w-100px text-gray-900">
                                 Property Type
-                              </th>
-                              <th class="min-w-100px text-gray-900">
+                              </th> -->
+                              <!-- <th class="min-w-100px text-gray-900">
                                 Property Sub-Type
-                              </th>
+                              </th> -->
                               <th class="min-w-50px text-gray-900">Status</th>
                               <th class="min-w-100px text-gray-900">
                                 Created At
@@ -305,9 +307,9 @@
                                     Edit
                                   </a>
                                 </td>
-                                <td>
+                                <!-- <td>
                                   {{ item?.propertyTemplate?.estate?.name }}
-                                </td>
+                                </td> -->
                                 <td>
                                   {{ item?.propertyTemplate?.templateName }}
                                 </td>
@@ -315,11 +317,17 @@
                                   {{ item?.name }}
                                 </td>
                                 <td>
-                                  {{ item?.propertyTemplate?.type?.name }}
+                                  {{ item?.propertyPurpose?.purpose }}
                                 </td>
                                 <td>
-                                  {{ item?.propertyTemplate?.subType?.name }}
+                                  {{ item?.propertyLocation?.name }}
                                 </td>
+                                <!-- <td>
+                                  {{ item?.propertyTemplate?.type?.name }}
+                                </td> -->
+                                <!-- <td>
+                                  {{ item?.propertyTemplate?.subType?.name }}
+                                </td> -->
                                 <td>
                                   {{ item?.status }}
                                 </td>
