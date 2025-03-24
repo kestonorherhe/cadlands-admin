@@ -38,15 +38,15 @@ export class EnvService {
       console.log("this is the _env ::", this._env);
 
       this._httpService = "http://localhost:3007";
-    } else if (/^birs-admin-portal.vercel.app/.test(hostname)) {
+    } else if (/^ca-cadlands.vercel.app/.test(hostname)) {
       this._env = Environment.Staging;
       console.log("this is the _env ::", this._env);
 
-      this._httpService = "https://service-gateway.bsg.com.ng/api/user-module/";
+      this._httpService = "https://cadlands-api.onrender.com";
     } else if (/^admin.birs.be.gov.ng/.test(hostname)) {
       this._env = Environment.Prod;
       console.log("this is the _env ::", this._env);
-      this._httpService = "https://service-gateway.bsg.com.ng/api/user-module/";
+      this._httpService = "https://cadlands-api.onrender.com";
     } else {
       console.warn(`Cannot find environment for host name ${hostname}`);
     }

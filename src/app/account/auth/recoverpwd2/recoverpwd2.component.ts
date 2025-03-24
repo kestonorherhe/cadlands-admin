@@ -4,7 +4,6 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthenticationService } from '../../../core/services/auth.service';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-recoverpwd2',
@@ -43,12 +42,6 @@ export class Recoverpwd2Component implements OnInit {
     // stop here if form is invalid
     if (this.resetForm.invalid) {
       return;
-    }
-    if (environment.defaultauth === 'firebase') {
-      // this.authenticationService.resetPassword(this.f.email.value)
-      //   .catch(error => {
-      //     this.error = error ? error : '';
-      //   });
     }
   }
 

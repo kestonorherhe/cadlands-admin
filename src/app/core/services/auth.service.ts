@@ -6,13 +6,11 @@ import {
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { environment } from "src/environments/environment";
-
-// import { getFirebaseBackend } from '../../authUtils';
 
 import { User } from "../models/auth.models";
 import { Router } from "@angular/router";
 import { HttpService } from "./http.service";
+import { EnvService } from "./env.service";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
@@ -23,7 +21,8 @@ export class AuthenticationService {
   constructor(
     private http: HttpClient,
     private readonly _httpService: HttpService,
-    private router: Router
+    private router: Router,
+    private envService: EnvService
   ) {
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem("currentUser"))
@@ -45,7 +44,7 @@ export class AuthenticationService {
   login(credential) {
     console.log("logging in...");
     return this.http
-      .post<any>(`${environment.apiUrl}/auth/admin-login`, credential)
+      .post<any>(`${this.envService.httpService}/auth/admin-login`, credential)
       .pipe(
         map((user) => {
           // login successful if there's a jwt token in the response
@@ -71,7 +70,7 @@ export class AuthenticationService {
     console.log("affiliate registration...");
     return this.http
       .post<any>(
-        `${environment.apiUrl}/admins/affiliate-registration`,
+        `${this.envService.httpService}/admins/affiliate-registration`,
         credential
       )
       .pipe(
@@ -90,7 +89,7 @@ export class AuthenticationService {
    */
   register(registerDto: any) {
     return this.http
-      .post<any>(`${environment.apiUrl}auth/register`, registerDto)
+      .post<any>(`${this.envService.httpService}auth/register`, registerDto)
       .pipe(
         map((response) => {
           // login successful if there's a jwt token in the response

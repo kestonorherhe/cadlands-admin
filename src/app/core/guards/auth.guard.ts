@@ -1,10 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
-
 import { AuthenticationService } from "../services/auth.service";
 import { AuthfakeauthenticationService } from "../services/authfake.service";
-
-import { environment } from "../../../environments/environment";
 
 @Injectable({ providedIn: "root" })
 export class AuthGuard  {
@@ -15,19 +12,6 @@ export class AuthGuard  {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    // if (environment.defaultauth === 'firebase') {
-    //     const currentUser = this.authenticationService.currentUser();
-    //     if (currentUser) {
-    //         // logged in so return true
-    //         return true;
-    //     }
-    // } else {
-    //     const currentUser = this.authFackservice.currentUserValue;
-    //     if (currentUser) {
-    //         // logged in so return true
-    //         return true;
-    //     }
-    // }
     const currentUser = this.authFackservice.currentUserValue;
     console.log("currentUser ::", currentUser)
     if (currentUser) {

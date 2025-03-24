@@ -4,14 +4,10 @@ import {
   UntypedFormGroup,
   Validators,
 } from "@angular/forms";
-
 import { AuthenticationService } from "../../../core/services/auth.service";
 import { AuthfakeauthenticationService } from "../../../core/services/authfake.service";
-
 import { ActivatedRoute, Router } from "@angular/router";
 import { first } from "rxjs/operators";
-
-import { environment } from "../../../../environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { User } from "src/app/core/models/auth.models";
 

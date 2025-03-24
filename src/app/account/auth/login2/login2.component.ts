@@ -4,15 +4,11 @@ import {
   UntypedFormGroup,
   Validators,
 } from "@angular/forms";
-
 import { AuthenticationService } from "../../../core/services/auth.service";
 import { AuthfakeauthenticationService } from "../../../core/services/authfake.service";
-
 import { OwlOptions } from "ngx-owl-carousel-o";
 import { ActivatedRoute, Router } from "@angular/router";
 import { first } from "rxjs/operators";
-
-import { environment } from "../../../../environments/environment";
 
 @Component({
   selector: "app-login2",
