@@ -110,7 +110,7 @@ export class GenderListComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to capture farmer", "error");
+        Swal.fire("Process Failed!", "Failed to create gender", "error");
       }
     );
   }

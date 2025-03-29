@@ -103,6 +103,7 @@ export class MyCommissionWithdrawalComponent implements OnInit {
     const filteredWithdrawals = data.filter(
       (item: any) => item.paymentStatus === "NOT_PAID"
     );
+    console.log("🚀 ~ MyCommissionWithdrawalComponent ~ getPendingWithdrawals ~ filteredWithdrawals:", filteredWithdrawals)
     return {
       totalAmount: filteredWithdrawals.reduce(
         (acc, item) => acc + Number(item.amount),
@@ -115,10 +116,13 @@ export class MyCommissionWithdrawalComponent implements OnInit {
   getPendingSales(data: any[]) {
     const filteredSales = data.filter((item: any) => item.status === "PENDING");
     this.obj.amount = Number(
-      filteredSales.reduce((acc, item) => acc + item.amount, 0)
+      filteredSales.reduce((acc, item) => acc + Number(item.amount), 0)
     );
     return {
-      totalAmount: filteredSales.reduce((acc, item) => acc + item.amount, 0),
+      totalAmount: filteredSales.reduce(
+        (acc, item) => acc + Number(item.amount),
+        0
+      ),
       count: filteredSales.length,
     };
   }

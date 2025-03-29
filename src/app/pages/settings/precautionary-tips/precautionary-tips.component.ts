@@ -100,7 +100,7 @@ export class PrecautionaryTipsComponent implements OnInit {
         this.isLoading = false;
         Swal.fire(
           "Process Successful!",
-          "PrecautionaryTip successfully created!",
+          "Precautionary Tip successfully created!",
           "success"
         );
         this.modalService.dismissAll();
@@ -109,7 +109,11 @@ export class PrecautionaryTipsComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to capture farmer", "error");
+        Swal.fire(
+          "Process Failed!",
+          "Failed to create precautionary tip",
+          "error"
+        );
       }
     );
   }

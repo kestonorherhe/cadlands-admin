@@ -8,96 +8,14 @@ import { AuthenticationService } from "../../../core/services/auth.service";
 import { OwlOptions } from "ngx-owl-carousel-o";
 import { first } from "rxjs/operators";
 import Swal from "sweetalert2";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: "app-affiliate-registration",
-  templateUrl: "./affiliate-registration.component.html",
-  styleUrls: ["./affiliate-registration.component.scss"],
+  selector: "app-affiliate-referral-registration",
+  templateUrl: "./affiliate-referral-registration.component.html",
+  styleUrls: ["./affiliate-referral-registration.component.scss"],
 })
-/**
- * Login-2 component
- */
-// export class AffiliateRegistrationComponent implements OnInit {
-//   constructor(
-//     private formBuilder: UntypedFormBuilder,
-//     private authenticationService: AuthenticationService
-//   ) {}
-//   loginForm: UntypedFormGroup;
-//   submitted = false;
-//   error = "";
-//   showErr = false;
-//   isLoggingIn = false;
-//   returnUrl: string;
-//   fieldTextType!: boolean;
-
-//   // set the currenr year
-//   year: number = new Date().getFullYear();
-
-//   ngOnInit(): void {
-//     document.body.classList.add("auth-body-bg");
-//     this.loginForm = this.formBuilder.group({
-//       firstName: [null, [Validators.required]],
-//       lastName: [null, [Validators.required]],
-//       phone: [null, [Validators.required]],
-//       email: [null, [Validators.required, Validators.email]],
-//       address: [null, []],
-//       password: [null, [Validators.required, Validators.minLength(6)]],
-//       confirmPassword: [null, [Validators.required, Validators.minLength(6)]],
-//       referralCode: [null, [Validators.minLength(11)]],
-//     });
-//   }
-
-//   carouselOption: OwlOptions = {
-//     items: 1,
-//     loop: false,
-//     margin: 0,
-//     nav: false,
-//     dots: true,
-//     responsive: {
-//       680: {
-//         items: 1,
-//       },
-//     },
-//   };
-
-//   get f() {
-//     return this.loginForm.controls;
-//   }
-
-//   onSubmit() {
-//     this.showErr = false;
-//     this.isLoggingIn = true;
-//     this.submitted = true;
-
-//     // stop here if form is invalid
-//     if (this.loginForm.invalid) {
-//       return;
-//     } else {
-//       this.authenticationService
-//         .affiliateRegistration(this.loginForm.value)
-//         .pipe(first())
-//         .subscribe(
-//           (data) => {
-//             this.isLoggingIn = false;
-//             Swal.fire("success", "Registration successful");
-//           },
-//           (error) => {
-//             this.isLoggingIn = false;
-//             console.log("error ::", error);
-//             this.error = error ? error : "";
-//           }
-//         );
-//     }
-//   }
-
-//   /**
-//    * Password Hide/Show
-//    */
-//   toggleFieldTextType() {
-//     this.fieldTextType = !this.fieldTextType;
-//   }
-// }
-export class AffiliateRegistrationComponent implements OnInit {
+export class AffiliateReferralRegistrationComponent implements OnInit {
   // set the currenr year
   year: number = new Date().getFullYear();
 
@@ -114,6 +32,7 @@ export class AffiliateRegistrationComponent implements OnInit {
     },
   };
 
+  referralCode: string
   loginForm: UntypedFormGroup;
   submitted = false;
   error = "";
@@ -126,8 +45,13 @@ export class AffiliateRegistrationComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
     private authenticationService: AuthenticationService
-  ) {}
+  ) {
+    this.route.params.subscribe((params) => {
+      this.referralCode = params["referralcode"];
+    });
+  }
 
   ngOnInit(): void {
     document.body.classList.add("auth-body-bg");
@@ -146,7 +70,7 @@ export class AffiliateRegistrationComponent implements OnInit {
           ],
         ],
         confirmPassword: [null, [Validators.required]],
-        referralCode: [null, []],
+        referralCode: [this.referralCode, []],
         termsAccepted: [false, [Validators.requiredTrue]],
       },
       {

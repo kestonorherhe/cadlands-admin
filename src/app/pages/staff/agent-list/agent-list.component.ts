@@ -158,7 +158,7 @@ export class AgentListComponent implements OnInit {
         this.getAllAdmins();
       },
       (error) => {
-        Swal.fire("Process Failed!", "Failed to capture farmer", "error");
+        Swal.fire("Process Failed!", "Failed to create staff", "error");
       }
     );
   }

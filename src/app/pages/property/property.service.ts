@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
 import { EnvService } from "src/app/core/services/env.service";
 import { HttpService } from "src/app/core/services/http.service";
@@ -12,6 +13,15 @@ export class PropertyService {
     private envService: EnvService
   ) {}
 
+  // property prices observables
+  private propertyPricesSubject = new BehaviorSubject<any | []>([]);
+  get propertyPrices$() {
+    return this.propertyPricesSubject.asObservable();
+  }
+  setPropertyPrices(propertyPrices: any) {
+    this.propertyPricesSubject.next(propertyPrices);
+  }
+
   uploadFile(data: any) {
     return this.http.post(`${this.envService.httpService}/upload`, data).pipe(
       map((res: any) => {
@@ -21,9 +31,9 @@ export class PropertyService {
     );
   }
 
-  uploadImage(file: File): Promise<any> {
-    const formData = new FormData();
-    formData.append("file", file);
+  uploadImage(formData: FormData): Promise<any> {
+    // const formData = new FormData();
+    // formData.append("file", file);
 
     return new Promise((resolve, reject) => {
       this.uploadFile(formData).subscribe(
@@ -69,7 +79,7 @@ export class PropertyService {
     return this.httpService.post(`estate`, data);
   }
   updateEstate(data: any) {
-    return this.httpService.post(`estate`, data);
+    return this.httpService.put(`estate`, data);
   }
 
   getAllEstate(payload: { estateId?: string }) {
@@ -88,7 +98,7 @@ export class PropertyService {
   }
 
   // proeprty templates
-  getAllPropertyTemplates(payload: { estateId?: string }) {
+  getAllPropertyTemplates(payload: { estateId?: string, propertyTemplateId?: string }) {
     // Initialize URLSearchParams
     const params = new URLSearchParams();
 
@@ -96,12 +106,14 @@ export class PropertyService {
     if (payload?.estateId) {
       params.set("estate_id", payload.estateId);
     }
+    if (payload?.propertyTemplateId) {
+      params.set("property_template_id", payload.propertyTemplateId);
+    }
 
     // Construct final URL
-    const url = `property-template?${params.toString()}`;
+    const url = `property-template/all-property-templates?${params.toString()}`;
 
     return this.httpService.get(url);
-    // return this.httpService.get("farmers");
   }
 
   createPropertyTemplate(data: any) {
@@ -112,10 +124,22 @@ export class PropertyService {
     return this.httpService.put("property-template", data);
   }
 
+  updatePropertyTemplatePrice(data: any) {
+    return this.httpService.post(
+      "property-template/update-property-template-price",
+      data
+    );
+  }
+
   // property routes
   getAllProperties(payload: { estateId?: string; status?: string }) {
     // Initialize URLSearchParams
     const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.estateId) {
+      params.set("estate_id", payload.estateId);
+    }
 
     // Add the availability parameter conditionally
     if (payload?.status) {

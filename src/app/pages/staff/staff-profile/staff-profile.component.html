@@ -261,67 +261,6 @@
                 </ngx-simplebar>
               </ng-template>
             </li>
-            <li [ngbNavItem]="3">
-              <a ngbNavLink>Tractor Owners</a>
-              <ng-template ngbNavContent>
-                <ngx-simplebar style="height: 250px">
-                  <dx-data-grid
-                    id="gridContainer"
-                    [dataSource]="data"
-                    keyExpr="id"
-                    [showBorders]="true"
-                    [showColumnLines]="true"
-                    [showRowLines]="true"
-                    [rowAlternationEnabled]="true"
-                    [columnAutoWidth]="true"
-                    [allowColumnResizing]="true"
-                  >
-                    <dxo-paging [pageSize]="10"> </dxo-paging>
-                    <dxo-selection mode="single"></dxo-selection>
-                    <div>
-                      <dx-button
-                        stylingMode="contained"
-                        text="Contained"
-                        type="normal"
-                        [width]="120"
-                      >
-                      </dx-button>
-                    </div>
-                    <dxo-export
-                      [enabled]="true"
-                      [allowExportSelectedData]="true"
-                    ></dxo-export>
-
-                    <dxo-search-panel
-                      [visible]="true"
-                      [width]="350"
-                    ></dxo-search-panel>
-
-                    <dxi-column
-                      dataField="firstName"
-                      caption="First Name"
-                    ></dxi-column>
-
-                    <dxi-column
-                      dataField="scheduledDate"
-                      caption="Scheduled Date"
-                    ></dxi-column>
-
-                    <!-- <dxi-column caption="View" name="delistBtn" type="buttons">
-                      <dxi-button
-                        text="View"
-                        [onClick]="viewRecord"
-                      ></dxi-button>
-                    </dxi-column> -->
-
-                    <dxo-summary>
-                      <dxi-total-item column="id" summaryType="count">
-                      </dxi-total-item>
-                    </dxo-summary>
-                  </dx-data-grid>
-                </ngx-simplebar>
-              </ng-template>
-            </li>
           </ul>
           <div [ngbNavOutlet]="nav1" class="mt-4"></div>
         </div>

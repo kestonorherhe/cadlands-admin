@@ -3,16 +3,13 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Router } from "@angular/router";
 import Swal from "sweetalert2";
 import { PropertyService } from "../../property/property.service";
+import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 @Component({
   selector: "app-estate-list",
   templateUrl: "./estate-list.component.html",
   styleUrls: ["./estate-list.component.scss"],
 })
-
-/**
- * Contacts-profile component
- */
 export class EstateListComponent implements OnInit {
   breadCrumbItems: Array<{}>;
   data: any;
@@ -25,16 +22,17 @@ export class EstateListComponent implements OnInit {
     description: null,
   };
 
+  files: File[] = [];
+  public Editor = ClassicEditor;
+
   constructor(
     private modalService: NgbModal,
     private readonly _router: Router,
     private readonly propertyService: PropertyService
-  ) {
-    this.viewRecord = this.viewRecord.bind(this);
-  }
+  ) {}
 
   viewRecord(evt: any) {
-    console.log("🚀 ~ EstateListComponent ~ viewRecord ~ evt:", evt)
+    console.log("🚀 ~ EstateListComponent ~ viewRecord ~ evt:", evt);
     const id = evt.id;
     this._router.navigate(["estate", id]);
   }
@@ -95,15 +93,47 @@ export class EstateListComponent implements OnInit {
     };
   }
 
-  processImage(evt: any) {
-    this.obj.imageUrl = evt.target.files[0];
+  // processImage(evt: any) {
+  //   this.obj.imageUrl = evt.target.files[0];
+  // }
+
+  // dropzone methods
+  onSelect(event: any) {
+    console.log(event);
+    // Clear existing files before adding new ones
+    this.files = [];
+
+    // Validate file type (optional, but recommended)
+    const file = event.addedFiles[0];
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+
+    if (!allowedTypes.includes(file.type)) {
+      Swal.fire("", "Please upload a valid image file", "warning");
+      return;
+    }
+
+    this.files.push(file);
+  }
+
+  onRemove(event: any) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
   }
 
   async onSubmit() {
     this.isLoading = true;
+
+    let formData: FormData = new FormData();
+    for (let i = 0; i < this.files.length; i++) {
+      formData.append("file", this.files[i]);
+    }
+
+    const imageUrl = await this.propertyService.uploadImage(formData);
+    console.log("🚀 ~ EstateListComponent ~ onSubmit ~ imageUrl:", imageUrl);
+
     const data = {
       name: this.obj.estateName,
-      imageUrl: await this.propertyService.uploadImage(this.obj.imageUrl),
+      imageUrl: imageUrl,
       description: this.obj.description,
     };
     this.propertyService.createEstate(data).subscribe(
@@ -120,7 +150,7 @@ export class EstateListComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to capture farmer", "error");
+        Swal.fire("Process Failed!", "Failed to create estate", "error");
       }
     );
   }

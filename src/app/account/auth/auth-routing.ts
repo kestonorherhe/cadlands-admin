@@ -9,6 +9,7 @@ import { PasswordresetComponent } from './passwordreset/passwordreset.component'
 import { Register2Component } from './register2/register2.component';
 import { Recoverpwd2Component } from './recoverpwd2/recoverpwd2.component';
 import { AffiliateRegistrationComponent } from './affiliate-registration/affiliate-registration.component';
+import { AffiliateReferralRegistrationComponent } from './affiliate-referral-registration/affiliate-referral-registration.component';
 
 const routes: Routes = [
     {
@@ -38,6 +39,10 @@ const routes: Routes = [
     {
         path: 'affiliate-registration',
         component: AffiliateRegistrationComponent
+    },
+    {
+        path: 'affiliate-registration/referral/:referralcode',
+        component: AffiliateReferralRegistrationComponent
     }
 ];
 

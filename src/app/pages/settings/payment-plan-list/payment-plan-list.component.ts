@@ -225,7 +225,7 @@ export class PaymentPlanListComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to capture farmer", "error");
+        Swal.fire("Process Failed!", "Failed to create property type", "error");
       }
     );
   }
@@ -252,7 +252,7 @@ export class PaymentPlanListComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to capture farmer", "error");
+        Swal.fire("Process Failed!", "Failed to create property sub-type", "error");
       }
     );
   }

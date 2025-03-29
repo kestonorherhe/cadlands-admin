@@ -160,17 +160,5 @@ export class AffiliateListComponent implements OnInit {
       city: this.obj.city.toString(),
     };
     console.log("🚀 ~ FarmerListComponent ~ onSubmit ~ data:", data);
-
-    // this.farmerService.createRecord(data).subscribe(
-    //   (response: any) => {
-    //     Swal.fire("Process Successful!", "Farmer Captured", "success");
-    //     this.modalService.dismissAll();
-    //     this.resetForm();
-    //     this.getAllFarmers();
-    //   },
-    //   (error) => {
-    //     Swal.fire("Process Failed!", "Failed to capture farmer", "error");
-    //   }
-    // );
   }
 }

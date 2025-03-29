@@ -187,7 +187,7 @@ export class PendingApplicationRequestListComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to capture farmer", "error");
+        Swal.fire("Process Failed!", "Failed to process application", "error");
       }
     );
   }

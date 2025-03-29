@@ -153,19 +153,17 @@
     <div class="modal-footer">
       <button
         *ngIf="!isLoading"
-        class="btn"
-        style="background-color: #2a3042; color: #ffffff"
+        class="btn btn-primary btn-rounded"
         (click)="onSubmit()"
       >
         Submit
       </button>
-      <button *ngIf="!isLoading" class="btn btn-danger" (click)="closeModal()">
+      <button *ngIf="!isLoading" class="btn btn-danger btn-rounded" (click)="closeModal()">
         Cancel
       </button>
       <button
         *ngIf="isLoading"
-        class="btn"
-        style="background-color: #2a3042; color: #ffffff"
+        class="btn btn-primary btn-rounded"
         disabled
       >
         Processing <span><i class="bx bx-loader bx-spin"></i></span>
@@ -243,19 +241,17 @@
     <div class="modal-footer">
       <button
         *ngIf="!isLoading"
-        class="btn"
-        style="background-color: #2a3042; color: #ffffff"
+        class="btn btn-primary btn-rounded"
         (click)="onUpdate()"
       >
         Update
       </button>
-      <button *ngIf="!isLoading" class="btn btn-danger" (click)="closeModal()">
+      <button *ngIf="!isLoading" class="btn btn-danger btn-rounded" (click)="closeModal()">
         Cancel
       </button>
       <button
         *ngIf="isLoading"
-        class="btn"
-        style="background-color: #2a3042; color: #ffffff"
+        class="btn btn-primary btn-rounded"
         disabled
       >
         Processing <span><i class="bx bx-loader bx-spin"></i></span>

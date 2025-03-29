@@ -192,7 +192,7 @@ export class PropertyListComponent implements OnInit {
         this.isLoading = false;
         Swal.fire(
           "Process Successful!",
-          "Estate successfully created!",
+          "Property successfully created!",
           "success"
         );
         this.modalService.dismissAll();
@@ -201,7 +201,7 @@ export class PropertyListComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to capture farmer", "error");
+        Swal.fire("Process Failed!", "Failed to create property", "error");
       }
     );
   }

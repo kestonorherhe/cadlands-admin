@@ -91,9 +91,11 @@ export class Login2Component implements OnInit {
 
             if (data.data.role && data.data.role == "admin") {
               window.location.replace("/dashboard");
+            } else if (data.data.role && data.data.role == "super_admin") {
+              window.location.replace("/dashboard");
             } else if (data.data.role && data.data.role == "affiliate") {
               window.location.replace("/my-dashboard");
-            }
+            } 
             // if (data.verxid.status == 1) {
             //   console.log("we are here!!!!");
             //   // this.router.navigate([""]);

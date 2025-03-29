@@ -158,49 +158,4 @@ export class ApplicationRequestListComponent implements OnInit {
     console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
-
-  // async onSubmit() {
-  //   let formData: FormData = new FormData();
-  //   for (let i = 0; i < this.files.length; i++) {
-  //     formData.append("files", this.files[i]);
-  //   }
-
-  //   this.isLoading = true;
-  //   const data = {
-  //     estateId: this.obj.estateId,
-  //     propertyTypeId: this.obj.propertyTypeId,
-  //     propertySubTypeId: this.obj.propertySubTypeId,
-  //     name: this.obj.propertyName,
-  //     buildingStructure: this.obj.buildingStructure,
-  //     mapUrl: this.obj.mapUrl,
-  //     size: this.obj.size,
-  //     price: this.obj.propertyPrice,
-  //     negotiationStatusId: this.obj.negotiationStatusId,
-  //     description: this.obj.description,
-  //     images: await this.applicationRequestService.uploadImages(formData),
-  //     facilities: [],
-  //     titles: [],
-  //   };
-  //   this.applicationRequestService.createProperty(data).subscribe(
-  //     (response: any) => {
-  //       console.log(
-  //         "🚀 ~ PropertyListComponent ~ onSubmit ~ response:",
-  //         response
-  //       );
-  //       this.isLoading = false;
-  //       Swal.fire(
-  //         "Process Successful!",
-  //         "Estate successfully created!",
-  //         "success"
-  //       );
-  //       this.modalService.dismissAll();
-  //       this.resetForm();
-  //       this.getAllProperties();
-  //     },
-  //     (error) => {
-  //       this.isLoading = false;
-  //       Swal.fire("Process Failed!", "Failed to capture farmer", "error");
-  //     }
-  //   );
-  // }
 }
