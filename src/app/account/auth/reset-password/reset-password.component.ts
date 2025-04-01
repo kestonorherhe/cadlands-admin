@@ -6,27 +6,30 @@ import {
 } from "@angular/forms";
 import { AuthenticationService } from "../../../core/services/auth.service";
 import { first } from "rxjs/operators";
-import Swal from "sweetalert2";
 
 @Component({
-  selector: "app-affiliate-registration",
-  templateUrl: "./affiliate-registration.component.html",
-  styleUrls: ["./affiliate-registration.component.scss"],
+  selector: "app-reset-password",
+  templateUrl: "./reset-password.component.html",
+  styleUrls: ["./reset-password.component.scss"],
 })
-
-export class AffiliateRegistrationComponent implements OnInit {
-  // set the currenr year
-  year: number = new Date().getFullYear();
-
+/**
+ * Login-2 component
+ */
+export class ResetPasswordComponent implements OnInit {
   loginForm: UntypedFormGroup;
   submitted = false;
   error = "";
   showErr = false;
   isLoggingIn = false;
+  returnUrl: string;
+  fieldTextType!: boolean;
 
   // Password visibility toggle
   passwordFieldType: "password" | "text" = "password";
   confirmPasswordFieldType: "password" | "text" = "password";
+
+  // set the currenr year
+  year: number = new Date().getFullYear();
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -37,10 +40,6 @@ export class AffiliateRegistrationComponent implements OnInit {
     document.body.classList.add("auth-body-bg");
     this.loginForm = this.formBuilder.group(
       {
-        firstName: [null, [Validators.required]],
-        lastName: [null, [Validators.required]],
-        phone: [null, [Validators.required]],
-        email: [null, [Validators.required, Validators.email]],
         password: [
           null,
           [
@@ -50,8 +49,6 @@ export class AffiliateRegistrationComponent implements OnInit {
           ],
         ],
         confirmPassword: [null, [Validators.required]],
-        referralCode: [null, []],
-        termsAccepted: [false, [Validators.requiredTrue]],
       },
       {
         validators: this.passwordMatchValidator,
@@ -71,6 +68,11 @@ export class AffiliateRegistrationComponent implements OnInit {
         }
       }
     });
+  }
+
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.loginForm.controls;
   }
 
   // Custom validator for password strength
@@ -110,11 +112,6 @@ export class AffiliateRegistrationComponent implements OnInit {
     return null;
   }
 
-  // Getter for easy access to form controls
-  get f() {
-    return this.loginForm.controls;
-  }
-
   // Toggle password visibility
   togglePasswordVisibility(field: "password" | "confirmPassword") {
     if (field === "password") {
@@ -126,46 +123,47 @@ export class AffiliateRegistrationComponent implements OnInit {
     }
   }
 
+  /**
+   * Form submit
+   */
   onSubmit() {
-    this.submitted = true;
     this.showErr = false;
+    this.isLoggingIn = true;
+    this.submitted = true;
 
-    // Additional check for password validation
-    if (
-      this.loginForm.get("password").value !==
-      this.loginForm.get("confirmPassword").value
-    ) {
-      this.loginForm
-        .get("confirmPassword")
-        .setErrors({ passwordMismatch: true });
-      return;
-    }
-
-    // Stop if form is invalid
+    // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
+    } else {
+      this.authenticationService
+        .login(this.loginForm.value)
+        .pipe(first())
+        .subscribe(
+          (data) => {
+            console.log("🚀 ~ Login2Component ~ onSubmit ~ data:", data);
+            this.isLoggingIn = false;
+
+            if (data.data.role && data.data.role == "admin") {
+              window.location.replace("/dashboard");
+            } else if (data.data.role && data.data.role == "super_admin") {
+              window.location.replace("/dashboard");
+            } else if (data.data.role && data.data.role == "affiliate") {
+              window.location.replace("/my-dashboard");
+            }
+          },
+          (error) => {
+            this.isLoggingIn = false;
+            console.log("error ::", error);
+            this.error = error ? error : "";
+          }
+        );
     }
+  }
 
-    this.isLoggingIn = true;
-
-    this.authenticationService
-      .affiliateRegistration(this.loginForm.value)
-      .pipe(first())
-      .subscribe(
-        (data) => {
-          this.isLoggingIn = false;
-          Swal.fire({
-            icon: "success",
-            title: "Registration Successful",
-            text: "You have been registered successfully!",
-          });
-        },
-        (error) => {
-          this.isLoggingIn = false;
-          this.showErr = true;
-          this.error =
-            error?.message || "Registration failed. Please try again.";
-        }
-      );
+  /**
+   * Password Hide/Show
+   */
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
   }
 }

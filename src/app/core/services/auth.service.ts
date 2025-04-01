@@ -66,6 +66,7 @@ export class AuthenticationService {
         })
       );
   }
+
   affiliateRegistration(credential) {
     console.log("affiliate registration...");
     return this.http
@@ -103,12 +104,16 @@ export class AuthenticationService {
    * Reset password
    * @param email email
    */
-  resetPassword(email: string) {
-    // return getFirebaseBackend().forgetPassword(email).then((response: any) => {
-    //     const message = response.data;
-    //     return message;
-    // });
-    return;
+  resetPassword(data) {
+    console.log("resetting password...");
+    return this.http
+      .post<any>(`${this.envService.httpService}/auth/forgot-password`, data)
+      .pipe(
+        map((response) => {
+          console.log("🚀 ~ AuthenticationService ~ map ~ response:", response);
+          return response;
+        })
+      );
   }
 
   /**

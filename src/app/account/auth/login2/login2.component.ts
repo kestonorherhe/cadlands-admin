@@ -96,15 +96,6 @@ export class Login2Component implements OnInit {
             } else if (data.data.role && data.data.role == "affiliate") {
               window.location.replace("/my-dashboard");
             } 
-            // if (data.verxid.status == 1) {
-            //   console.log("we are here!!!!");
-            //   // this.router.navigate([""]);
-            //   window.location.replace('');
-            // } else if (data.verxid.status == 0) {
-            //   console.log("error message ::", data.verxid.message)
-            //   this.error = data.verxid.message;
-            //   this.showErr = true;
-            // }
           },
           (error) => {
             this.isLoggingIn = false;

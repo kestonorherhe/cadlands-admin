@@ -1,0 +1,242 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="row p-4">
+          <div class="col-6">
+            <h4 class="card-title" style="padding: 0px; font-size: 1.5rem">
+              Other Listings (Estate)
+            </h4>
+            <p style="font-size: 1rem">List available estates.</p>
+          </div>
+          <div class="col-6">
+            <button
+              class="btn btn-primary text-right"
+              style="
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                float: right;
+              "
+              (click)="createRecordModal(createItemModal)"
+            >
+              <!-- <app-keenicon name="plus-square" class="fs-3"></app-keenicon> -->
+              <span style="margin-left: 6px">Create Estate</span>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-12">
+              <!-- search field goes here -->
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-middle gs-0 gy-4">
+              <thead>
+                <tr class="fw-bolder text-muted bg-light">
+                  <th
+                    class="min-w-10px text-gray-900 text-end rounded-end"
+                  ></th>
+                  <th class="min-w-100px text-gray-900">Estate</th>
+                  <th class="min-w-50px text-gray-900">Status</th>
+                  <th class="min-w-100px text-gray-900">Created At</th>
+                  <th class="min-w-100px text-gray-900"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="data != null">
+                  <tr *ngFor="let item of data?.estates">
+                    <td class="text-end">
+                      <a (click)="viewRecord(item)" style="cursor: pointer">
+                        <i class="bx bx-pointer"></i>
+                        Edit
+                      </a>
+                    </td>
+                    <td>
+                      {{ item.name }}
+                    </td>
+                    <td>Active</td>
+                    <td>
+                      {{ item?.createdAt | date }}
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #createItemModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Create Estate</h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="mb-3">
+            <label
+              for="estateName"
+              [class.text-danger]="estateName.invalid &amp;&amp; estateName.touched"
+              class="form-label"
+              >Estate Name <span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="estateName"
+              #estateName="ngModel"
+              [(ngModel)]="obj.estateName"
+              [class.is-invalid]="estateName.invalid &amp;&amp; estateName.touched"
+              placeholder="Enter Estate Name"
+              required
+            />
+
+            <div *ngIf="estateName.invalid &amp;&amp; estateName.touched">
+              <small *ngIf="estateName.errors?.required" class="text-danger"
+                >Estate Name is Required</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="mb-3">
+            <label
+              for="imageUrl"
+              [class.text-danger]="imageUrl.invalid &amp;&amp; imageUrl.touched"
+              class="form-label"
+              >Estate Image <span class="text-danger">*</span></label
+            >
+            <input
+              type="file"
+              class="form-control"
+              name="imageUrl"
+              #imageUrl="ngModel"
+              [(ngModel)]="obj.imageUrl"
+              [class.is-invalid]="imageUrl.invalid &amp;&amp; imageUrl.touched"
+              required
+              (change)="processImage($event)"
+            />
+  
+            <div *ngIf="estateName.invalid &amp;&amp; estateName.touched">
+              <small *ngIf="estateName.errors?.required" class="text-danger"
+                >Estate Image is Required</small
+              >
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="mb-3">
+            <label
+              for="description"
+              [class.text-danger]="description.invalid &amp;&amp; description.touched"
+              class="form-label"
+              >Estate Description <span class="text-danger">*</span></label
+            >
+            <textarea
+              class="form-control"
+              name="description"
+              #description="ngModel"
+              [(ngModel)]="obj.description"
+              [class.is-invalid]="description.invalid &amp;&amp; description.touched"
+              placeholder="Enter Estate Description"
+              required
+            ></textarea>
+  
+            <div *ngIf="description.invalid &amp;&amp; description.touched">
+              <small *ngIf="description.errors?.required" class="text-danger"
+                >Estate Description is Required</small
+              >
+            </div>
+          </div>
+        </div> -->
+
+        <label class="form-label"
+          >Images <span class="text-danger">*</span></label
+        >
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <ngx-dropzone [multiple]="false" (change)="onSelect($event)">
+            <ngx-dropzone-label>Drop images!</ngx-dropzone-label>
+
+            <ngx-dropzone-image-preview
+              ngProjectAs="ngx-dropzone-preview"
+              *ngFor="let f of files"
+              [file]="f"
+              required
+            >
+              <ngx-dropzone-label>
+                {{ f.name }} ({{ f.type }})
+              </ngx-dropzone-label>
+            </ngx-dropzone-image-preview>
+          </ngx-dropzone>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 mt-4">
+          <div class="mb-3">
+            <label
+              for="description"
+              [class.text-danger]="description.invalid &amp;&amp; description.touched"
+              class="form-label"
+              >Property Description/Prototype
+              <span class="text-danger">*</span></label
+            >
+            <ckeditor
+              [editor]="Editor"
+              [data]="obj.description"
+              name="description"
+              #description="ngModel"
+              [(ngModel)]="obj.description"
+              required
+            ></ckeditor>
+
+            <div *ngIf="description.invalid &amp;&amp; description.touched">
+              <small *ngIf="description.errors?.required" class="text-danger"
+                >Estate Description is Required</small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          *ngIf="!isLoading"
+          class="btn"
+          style="background-color: #2a3042; color: #ffffff"
+          (click)="onSubmit()"
+          [disabled]="form.invalid || files.length === 0"
+        >
+          Submit
+        </button>
+        <button
+          *ngIf="!isLoading"
+          class="btn btn-danger btn-rounded"
+          (click)="closeModal()"
+        >
+          Cancel
+        </button>
+        <button
+          *ngIf="isLoading"
+          class="btn"
+          style="background-color: #2a3042; color: #ffffff"
+          disabled
+        >
+          Processing <span><i class="bx bx-loader bx-spin"></i></span>
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

@@ -23,9 +23,16 @@ import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 import { EstateListComponent } from "./estate-list/estate-list.component";
 import { EstateRoutingModule } from "./estate-routing.module";
 import { EstateProfileComponent } from "./estate-profile/estate-profile.component";
+import { OtherListingComponent } from "./other-listing/other-listing.component";
+import { OtherListingProfileComponent } from "./other-listing-profile/other-listing-profile.component";
 
 @NgModule({
-  declarations: [EstateListComponent, EstateProfileComponent],
+  declarations: [
+    EstateListComponent,
+    OtherListingComponent,
+    EstateProfileComponent,
+    OtherListingProfileComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,

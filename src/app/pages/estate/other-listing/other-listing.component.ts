@@ -6,11 +6,11 @@ import { PropertyService } from "../../property/property.service";
 import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 @Component({
-  selector: "app-estate-list",
-  templateUrl: "./estate-list.component.html",
-  styleUrls: ["./estate-list.component.scss"],
+  selector: "app-other-listing",
+  templateUrl: "./other-listing.component.html",
+  styleUrls: ["./other-listing.component.scss"],
 })
-export class EstateListComponent implements OnInit {
+export class OtherListingComponent implements OnInit {
   breadCrumbItems: Array<{}>;
   data: any;
 
@@ -20,7 +20,7 @@ export class EstateListComponent implements OnInit {
     estateName: null,
     imageUrl: null,
     description: null,
-    otherListing: false,
+    otherListing: true,
   };
 
   files: File[] = [];
@@ -35,7 +35,7 @@ export class EstateListComponent implements OnInit {
   viewRecord(evt: any) {
     console.log("🚀 ~ EstateListComponent ~ viewRecord ~ evt:", evt);
     const id = evt.id;
-    this._router.navigate(["estate/info", id]);
+    this._router.navigate(["estate/other-listing", id]);
   }
 
   closeModal() {
@@ -75,7 +75,7 @@ export class EstateListComponent implements OnInit {
 
   getAllEstate() {
     this.isLoading = true;
-    this.propertyService.getAllEstate({}).subscribe(
+    this.propertyService.getAllOtherEstateListings({}).subscribe(
       (response: any) => {
         this.data = response.data;
         this.isLoading = false;
@@ -91,7 +91,7 @@ export class EstateListComponent implements OnInit {
       estateName: null,
       imageUrl: null,
       description: null,
-      otherListing: false,
+      otherListing: true,
     };
   }
 
@@ -137,6 +137,7 @@ export class EstateListComponent implements OnInit {
       name: this.obj.estateName,
       imageUrl: imageUrl,
       description: this.obj.description,
+      otherListing: this.obj.otherListing,
     };
     this.propertyService.createEstate(data).subscribe(
       (response: any) => {

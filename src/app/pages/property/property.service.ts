@@ -97,8 +97,64 @@ export class PropertyService {
     return this.httpService.get(url);
   }
 
+  getAllOtherEstateListings(payload: { estateId?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.estateId) {
+      params.set("estate_id", payload.estateId);
+    }
+
+    // Construct final URL
+    const url = `estate/other-listings?${params.toString()}`;
+
+    return this.httpService.get(url);
+  }
+
+  getAllDirectSaleCommissions(payload: { estateId?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.estateId) {
+      params.set("estate_id", payload.estateId);
+    }
+
+    // Construct final URL
+    const url = `estate/direct-sale-commission?${params.toString()}`;
+
+    return this.httpService.get(url);
+  }
+
+  createDirectSaleCommission(data: any) {
+    return this.httpService.post(`estate/direct-sale-commission`, data);
+  }
+
+  getAllIndirectSaleCommissions(payload: { estateId?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.estateId) {
+      params.set("estate_id", payload.estateId);
+    }
+
+    // Construct final URL
+    const url = `estate/indirect-sale-commission?${params.toString()}`;
+
+    return this.httpService.get(url);
+  }
+
+  createIndirectSaleCommission(data: any) {
+    return this.httpService.post(`estate/indirect-sale-commission`, data);
+  }
+
   // proeprty templates
-  getAllPropertyTemplates(payload: { estateId?: string, propertyTemplateId?: string }) {
+  getAllPropertyTemplates(payload: {
+    estateId?: string;
+    propertyTemplateId?: string;
+  }) {
     // Initialize URLSearchParams
     const params = new URLSearchParams();
 

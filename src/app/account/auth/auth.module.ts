@@ -13,9 +13,9 @@ import { Register2Component } from './register2/register2.component';
 import { Recoverpwd2Component } from './recoverpwd2/recoverpwd2.component';
 
 import { AuthRoutingModule } from './auth-routing';
-import { PasswordresetComponent } from './passwordreset/passwordreset.component';
 import { AffiliateRegistrationComponent } from './affiliate-registration/affiliate-registration.component';
 import { AffiliateReferralRegistrationComponent } from './affiliate-referral-registration/affiliate-referral-registration.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { AffiliateReferralRegistrationComponent } from './affiliate-referral-reg
     AffiliateRegistrationComponent,
     AffiliateReferralRegistrationComponent,
     SignupComponent,
-    PasswordresetComponent,
+    ResetPasswordComponent,
     Register2Component,
     Recoverpwd2Component,
   ],
