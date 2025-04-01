@@ -1,7 +1,7 @@
 <div>
   <div class="container-fluid p-0">
     <div class="row g-0">
-      <div class="col-xl-5">
+      <div class="col-xl-5 d-none d-md-block">
         <div class="auth-full-bg pt-lg-5 p-4">
           <div class="w-100">
             <div class="bg-overlay"></div>
@@ -20,46 +20,20 @@
       <!-- end col -->
 
       <div class="col-xl-7">
-        <div
-          class="auth-full-page-content p-md-5 p-4"
-          style="margin-right: 10rem"
-        >
+        <div class="auth-full-page-content p-md-5 p-4 affiliate-form-container">
           <div class="w-100">
             <div class="d-flex flex-column h-100">
               <div class="my-auto">
                 <div style="text-align: left; margin-bottom: 4rem">
                   <img
                     src="assets/images/cadland-logo.png"
-                    width="30%"
                     alt=""
-                    class="auth-logo-dark"
+                    class="auth-logo-dark logo"
                   />
                 </div>
                 <div>
-                  <h5
-                    style="
-                      color: #2a3042;
-                      font-family: Bilbo Swash Caps !important;
-                      font-weight: 400;
-                      font-size: 48px;
-                      line-height: 100%;
-                      letter-spacing: 0%;
-                      text-align: left;
-                    "
-                  >
-                    Reset Password
-                  </h5>
-                  <p
-                    style="
-                      margin-top: 1rem;
-                      font-family: Poppins;
-                      font-weight: 400;
-                      font-size: 16px;
-                      line-height: 100%;
-                      letter-spacing: 0%;
-                      text-align: left;
-                    "
-                  >
+                  <h5 class="header-text">Reset Password</h5>
+                  <p class="sub-header-text">
                     Log-in to continue to Cadlands Affiliate Account.
                   </p>
                 </div>
@@ -112,7 +86,7 @@
                       </div>
                     </div>
 
-                    <div class="text-start">
+                    <div class="login-button" style="margin-top: 4rem;">
                       <button
                         *ngIf="loading"
                         class="btn"
@@ -144,7 +118,7 @@
                       </button>
                     </div>
                   </form>
-                  <div class="mt-5 text-start">
+                  <div class="mt-5 footer-text">
                     <p>
                       Remember It ?
                       <a

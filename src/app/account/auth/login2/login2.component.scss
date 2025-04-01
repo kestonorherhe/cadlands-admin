@@ -1,4 +1,73 @@
-.form-control {
-    height: 48px !important;
-    border-radius: 10px;
+.slider {
+  visibility: visible;
+}
+
+.affiliate-form-container {
+  margin-right: 10rem;
+}
+
+.header-text {
+  color: #2a3042;
+  font-family: "Bilbo Swash Caps !important";
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+}
+
+.sub-header-text {
+  margin-top: 1rem;
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: left;
+}
+
+.logo {
+  width: 30%;
+}
+
+.login-button {
+    text-align: left
+  }
+
+@media (max-width: 576px) {
+  .affiliate-form-container {
+    margin-top: 20%;
+    margin-right: 0rem;
+  }
+
+  .logo {
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .header-text {
+    color: #2a3042;
+    font-family: "Bilbo Swash Caps !important";
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+  }
+
+  .sub-header-text {
+    margin-top: 1rem;
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+  }
+
+  .login-button {
+    text-align: center
+  }
 }

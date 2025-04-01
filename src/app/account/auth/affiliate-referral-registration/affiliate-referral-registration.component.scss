@@ -1,4 +1,50 @@
 .form-control {
-    height: 48px !important;
-    border-radius: 10px;
+  height: 48px !important;
+  border-radius: 10px;
+}
+
+.slider {
+  visibility: visible;
+}
+
+.affiliate-form-container {
+  margin-right: 10rem;
+}
+
+.header-text {
+  color: #2a3042;
+  font-family: "Bilbo Swash Caps !important";
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+}
+
+.logo {
+  width: 30%;
+}
+
+@media (max-width: 576px) {
+  .affiliate-form-container {
+    margin-right: 0rem;
+  }
+
+  .slider {
+    visibility: hidden;
+  }
+
+  .logo {
+    width: 50%;
+  }
+
+  .header-text {
+    color: #2a3042;
+    font-family: "Bilbo Swash Caps !important";
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+  }
 }
