@@ -44,7 +44,7 @@ export class EnvService {
       console.log("this is the _env ::", this._env);
 
       this._httpService = "https://cadlands-api.onrender.com";
-    } else if (/^admin.birs.be.gov.ng/.test(hostname)) {
+    } else if (/^ca.cadlands.com/.test(hostname)) {
       this._env = Environment.Prod;
       console.log("this is the _env ::", this._env);
       this._httpService = "https://cadlands-api.onrender.com";
