@@ -28,23 +28,22 @@ export class HttpService {
 
    // GET method to fetch data from the API
    public get<T>(endpoint: string): Observable<T> {
-    return this.http.get<T>(`${environment.apiUrl}/${endpoint}`)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http
+      .get<T>(`${this.envService.httpService}/${endpoint}`)
+      .pipe(catchError(this.handleError));
   }
 
   // POST method to send data to the API
   public post<T>(endpoint: string, data: any): Observable<T> {
     return this.http
-      .post<T>(`${environment.apiUrl}/${endpoint}`, data)
+      .post<T>(`${this.envService.httpService}/${endpoint}`, data)
       .pipe(catchError(this.handleError));
   }
 
   // POST method to send data to the API
   public put<T>(endpoint: string, data: any): Observable<T> {
     return this.http
-      .put<T>(`${environment.apiUrl}/${endpoint}`, data)
+      .put<T>(`${this.envService.httpService}/${endpoint}`, data)
       .pipe(catchError(this.handleError));
   }
 }
