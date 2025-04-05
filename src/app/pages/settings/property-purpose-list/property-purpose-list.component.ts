@@ -20,6 +20,7 @@ export class PropertyPurposeListComponent implements OnInit {
   obj = {
     id: null,
     purpose: null,
+    description: null,
   };
 
   propertyPurposeCommission = {
@@ -133,6 +134,7 @@ export class PropertyPurposeListComponent implements OnInit {
     this.obj = {
       id: null,
       purpose: null,
+      description: null,
     };
     this.propertyPurposeCommission = {
       propertyPurposeId: null,
@@ -169,6 +171,7 @@ export class PropertyPurposeListComponent implements OnInit {
     const data = {
       id: this.obj.id,
       purpose: this.obj.purpose,
+      description: this.obj.description,
     };
     this.settingsService.updatePropertyPurpose(data).subscribe(
       (response: any) => {

@@ -29,12 +29,14 @@ import { MySalesHistoryComponent } from "./my-sales-history/my-sales-history.com
 import { MySubscriptionComponent } from "./my-subscription/my-subscription.component";
 import { MyCommissionWithdrawalComponent } from "./my-commission-withdrawal/my-commission-withdrawal.component";
 import { MyBonusWithdrawalComponent } from "./my-bonus-withdrawal/my-bonus-withdrawal.component";
+import { DeactivatedAffiliateListComponent } from "./deactivated-affiliate-list/deactivated-affiliate-list.component";
 
 @NgModule({
   declarations: [
     AffiliateListComponent,
     VerifiedAffiliateListComponent,
     PendingAffiliateListComponent,
+    DeactivatedAffiliateListComponent,
     AffiliateProfileComponent,
     MyProfileComponent,
     MyCommissionWithdrawalComponent,

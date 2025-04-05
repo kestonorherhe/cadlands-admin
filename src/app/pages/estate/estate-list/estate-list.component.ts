@@ -137,6 +137,7 @@ export class EstateListComponent implements OnInit {
       name: this.obj.estateName,
       imageUrl: imageUrl,
       description: this.obj.description,
+      otherListing: false,
     };
     this.propertyService.createEstate(data).subscribe(
       (response: any) => {

@@ -98,9 +98,10 @@ export class Login2Component implements OnInit {
             } 
           },
           (error) => {
+            this.showErr = true;
             this.isLoggingIn = false;
             console.log("error ::", error);
-            this.error = error ? error : "";
+            this.error = error ? error  : "";
           }
         );
     }

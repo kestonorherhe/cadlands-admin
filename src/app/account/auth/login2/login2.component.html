@@ -36,13 +36,14 @@
                   Log-in to continue to Cadlands Affiliate Account.
                 </p>
 
-                <p
-                  *ngIf="showErr"
-                  class="text-danger"
-                  style="text-align: center"
-                >
-                  {{ error }}
-                </p>
+                <div class="col-6">
+                  <ngb-alert
+                    type="danger"
+                    *ngIf="showErr"
+                    [dismissible]="false"
+                    >{{ error }}</ngb-alert
+                  >
+                </div>
               </div>
 
               <div class="mt-4">
@@ -134,7 +135,7 @@
                     </label>
                   </div>
 
-                  <div class="login-button" style="margin-top: 4rem;">
+                  <div class="login-button" style="margin-top: 4rem">
                     <button
                       *ngIf="isLoggingIn"
                       class="btn"

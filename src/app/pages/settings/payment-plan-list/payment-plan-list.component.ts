@@ -210,6 +210,7 @@ export class PaymentPlanListComponent implements OnInit {
     this.isLoading = true;
     const data = {
       name: this.obj.paymentPlan,
+      description: this.obj.description,
     };
     this.settingsService.createPaymentPlan(data).subscribe(
       (response: any) => {

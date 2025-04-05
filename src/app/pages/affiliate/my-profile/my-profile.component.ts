@@ -197,7 +197,7 @@ export class MyProfileComponent implements OnInit {
       showDenyButton: true,
       allowOutsideClick: false,
       confirmButtonText: "Yes, submit request!",
-      confirmButtonColor: "#1B84FF",
+      confirmButtonColor: "#450000",
       denyButtonText: `No, cancel`,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */

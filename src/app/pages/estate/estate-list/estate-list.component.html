@@ -214,8 +214,7 @@
       <div class="modal-footer">
         <button
           *ngIf="!isLoading"
-          class="btn"
-          style="background-color: #2a3042; color: #ffffff"
+          class="btn btn-primary btn-rounded"
           (click)="onSubmit()"
           [disabled]="form.invalid || files.length === 0"
         >
@@ -230,8 +229,7 @@
         </button>
         <button
           *ngIf="isLoading"
-          class="btn"
-          style="background-color: #2a3042; color: #ffffff"
+          class="btn btn-primary btn-rounded"
           disabled
         >
           Processing <span><i class="bx bx-loader bx-spin"></i></span>
