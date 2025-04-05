@@ -4,6 +4,7 @@ import { EventService } from "../../../core/services/event.service";
 import { QueryService } from "src/app/core/services/query.service";
 import { StaffService } from "../../staff/staff.service";
 import { Observable } from "rxjs";
+import { SalesCommissionService } from "../../sales-commission/sales-commission.service";
 
 @Component({
   selector: "app-affiliate-dashboard",
@@ -32,10 +33,8 @@ export class AffiliateDashboardComponent implements OnInit {
   @ViewChild("appointmentDetailModal")
   appointmentDetailModalRef: TemplateRef<any>;
   constructor(
-    private readonly queryService: QueryService,
     private modalService: NgbModal,
-    private eventService: EventService,
-    private staffService: StaffService
+    private readonly salesCommissionService: SalesCommissionService
   ) {
     this.viewDetail = this.viewDetail.bind(this);
   }
@@ -76,58 +75,51 @@ export class AffiliateDashboardComponent implements OnInit {
     /**
      * horizontal-vertical layput set
      */
-    const attribute = document.body.getAttribute("data-layout");
-    this.isVisible = attribute;
+    // const attribute = document.body.getAttribute("data-layout");
+    // this.isVisible = attribute;
 
     this.first_name = JSON.parse(
       localStorage.getItem("currentUser")
     ).first_name;
     this.user = JSON.parse(localStorage.getItem("currentUser"));
 
-    const vertical = document.getElementById("layout-vertical");
-    if (vertical != null) {
-      vertical.setAttribute("checked", "true");
-    }
-    if (attribute == "horizontal") {
-      const horizontal = document.getElementById("layout-horizontal");
-      if (horizontal != null) {
-        horizontal.setAttribute("checked", "true");
-        console.log(horizontal);
-      }
-    }
+    // const vertical = document.getElementById("layout-vertical");
+    // if (vertical != null) {
+    //   vertical.setAttribute("checked", "true");
+    // }
+    // if (attribute == "horizontal") {
+    //   const horizontal = document.getElementById("layout-horizontal");
+    //   if (horizontal != null) {
+    //     horizontal.setAttribute("checked", "true");
+    //     console.log(horizontal);
+    //   }
+    // }
 
     /**
      * Fetches the data
      */
     // this.fetchData();
 
-    this.staffService.getAllAdmins({ role: "admin" }).subscribe(
-      (response: any) => {
-        console.log("🚀 ~ DefaultComponent ~ ngOnInit ~ response:", response);
-        this.adminCount = response.length;
-      },
-      (error) => {}
-    );
-    this.staffService.getAllAdmins({ role: "agent" }).subscribe(
-      (response: any) => {
-        this.agentCount = response.length;
-      },
-      (error) => {}
-    );
-
-    // this.farmerService.getRecords({}).subscribe(
+    // this.staffService.getAllAdmins({ role: "admin" }).subscribe(
     //   (response: any) => {
-    //     this.farmerCount = response.length;
+    //     console.log("🚀 ~ DefaultComponent ~ ngOnInit ~ response:", response);
+    //     this.adminCount = response.length;
     //   },
     //   (error) => {}
     // );
+    // this.staffService.getAllAdmins({ role: "agent" }).subscribe(
+    //   (response: any) => {
+    //     this.agentCount = response.length;
+    //   },
+    //   (error) => {}
+    // );
+
+    this.transactions$ = this.salesCommissionService.getMySalesHistory({
+      // status: "PENDING",
+    });
   }
 
-  /**
-   * Change the layout onclick
-   * @param layout Change the layout
-   */
-  changeLayout(layout: string) {
-    this.eventService.broadcast("changeLayout", layout);
-  }
+  // changeLayout(layout: string) {
+  //   this.eventService.broadcast("changeLayout", layout);
+  // }
 }

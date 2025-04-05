@@ -7,7 +7,6 @@
             <h4 class="card-title" style="padding: 0px; font-size: 1.5rem">
               My Profile
             </h4>
-            <p style="font-size: 1rem">List available features.</p>
           </div>
 
           <div class="col-6">
@@ -36,9 +35,27 @@
         <div class="card-body">
           <div class="row">
             <div class="row mt-4 mb-2">
-              <h4 class="text-primary" style="font-weight: bold">
-                Personal Information
-              </h4>
+              <div class="col-6">
+                <h4 class="text-primary" style="font-weight: bold">
+                  Personal Information
+                </h4>
+              </div>
+
+              <div class="col-6">
+                <button
+                  class="btn btn-primary btn-rounded text-right"
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    float: right;
+                  "
+                  (click)="editNokModal(editNokTemplate)"
+                >
+                  <i class="bx bx-pen"></i>
+                  <span style="margin-left: 6px">Edit</span>
+                </button>
+              </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-12">
               <div class="mb-3">
@@ -102,7 +119,7 @@
                 >
                 <br />
                 <p style="font-size: 14px">
-                  {{ affiliate?.email }}
+                  {{ affiliate?.birthDate ?? "---" }}
                 </p>
               </div>
             </div>
@@ -113,7 +130,7 @@
                 >
                 <br />
                 <p style="font-size: 14px">
-                  {{ affiliate?.email }}
+                  {{ affiliate?.gender ?? "---" }}
                 </p>
               </div>
             </div>
@@ -124,7 +141,7 @@
                 >
                 <br />
                 <p style="font-size: 14px">
-                  {{ affiliate?.email }}
+                  {{ affiliate?.meansOfIdentification ?? "---" }}
                 </p>
               </div>
             </div>
@@ -195,6 +212,7 @@
                 "
                 (click)="editNokModal(editNokTemplate)"
               >
+                <i class="bx bx-pen"></i>
                 <span style="margin-left: 6px">Edit</span>
               </button>
             </div>

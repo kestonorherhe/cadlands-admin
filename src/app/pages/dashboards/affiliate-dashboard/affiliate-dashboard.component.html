@@ -24,12 +24,14 @@
   <!-- end page title -->
 
   <div class="row">
-    <div class="col-md-3" style="width: 25% !important">
+    <div class="col-md-3 col-sm-12 table-card">
       <div class="card mini-stats-wid">
         <div class="card-body">
           <div class="media">
             <div class="media-body">
-              <p class="text-muted fs-5 fw-medium">Affiliate Signup Commission</p>
+              <p class="text-muted fs-5 fw-medium">
+                Affiliate Signup Commission
+              </p>
               <h2 class="mb-0">NGN {{ 0 | number }}</h2>
               <h6 class="mb-0 mt-2">Affiliate Referral: 0</h6>
             </div>
@@ -37,7 +39,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3" style="width: 25% !important">
+    <div class="col-md-3 col-sm-12 table-card">
       <div class="card mini-stats-wid">
         <div class="card-body">
           <div class="media">
@@ -50,12 +52,14 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3" style="width: 25% !important">
+    <div class="col-md-3 col-sm-12 table-card">
       <div class="card mini-stats-wid">
         <div class="card-body">
           <div class="media">
             <div class="media-body">
-              <p class="text-muted fs-5 fw-medium">Direct-Affiliate Land Sales</p>
+              <p class="text-muted fs-5 fw-medium">
+                Direct-Affiliate Land Sales
+              </p>
               <h2 class="mb-0">NGN {{ 0 | number }}</h2>
               <h6 class="mb-0 mt-2">Land Sold: {{ 0 | number }}</h6>
             </div>
@@ -63,12 +67,14 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3" style="width: 25% !important">
+    <div class="col-md-3 col-sm-12 table-card">
       <div class="card mini-stats-wid">
         <div class="card-body">
           <div class="media">
             <div class="media-body">
-              <p class="text-muted fs-5 fw-medium">Indirect-Affiliate Land Sales</p>
+              <p class="text-muted fs-5 fw-medium">
+                Indirect-Affiliate Land Sales
+              </p>
               <h2 class="mb-0">NGN {{ 0 | number }}</h2>
               <h6 class="mb-0 mt-2">Land Sold: {{ 0 | number }}</h6>
             </div>
@@ -87,58 +93,114 @@
               <h4 class="card-title" style="padding: 0px">
                 All Land Sales Earnings
               </h4>
-              <p style="font-size: 1rem">
-                This list all land sales earnings.
-              </p>
+              <p style="font-size: 1rem">This list all land sales earnings.</p>
             </div>
 
-            <div class="table-responsive">
-            <table class="table align-middle gs-0 gy-4">
-              <thead>
-                <tr class="fw-bolder text-white bg-primary">
-                  <th
-                    class="min-w-10px text-gray-900 text-end text-center"
-                  ></th>
-                  <th class="min-w-250px text-gray-900">Feature</th>
-                  <th class="min-w-300px text-gray-900">Description</th>
-                  <th class="min-w-150px text-gray-900">Status</th>
-                  <th class="min-w-150px text-gray-900">Created At</th>
-                  <th class="min-w-100px text-gray-900"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <ng-container *ngIf="(transactions$ | async)?.data != null">
-                  <tr *ngFor="let item of (transactions$ | async)?.data">
-                    <td class="text-center">
-                      {{ item.id }}
-                    </td>
-                    <td>
-                      {{ item.name }}
-                    </td>
-                    <td>
-                      {{ item.description }}
-                    </td>
-                    <td>
-                      <span class="badge badge-light-primary fs-7 fw-bold"
-                        >Active</span
-                      >
-                    </td>
-                    <td>
-                      {{ item.createdAt | date }}
-                    </td>
-                    <td class="text-end">
-                      <a
-                        (click)="edit(item)"
-                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                      >
-                        View
-                      </a>
-                    </td>
+            <div class="table-responsive" style="max-width: 100%">
+              <table class="table align-middle gs-0 gy-4">
+                <thead>
+                  <tr class="fw-bolder text-white bg-primary">
+                    <!-- <th
+                      class="min-w-10px text-gray-900 text-end text-center"
+                    ></th> -->
+                    <th class="min-w-300px text-gray-900 text-center">
+                      Application ID
+                    </th>
+                    <th class="min-w-300px text-gray-900">Property Template</th>
+                    <th class="min-w-300px text-gray-900 text-center">
+                      No. of Plots
+                    </th>
+                    <th class="min-w-300px text-gray-900">Customer</th>
+
+                    <!-- <th class="min-w-300px text-gray-900">Affiliate</th>
+                    <th class="min-w-300px text-gray-900">Phone</th>
+                    <th class="min-w-300px text-gray-900">Email</th> -->
+                    <th class="min-w-300px text-gray-900 text-center">
+                      Paid Amount
+                    </th>
+                    <th class="min-w-300px text-gray-900 text-center">
+                      Coomission Amount
+                    </th>
+                    <th class="min-w-300px text-gray-900 text-center">
+                      Commission(%)
+                    </th>
+                    <th class="min-w-300px text-gray-900">Payment Date</th>
+
+                    <th class="min-w-150px text-gray-900">Status</th>
+                    <th class="min-w-150px text-gray-900">Created At</th>
+                    <th class="min-w-100px text-gray-900"></th>
                   </tr>
-                </ng-container>
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  <ng-container
+                    *ngIf="
+                      (transactions$ | async)?.data?.applicationRequests != null
+                    "
+                  >
+                    <tr
+                      *ngFor="
+                        let item of (transactions$ | async)?.data
+                          ?.applicationRequests
+                      "
+                    >
+                      <td class="text-center">
+                        {{ item.id }}
+                      </td>
+                      <td>
+                        {{ item?.propertyTemplate?.templateName }}
+                      </td>
+                      <td class="text-center">
+                        {{ item?.units }}
+                      </td>
+                      <td>
+                        {{ item?.customer?.firstName }}
+                        {{ item?.customer?.lastName }}
+                      </td>
+                      <!-- <td>
+                        {{ item.directAffiliate.firstName }}
+                        {{ item.directAffiliate.lastName }}
+                      </td>
+                      <td>
+                        {{ item.directAffiliate.phone }}
+                      </td>
+                      <td>
+                        {{ item.directAffiliate.email }}
+                      </td> -->
+                      <td class="text-center">
+                        {{ item?.amount | number }}
+                      </td>
+                      <td class="text-center">
+                        {{
+                          item?.amount *
+                            (item?.directCommission?.commission / 100) | number
+                        }}
+                      </td>
+                      <td class="text-center">
+                        {{ item?.directCommission?.commission | number }}
+                      </td>
+                      <td>
+                        {{ item?.paymentDate | date }}
+                      </td>
+
+                      <td>
+                        <span class="fs-7 fw-bold">{{ item?.status }}</span>
+                      </td>
+                      <td>
+                        {{ item.createdAt | date }}
+                      </td>
+                      <td class="text-end">
+                        <a
+                          (click)="edit(item)"
+                          class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                        >
+                          View
+                        </a>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

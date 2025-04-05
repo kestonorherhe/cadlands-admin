@@ -7,8 +7,8 @@
         class="page-title-box d-flex align-items-center justify-content-between"
       >
         <div>
-          <h4 class="mb-0 font-size-18">My Sales Withdrawals</h4>
-          <p class="font-size-15">Overview of all sales earnings and withdrawals</p>
+          <h4 class="mb-0 font-size-18">My Referral Bonus Withdrawals</h4>
+          <p class="font-size-15">Overview of all referral bonus earnings and withdrawals</p>
         </div>
         <div class="page-title-right">
           <ol class="breadcrumb m-0">
@@ -21,7 +21,7 @@
   <!-- end page title -->
 
   <div class="row">
-    <div class="col-md-3" style="width: 25% !important">
+    <div class="col-md-3 col-sm-12 table-card">
       <div class="card mini-stats-wid">
         <div class="card-body">
           <div class="media">
@@ -49,7 +49,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3" style="width: 25% !important">
+    <div class="col-md-3 col-sm-12 table-card">
       <div class="card mini-stats-wid">
         <div class="card-body">
           <div class="media">
@@ -78,7 +78,7 @@
       </div>
     </div>
 
-    <div class="col-md-3" style="width: 25% !important">
+    <div class="col-md-3 col-sm-12 table-card">
       <div class="card mini-stats-wid">
         <div class="card-body">
           <div class="media">
@@ -241,63 +241,6 @@
                       <td class="text-center">
                         {{ item.paymentDate | date }}
                       </td>
-
-                      <!-- <td class="text-end">
-                        <div class="dropdown d-inline-block" ngbDropdown>
-                          <button
-                            type="button"
-                            class="btn header-item"
-                            ngbDropdownToggle
-                            id="page-header-user-dropdown"
-                            style="
-                              display: flex;
-                              flex-direction: row;
-                              align-items: center;
-                            "
-                          >
-                            <i
-                              class="bx bx-pen"
-                              style="color: #000; font-size: 16px"
-                            ></i>
-                            <span
-                              class="d-none d-xl-inline-block ms-1"
-                              style="
-                                color: #000;
-                                font-size: 14px;
-                                font-weight: 500;
-                              "
-                              >Action</span
-                            >
-                            <i
-                              class="mdi mdi-chevron-down d-none d-xl-inline-block"
-                              style="color: #000; font-size: 15px"
-                            ></i>
-                          </button>
-                          <div
-                            class="dropdown-menu dropdown-menu-end"
-                            ngbDropdownMenu
-                          >
-                            <a
-                              class="dropdown-item"
-                              routerLink="/clients/client-profile"
-                              ><i
-                                class="bx bx-check-square font-size-16 text-success align-middle me-1"
-                              ></i>
-                              Approve</a
-                            >
-                            <div class="dropdown-divider"></div>
-                            <a
-                              class="dropdown-item text-danger"
-                              href="javascript: void(0);"
-                              (click)="edit(item)"
-                              ><i
-                                class="bx bx-x-square font-size-16 text-danger align-middle me-1 text-danger"
-                              ></i>
-                              Cancel</a
-                            >
-                          </div>
-                        </div>
-                      </td> -->
                     </tr>
                   </ng-container>
                 </tbody>

@@ -21,7 +21,7 @@
   <!-- end page title -->
 
   <div class="row">
-    <div class="col-md-3" style="width: 25% !important">
+    <div class="col-md-3 col-sm-12 table-card">
       <div class="card mini-stats-wid">
         <div class="card-body">
           <div class="media">
@@ -35,53 +35,68 @@
                   )?.totalAmount | number
                 }}
               </h2>
-              <h6 class="mb-0 mt-2">Land Sold: {{
+              <h6 class="mb-0 mt-2">
+                Land Sold:
+                {{
                   getPaidSales(
                     (transactions$ | async)?.data?.applicationRequests || []
                   )?.count | number
-                }}</h6>
+                }}
+              </h6>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-3" style="width: 25% !important">
+    <div class="col-md-3 col-sm-12 table-card">
       <div class="card mini-stats-wid">
         <div class="card-body">
           <div class="media">
             <div class="media-body">
               <p class="text-muted fs-5 fw-medium">Total Pending Land Sales</p>
-              <h2 class="mb-0">NGN {{
+              <h2 class="mb-0">
+                NGN
+                {{
                   getPendingSales(
                     (transactions$ | async)?.data?.applicationRequests || []
                   )?.totalAmount | number
-                }}</h2>
-              <h6 class="mb-0 mt-2">Pending Sales: {{
+                }}
+              </h2>
+              <h6 class="mb-0 mt-2">
+                Pending Sales:
+                {{
                   getPendingSales(
                     (transactions$ | async)?.data?.applicationRequests || []
                   )?.count | number
-                }}</h6>
+                }}
+              </h6>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-3" style="width: 25% !important">
+    <div class="col-md-3 col-sm-12 table-card">
       <div class="card mini-stats-wid">
         <div class="card-body">
           <div class="media">
             <div class="media-body">
               <p class="text-muted fs-5 fw-medium">Total Affiliate Sales</p>
-              <h2 class="mb-0">NGN {{
+              <h2 class="mb-0">
+                NGN
+                {{
                   getPaidSales(
                     (affiliateSales$ | async)?.data?.applicationRequests || []
                   )?.totalAmount | number
-                }}</h2>
-              <h6 class="mb-0 mt-2">Pending Sales: {{
+                }}
+              </h2>
+              <h6 class="mb-0 mt-2">
+                Pending Sales:
+                {{
                   getPaidSales(
                     (affiliateSales$ | async)?.data?.applicationRequests || []
                   )?.count | number
-                }}</h6>
+                }}
+              </h6>
             </div>
           </div>
         </div>
@@ -115,9 +130,9 @@
                     </th>
                     <th class="min-w-300px text-gray-900">Customer</th>
 
-                    <th class="min-w-300px text-gray-900">Affiliate</th>
+                    <!-- <th class="min-w-300px text-gray-900">Affiliate</th>
                     <th class="min-w-300px text-gray-900">Phone</th>
-                    <th class="min-w-300px text-gray-900">Email</th>
+                    <th class="min-w-300px text-gray-900">Email</th> -->
                     <th class="min-w-300px text-gray-900 text-center">
                       Paid Amount
                     </th>
@@ -159,7 +174,7 @@
                         {{ item?.customer?.firstName }}
                         {{ item?.customer?.lastName }}
                       </td>
-                      <td>
+                      <!-- <td>
                         {{ item.directAffiliate.firstName }}
                         {{ item.directAffiliate.lastName }}
                       </td>
@@ -168,7 +183,7 @@
                       </td>
                       <td>
                         {{ item.directAffiliate.email }}
-                      </td>
+                      </td> -->
                       <td class="text-center">
                         {{ item?.amount | number }}
                       </td>
