@@ -67,9 +67,9 @@ export class EstateProfileComponent implements OnInit {
 
   propertyObj = {
     propertyTemplateId: null,
-    propertyPurposeId: null,
-    propertyLocationId: null,
-    properties: [{ propertyName: null }],
+    properties: [
+      { propertyName: null, propertyPurposeId: null, propertyLocationId: null },
+    ],
   };
 
   updateProperty = {
@@ -85,7 +85,11 @@ export class EstateProfileComponent implements OnInit {
   };
 
   addItem() {
-    this.propertyObj.properties.push({ propertyName: null });
+    this.propertyObj.properties.push({
+      propertyName: null,
+      propertyPurposeId: null,
+      propertyLocationId: null,
+    });
   }
 
   removeItem(index: number) {
@@ -289,9 +293,13 @@ export class EstateProfileComponent implements OnInit {
 
     this.propertyObj = {
       propertyTemplateId: null,
-      propertyPurposeId: null,
-      propertyLocationId: null,
-      properties: [{ propertyName: null }],
+      properties: [
+        {
+          propertyName: null,
+          propertyPurposeId: null,
+          propertyLocationId: null,
+        },
+      ],
     };
   }
 
@@ -556,7 +564,10 @@ export class EstateProfileComponent implements OnInit {
   }
 
   getAcivePrice(prices: any[]) {
-    console.log("🚀 ~ EstateProfileComponent ~ getAcivePrice ~ prices:", prices)
+    console.log(
+      "🚀 ~ EstateProfileComponent ~ getAcivePrice ~ prices:",
+      prices
+    );
     if (!prices || !Array.isArray(prices) || prices.length === 0) {
       return 0;
     }
