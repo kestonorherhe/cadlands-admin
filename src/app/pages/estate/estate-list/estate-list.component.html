@@ -49,9 +49,9 @@
                 <ng-container *ngIf="data != null">
                   <tr *ngFor="let item of data?.estates">
                     <td class="text-end">
-                      <a (click)="viewRecord(item)" style="cursor: pointer">
-                        <i class="bx bx-pointer"></i>
-                        Edit
+                      <a class="text-primary" (click)="viewRecord(item)" style="cursor: pointer">
+                        <i class="bx bx-pen"></i>
+                        Manage
                       </a>
                     </td>
                     <td>
