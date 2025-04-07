@@ -12,7 +12,7 @@
           <div class="col-6">
             <button
               [disabled]="form.invalid || selectedItems.length == 0"
-              class="btn btn-primary text-right"
+              class="btn btn-primary btn-rounded text-right"
               style="
                 display: flex;
                 flex-direction: row;
@@ -25,7 +25,7 @@
               <span style="margin-left: 6px"> Submit & Save</span>
             </button>
 
-            <button class="btn btn-primary" disabled *ngIf="isLoading">
+            <button class="btn btn-primary btn-rounded" disabled *ngIf="isLoading">
               Please wait...
               <span
                 class="spinner-border spinner-border-sm align-middle ms-2"

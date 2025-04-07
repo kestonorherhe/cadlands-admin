@@ -23,7 +23,7 @@
           <div class="table-responsive">
             <table class="table align-middle gs-0 gy-4">
               <thead>
-                <tr class="fw-bolder text-muted bg-light">
+                <tr class="fw-bolder text-white bg-primary">
                   <th
                     class="min-w-10px text-gray-900 text-end rounded-end"
                   ></th>
@@ -314,10 +314,10 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button *ngIf="!isLoading" class="btn btn-primary" (click)="onSubmit()">
+      <button *ngIf="!isLoading" class="btn btn-primary btn-rounded" (click)="onSubmit()">
         Process Application
       </button>
-      <button *ngIf="isLoading" class="btn btn-primary" disabled>
+      <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
         Processing <span><i class="bx bx-loader bx-spin"></i></span>
       </button>
     </div>

@@ -30,7 +30,7 @@
           <div class="media">
             <div class="media-body">
               <p class="text-muted fw-medium">Total Affiliates</p>
-              <h4 class="mb-0">{{ 0 }}</h4>
+              <h4 class="mb-0">{{ affiliateCount ?? 0 | number }}</h4>
             </div>
 
             <div
@@ -72,7 +72,7 @@
           <div class="media">
             <div class="media-body">
               <p class="text-muted fw-medium">Total Estates</p>
-              <h4 class="mb-0">{{ 0 }}</h4>
+              <h4 class="mb-0">{{ estateCount ?? 0 | number }}</h4>
             </div>
 
             <div
@@ -93,7 +93,7 @@
           <div class="media">
             <div class="media-body">
               <p class="text-muted fw-medium">Total Properties</p>
-              <h4 class="mb-0">{{ 0 }}</h4>
+              <h4 class="mb-0">{{ propertyCount ?? 0 | number }}</h4>
             </div>
 
             <div
@@ -114,7 +114,7 @@
           <div class="media">
             <div class="media-body">
               <p class="text-muted fw-medium">Total Application</p>
-              <h4 class="mb-0">{{ 0 }}</h4>
+              <h4 class="mb-0">{{ totalApplicationCount | number }}</h4>
             </div>
 
             <div
@@ -143,8 +143,7 @@
           <div class="table-responsive">
             <table class="table align-middle gs-0 gy-4">
               <thead>
-                <tr class="fw-bolder text-muted bg-light">
-                  <!-- <th class="min-w-10px text-gray-900 text-end"></th> -->
+                <tr class="fw-bolder text-white bg-primary">
                   <th class="min-w-100px text-gray-900">ID</th>
                   <th class="min-w-100px text-gray-900">Estate</th>
                   <th class="min-w-100px text-gray-900">Property Type</th>
@@ -176,14 +175,6 @@
               <tbody>
                 <ng-container *ngIf="data?.applications != null">
                   <tr *ngFor="let item of data?.applications">
-                    <!-- <td class="text-end">
-                      <a
-                        (click)="viewRecord(item)"
-                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                      >
-                        View Detail
-                      </a>
-                    </td> -->
                     <td>
                       {{ item?.id }}
                     </td>

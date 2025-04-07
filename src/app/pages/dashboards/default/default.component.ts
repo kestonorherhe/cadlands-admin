@@ -1,9 +1,7 @@
-import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { EventService } from "../../../core/services/event.service";
-import { QueryService } from "src/app/core/services/query.service";
-import { StaffService } from "../../staff/staff.service";
+import { Component, OnInit } from "@angular/core";
 import { ApplicationRequestService } from "../../application-request/application-request.service";
+import { PropertyService } from "../../property/property.service";
+import { AffiliateService } from "../../affiliate/affiliate.service";
 
 @Component({
   selector: "app-default",
@@ -19,62 +17,24 @@ export class DefaultComponent implements OnInit {
   appointments;
   appointmentDetail;
 
+  affiliateCount: number = 0;
+  estateCount: number = 0;
+  propertyCount: number = 0;
+  totalApplicationCount: number = 0;
+
   isVisible: string;
   isActive: string;
-
-  // @ViewChild("appointmentDetailModal")
-  // appointmentDetailModalRef: TemplateRef<any>;
   constructor(
-    private modalService: NgbModal,
-    private eventService: EventService,
+    private readonly propertyService: PropertyService,
+    private readonly affiliateService: AffiliateService,
     private readonly applicationRequestService: ApplicationRequestService
   ) {}
-
-  // showAppointmentDetailModal(content: TemplateRef<any>) {
-  //   this.modalService
-  //     .open(content, {
-  //       centered: true,
-  //       size: "lg",
-  //       animation: true,
-  //       backdrop: "static",
-  //       keyboard: false,
-  //     })
-  //     .result.then((result) => {
-  //       console.log("Modal closed" + result);
-  //     })
-  //     .catch((res) => {});
-  // }
-
-  // onShowAppointmentDetailModal() {
-  //   this.showAppointmentDetailModal(this.appointmentDetailModalRef);
-  // }
-
-  // viewDetail(evt: any) {
-  //   console.log(
-  //     "🚀 ~ AppointmentListComponent ~ viewDetail ~ evt:",
-  //     evt.row.data
-  //   );
-  //   this.appointmentDetail = evt.row.data;
-  //   this.onShowAppointmentDetailModal();
-  // }
 
   ngOnInit() {
     this.first_name = JSON.parse(
       localStorage.getItem("currentUser")
     ).first_name;
     this.user = JSON.parse(localStorage.getItem("currentUser"));
-
-    // const vertical = document.getElementById("layout-vertical");
-    // if (vertical != null) {
-    //   vertical.setAttribute("checked", "true");
-    // }
-    // if (attribute == "horizontal") {
-    //   const horizontal = document.getElementById("layout-horizontal");
-    //   if (horizontal != null) {
-    //     horizontal.setAttribute("checked", "true");
-    //     console.log(horizontal);
-    //   }
-    // }
 
     // this.farmerService.getRecords({}).subscribe(
     //   (response: any) => {
@@ -83,6 +43,41 @@ export class DefaultComponent implements OnInit {
     //   (error) => {}
     // );
     this.getAllApplicationRequests();
+    this.getAllEstate();
+    this.getAllProperties();
+    this.getAllAffiliate();
+  }
+
+  getAllEstate() {
+    this.propertyService.getAllEstate({}).subscribe(
+      (response: any) => {
+        this.estateCount = response.data.estates.length;
+        this.isLoading = false;
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
+  }
+  getAllProperties() {
+    this.propertyService.getAllProperties({}).subscribe(
+      (response: any) => {
+        this.propertyCount = response.data.properties.length;
+        this.isLoading = false;
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
+  }
+
+  getAllAffiliate() {
+    this.affiliateService.getRecords({ role: "affiliate" }).subscribe(
+      (response: any) => {
+        this.affiliateCount = response.length;
+      },
+      (error) => {}
+    );
   }
 
   getAllApplicationRequests() {
@@ -90,6 +85,7 @@ export class DefaultComponent implements OnInit {
     this.applicationRequestService.getAllApplicationRequests({}).subscribe(
       (response: any) => {
         this.data = response.data;
+        this.totalApplicationCount = response.data.applications.length;
         this.isLoading = false;
       },
       (error) => {

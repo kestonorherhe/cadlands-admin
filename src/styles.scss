@@ -50,3 +50,21 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
   height: 48px !important;
   border-radius: 10px;
 }
+
+/* Change confirm button color globally */
+.swal2-confirm {
+  background-color: #450000 !important; /* Your preferred color */
+  border-radius: 50px !important; /* Makes buttons rounded */
+}
+
+/* Change cancel button color if needed */
+.swal2-deny {
+  background-color: #d33 !important; /* Your preferred color */
+  border-radius: 50px !important; /* Makes buttons rounded */
+}
+
+/* Optional: Style for both buttons at once */
+.swal2-confirm, .swal2-cancel {
+  padding: 8px 25px !important; /* Adjust padding for better rounded appearance */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important; /* Optional: adds subtle shadow */
+}
