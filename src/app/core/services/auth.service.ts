@@ -104,10 +104,22 @@ export class AuthenticationService {
    * Reset password
    * @param email email
    */
-  resetPassword(data) {
+  forgotPassword(data) {
     console.log("resetting password...");
     return this.http
       .post<any>(`${this.envService.httpService}/auth/forgot-password`, data)
+      .pipe(
+        map((response) => {
+          console.log("🚀 ~ AuthenticationService ~ map ~ response:", response);
+          return response;
+        })
+      );
+  }
+
+  resetPassword(data, token) {
+    console.log("resetting password...");
+    return this.http
+      .post<any>(`${this.envService.httpService}/auth/reset/${token}`, data)
       .pipe(
         map((response) => {
           console.log("🚀 ~ AuthenticationService ~ map ~ response:", response);

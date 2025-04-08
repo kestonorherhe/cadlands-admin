@@ -25,16 +25,12 @@ export class PropertyService {
   uploadFile(data: any) {
     return this.http.post(`${this.envService.httpService}/upload`, data).pipe(
       map((res: any) => {
-        console.log("create user ::", res);
         return res.secure_url;
       })
     );
   }
 
   uploadImage(formData: FormData): Promise<any> {
-    // const formData = new FormData();
-    // formData.append("file", file);
-
     return new Promise((resolve, reject) => {
       this.uploadFile(formData).subscribe(
         (response: any) => {

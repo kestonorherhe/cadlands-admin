@@ -56,7 +56,7 @@ export class Recoverpwd2Component implements OnInit {
     }
 
     this.authenticationService
-      .resetPassword(this.resetForm.value)
+      .forgotPassword(this.resetForm.value)
       .pipe(first())
       .subscribe(
         (data) => {

@@ -6,6 +6,8 @@ import {
 } from "@angular/forms";
 import { AuthenticationService } from "../../../core/services/auth.service";
 import { first } from "rxjs/operators";
+import { ActivatedRoute } from "@angular/router";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-reset-password",
@@ -22,6 +24,7 @@ export class ResetPasswordComponent implements OnInit {
   showErr = false;
   isLoggingIn = false;
   returnUrl: string;
+  token: string;
   fieldTextType!: boolean;
 
   // Password visibility toggle
@@ -33,8 +36,13 @@ export class ResetPasswordComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
+    private readonly route: ActivatedRoute,
     private authenticationService: AuthenticationService
-  ) {}
+  ) {
+    this.route.params.subscribe((params) => {
+      this.token = params["token"];
+    });
+  }
 
   ngOnInit(): void {
     document.body.classList.add("auth-body-bg");
@@ -136,20 +144,19 @@ export class ResetPasswordComponent implements OnInit {
       return;
     } else {
       this.authenticationService
-        .login(this.loginForm.value)
+        .resetPassword(this.loginForm.value, this.token)
         .pipe(first())
         .subscribe(
           (data) => {
             console.log("🚀 ~ Login2Component ~ onSubmit ~ data:", data);
             this.isLoggingIn = false;
-
-            if (data.data.role && data.data.role == "admin") {
-              window.location.replace("/dashboard");
-            } else if (data.data.role && data.data.role == "super_admin") {
-              window.location.replace("/dashboard");
-            } else if (data.data.role && data.data.role == "affiliate") {
-              window.location.replace("/my-dashboard");
-            }
+            Swal.fire(
+              data.message,
+              "Password reset was successful!",
+              "success"
+            ).then(() => {
+              window.location.replace("/account/login");
+            });
           },
           (error) => {
             this.isLoggingIn = false;

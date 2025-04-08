@@ -18,6 +18,7 @@ import { MenuItem } from "./menu.model";
 import { TranslateService } from "@ngx-translate/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AuthenticationService } from "src/app/core/services/auth.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-sidebar",
@@ -58,7 +59,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
     private router: Router,
     public translate: TranslateService,
     private http: HttpClient,
-    private modalService: NgbModal,
+    private modalService: NgbModal
   ) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
@@ -71,7 +72,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnInit() {
     this.initialize();
     // this.menuItems = MENU;
-    this.menuItems = JSON.parse(localStorage.getItem('menuList'));
+    this.menuItems = JSON.parse(localStorage.getItem("menuList"));
     // console.log("🚀 ~ SidebarComponent ~ ngOnInit ~ menuItems:", this.menuItems);
     this._scrollElement();
   }
@@ -216,17 +217,16 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   onRemoveItem(evt) {
     // console.log("event::", evt.value);
     this.requestedApis = this.requestedApis.filter((i) => i.id != evt.value.id);
-    this.requestedApis = [...[], ...this.requestedApis]
-
+    this.requestedApis = [...[], ...this.requestedApis];
   }
 
   removeItem(evt) {
     // console.log("event::", evt);
     this.requestedApis = this.requestedApis.filter((i) => i.id != evt.id);
-    const selectedAccounts = this.requestedApis.map(a => a.name);
+    const selectedAccounts = this.requestedApis.map((a) => a.name);
     this.obj.selectedAccounts = selectedAccounts;
 
-    this.calculateAmount()
+    this.calculateAmount();
   }
 
   calculateAmount() {
@@ -239,6 +239,18 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   logout() {
-    this.authenticationService.logout();
+    Swal.fire({
+      icon: "warning",
+      text: "Are you sure you want to sign out?",
+      showDenyButton: true,
+      allowOutsideClick: false,
+      confirmButtonText: "Yes, log out!",
+      denyButtonText: `No, return`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.authenticationService.logout();
+      }
+    });
   }
 }
