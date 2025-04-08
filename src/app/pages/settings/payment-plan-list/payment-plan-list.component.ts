@@ -1,6 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Router } from "@angular/router";
 import Swal from "sweetalert2";
 import { SettingsService } from "../settings.service";
 import { Observable } from "rxjs";
@@ -27,6 +32,7 @@ export class PaymentPlanListComponent implements OnInit {
   };
 
   paymentSubPlanObj = {
+    id: null,
     paymentSubPlan: null,
     duration: null,
     description: null,
@@ -47,12 +53,35 @@ export class PaymentPlanListComponent implements OnInit {
   tabType2 = "commissions";
 
   showDetail = false;
+
+  @ViewChild("editPaymentSubPlanModal")
+  editPaymentSubPlanModalRef: TemplateRef<any>;
   constructor(
     private modalService: NgbModal,
     private cdr: ChangeDetectorRef,
     private readonly settingsService: SettingsService
-  ) {
-    // this.viewRecord = this.viewRecord.bind(this);
+  ) {}
+
+  showEditItemModal(content: TemplateRef<any>) {
+    this.modalService
+      .open(content, {
+        centered: false,
+        size: "lg",
+        animation: true,
+        backdrop: "static",
+        keyboard: false,
+      })
+      .result.then((result) => {
+        console.log("Modal closed" + result);
+      })
+      .catch((res) => {});
+  }
+
+  edit(data: any) {
+    console.log("🚀 ~ PaymentPlanListComponent ~ edit ~ data:", data);
+    this.paymentSubPlanObj = data;
+    this.paymentSubPlanObj.paymentSubPlan = data.name;
+    this.showEditItemModal(this.editPaymentSubPlanModalRef);
   }
 
   viewRecord(data: any) {
@@ -196,6 +225,7 @@ export class PaymentPlanListComponent implements OnInit {
       description: null,
     };
     this.paymentSubPlanObj = {
+      id: null,
       paymentSubPlan: null,
       duration: null,
       description: null,
@@ -253,7 +283,44 @@ export class PaymentPlanListComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to create property sub-type", "error");
+        Swal.fire(
+          "Process Failed!",
+          "Failed to create property sub-type",
+          "error"
+        );
+      }
+    );
+  }
+
+  onUpdatePaymentSubPlan() {
+    this.isLoading = true;
+    const data = {
+      id: this.paymentSubPlanObj.id,
+      // paymentPlanId: this.paymentPlan.id,
+      name: this.paymentSubPlanObj.paymentSubPlan,
+      duration: this.paymentSubPlanObj.duration,
+      description: this.paymentSubPlanObj.description,
+    };
+    this.settingsService.updatePaymentSubPlan(data).subscribe(
+      (response: any) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Successful!",
+          "Property sub-type successfully updated!",
+          "success"
+        );
+        this.modalService.dismissAll();
+        this.resetForm();
+        this.getAllPaymentPlan();
+        this.paymentSubPlan = response.data.data;
+      },
+      (error) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Failed!",
+          "Failed to update property sub-type",
+          "error"
+        );
       }
     );
   }

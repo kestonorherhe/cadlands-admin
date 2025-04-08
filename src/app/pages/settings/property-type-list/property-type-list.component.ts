@@ -27,11 +27,13 @@ export class PropertyTypeListComponent implements OnInit {
   isLoading = false;
 
   obj = {
+    id: null,
     name: null,
     description: null,
   };
 
   propertySubType = {
+    id: null,
     name: null,
     description: null,
   };
@@ -41,13 +43,43 @@ export class PropertyTypeListComponent implements OnInit {
   propertySubTypes$: Observable<any>;
   tabType = "property-sub-type";
   showDetail = false;
+
+  @ViewChild("editPropertyTypeModal")
+  editPropertyTypeModalRef: TemplateRef<any>;
+  @ViewChild("editPropertySubTypeModal")
+  editPropertySubTypeModalRef: TemplateRef<any>;
   constructor(
     private modalService: NgbModal,
     private readonly _router: Router,
     private cdr: ChangeDetectorRef,
     private readonly settingsService: SettingsService
-  ) {
-    this.viewRecord = this.viewRecord.bind(this);
+  ) {}
+
+  showEditItemModal(content: TemplateRef<any>) {
+    this.modalService
+      .open(content, {
+        centered: false,
+        size: "lg",
+        animation: true,
+        backdrop: "static",
+        keyboard: false,
+      })
+      .result.then((result) => {
+        console.log("Modal closed" + result);
+      })
+      .catch((res) => {});
+  }
+
+  editPropertyType(data: any) {
+    console.log("we are editing ::", data);
+    this.obj = data;
+    this.showEditItemModal(this.editPropertyTypeModalRef);
+  }
+
+  editSubType(data: any) {
+    console.log("we are editing ::", data);
+    this.propertySubType = data;
+    this.showEditItemModal(this.editPropertySubTypeModalRef);
   }
 
   viewRecord(data: any) {
@@ -139,15 +171,17 @@ export class PropertyTypeListComponent implements OnInit {
   }
 
   getAllPropertyTypes() {
-    this.propertyTypes$ = this.settingsService.getAllPropertyTypes({})
+    this.propertyTypes$ = this.settingsService.getAllPropertyTypes({});
   }
 
   resetForm() {
     this.obj = {
+      id: null,
       name: null,
       description: null,
     };
     this.propertySubType = {
+      id: null,
       name: null,
       description: null,
     };
@@ -173,6 +207,33 @@ export class PropertyTypeListComponent implements OnInit {
       }
     );
   }
+
+  onUpdate() {
+    this.isLoading = true;
+    const updateDto = {
+      id: this.obj.id,
+      name: this.obj.name,
+      description: this.obj.description,
+    };
+    this.settingsService.updatePropertyType(updateDto).subscribe(
+      (response: any) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Successful!",
+          "Successfully updated property type!",
+          "success"
+        );
+        this.modalService.dismissAll();
+        this.resetForm();
+        this.getAllPropertyTypes();
+      },
+      (error) => {
+        this.isLoading = false;
+        Swal.fire("Process Failed!", "Failed to update property type", "error");
+      }
+    );
+  }
+
   onSubmitPropertySubType() {
     this.isLoading = true;
     const data = {
@@ -193,7 +254,43 @@ export class PropertyTypeListComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to create property sub-type", "error");
+        Swal.fire(
+          "Process Failed!",
+          "Failed to create property sub-type",
+          "error"
+        );
+      }
+    );
+  }
+
+  onUpdatePropertySubType() {
+    this.isLoading = true;
+    const data = {
+      id: this.propertySubType.id,
+      // propertyTypeId: this.propertyType.id,
+      name: this.propertySubType.name,
+      description: this.propertySubType.description,
+    };
+    console.log("🚀 ~ PropertyTypeListComponent ~ onUpdatePropertySubType ~ data:", data)
+    this.settingsService.updatePropertySubType(data).subscribe(
+      (response: any) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Successful!",
+          "Successfully updated property sub-type!",
+          "success"
+        );
+        this.modalService.dismissAll();
+        this.resetForm();
+        this.getPropertyType();
+      },
+      (error) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Failed!",
+          "Failed to update property sub-type",
+          "error"
+        );
       }
     );
   }

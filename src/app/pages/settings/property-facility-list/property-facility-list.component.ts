@@ -20,20 +20,38 @@ export class PropertyFacilityListComponent implements OnInit {
   isLoading = false;
 
   obj = {
+    id: null,
     facilityName: null,
   };
 
+  @ViewChild("editItemModal")
+  editItemModalRef: TemplateRef<any>;
   constructor(
     private modalService: NgbModal,
     private readonly _router: Router,
     private readonly settingsService: SettingsService
-  ) {
-    this.viewRecord = this.viewRecord.bind(this);
+  ) {}
+
+  showEditItemModal(content: TemplateRef<any>) {
+    this.modalService
+      .open(content, {
+        centered: false,
+        size: "lg",
+        animation: true,
+        backdrop: "static",
+        keyboard: false,
+      })
+      .result.then((result) => {
+        console.log("Modal closed" + result);
+      })
+      .catch((res) => {});
   }
 
-  viewRecord(evt: any) {
-    const id = evt.row.data.id;
-    this._router.navigate(["staff", id]);
+  edit(data: any) {
+    console.log("we are editing ::", data);
+    this.obj = data;
+    this.obj.facilityName = data.name;
+    this.showEditItemModal(this.editItemModalRef);
   }
 
   closeModal() {
@@ -90,6 +108,7 @@ export class PropertyFacilityListComponent implements OnInit {
 
   resetForm() {
     this.obj = {
+      id: null,
       facilityName: null,
     };
   }
@@ -98,9 +117,39 @@ export class PropertyFacilityListComponent implements OnInit {
     this.isLoading = true;
     const data = {
       name: this.obj.facilityName,
-      icon: null
+      icon: null,
     };
     this.settingsService.createPropertyFacility(data).subscribe(
+      (response: any) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Successful!",
+          "Property facility successfully created!",
+          "success"
+        );
+        this.modalService.dismissAll();
+        this.resetForm();
+        this.getAllPropertyFacility();
+      },
+      (error) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Failed!",
+          "Failed to create property facility",
+          "error"
+        );
+      }
+    );
+  }
+
+  onUpdate() {
+    this.isLoading = true;
+    const data = {
+      id: this.obj.id,
+      name: this.obj.facilityName,
+      icon: null,
+    };
+    this.settingsService.updatePropertyFacility(data).subscribe(
       (response: any) => {
         this.isLoading = false;
         Swal.fire(

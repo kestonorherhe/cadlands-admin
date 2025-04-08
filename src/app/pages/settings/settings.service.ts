@@ -135,13 +135,16 @@ export class SettingsService {
   createPropertyType(data: any) {
     return this.httpService.post(`property-type`, data);
   }
+  updatePropertyType(data: any) {
+    return this.httpService.put(`property-type`, data);
+  }
   createPropertySubType(data: any) {
     return this.httpService.post(`property-type/property-sub-type`, data);
   }
-  updatePropertyType(data: any) {
-    return this.httpService.post(`property-type`, data);
+  updatePropertySubType(data: any) {
+    return this.httpService.put(`property-type/property-sub-type`, data);
   }
-
+  
   getAllPropertyTypes(payload: { propertyTypeId?: string }) {
     // Initialize URLSearchParams
     const params = new URLSearchParams();
@@ -204,7 +207,7 @@ export class SettingsService {
   }
 
   updateNegotiationStatus(data: any) {
-    return this.httpService.post(`negotiation-status`, data);
+    return this.httpService.put(`negotiation-status`, data);
   }
 
   getAllNegotiationStatus(payload: { propertyTypeId?: string }) {
@@ -236,7 +239,7 @@ export class SettingsService {
   }
 
   updatePaymentSubPlan(data: any) {
-    return this.httpService.post(`payment-plan/payment-sub-plan`, data);
+    return this.httpService.put(`payment-plan/payment-sub-plan`, data);
   }
 
   createPaymentSubPlanCommission(data: any) {
@@ -303,7 +306,7 @@ export class SettingsService {
   }
 
   updatePropertyFacility(data: any) {
-    return this.httpService.post(`property-facility`, data);
+    return this.httpService.put(`property-facility`, data);
   }
 
   getAllPropertyFacilities(payload: { propertyTypeId?: string }) {

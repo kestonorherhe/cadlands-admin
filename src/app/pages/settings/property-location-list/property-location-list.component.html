@@ -52,7 +52,7 @@
                   <tr *ngFor="let item of (propertyLocations$ | async)?.data">
                     <td class="text-end">
                       <a (click)="viewRecord(item)" style="cursor: pointer">
-                        <i class="bx bx-pointer"></i>
+                        <i class="bx bx-pen"></i>
                         Edit
                       </a>
                     </td>
@@ -133,7 +133,7 @@
                       class="text-primary"
                       (click)="updateRecordModal(updateItemModal)"
                       style="cursor: pointer"
-                      >Edit</a
+                      ><i class="bx bx-pen"></i> Edit</a
                     >
                   </div>
 

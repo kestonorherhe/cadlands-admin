@@ -20,20 +20,38 @@ export class NegotiationStatusListComponent implements OnInit {
   isLoading = false;
 
   obj = {
+    id: null,
     negotiationStatus: null,
   };
 
+  @ViewChild("editItemModal")
+  editItemModalRef: TemplateRef<any>;
   constructor(
     private modalService: NgbModal,
     private readonly _router: Router,
     private readonly settingsService: SettingsService
-  ) {
-    this.viewRecord = this.viewRecord.bind(this);
+  ) {}
+
+  showEditItemModal(content: TemplateRef<any>) {
+    this.modalService
+      .open(content, {
+        centered: false,
+        size: "lg",
+        animation: true,
+        backdrop: "static",
+        keyboard: false,
+      })
+      .result.then((result) => {
+        console.log("Modal closed" + result);
+      })
+      .catch((res) => {});
   }
 
-  viewRecord(evt: any) {
-    const id = evt.row.data.id;
-    this._router.navigate(["staff", id]);
+  edit(data: any) {
+    console.log("🚀 ~ NegotiationStatusListComponent ~ edit ~ data:", data);
+    this.obj = data;
+    this.obj.negotiationStatus = data.name;
+    this.showEditItemModal(this.editItemModalRef);
   }
 
   closeModal() {
@@ -86,6 +104,7 @@ export class NegotiationStatusListComponent implements OnInit {
 
   resetForm() {
     this.obj = {
+      id: null,
       negotiationStatus: null,
     };
   }
@@ -109,7 +128,40 @@ export class NegotiationStatusListComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to create negotiation status", "error");
+        Swal.fire(
+          "Process Failed!",
+          "Failed to create negotiation status",
+          "error"
+        );
+      }
+    );
+  }
+
+  onUpdate() {
+    this.isLoading = true;
+    const data = {
+      id: this.obj.id,
+      name: this.obj.negotiationStatus,
+    };
+    this.settingsService.updateNegotiationStatus(data).subscribe(
+      (response: any) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Successful!",
+          "Negotiation status successfully update!",
+          "success"
+        );
+        this.modalService.dismissAll();
+        this.resetForm();
+        this.getAllNegotiationStatus();
+      },
+      (error) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Failed!",
+          "Failed to update negotiation status",
+          "error"
+        );
       }
     );
   }
