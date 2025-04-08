@@ -1,9 +1,4 @@
 <div class="container-fluid">
-  <app-page-title
-    title="Profile"
-    [breadcrumbItems]="breadCrumbItems"
-  ></app-page-title>
-
   <div class="row">
     <div class="col-xl-4">
       <div class="card overflow-hidden">
@@ -45,10 +40,10 @@
               <h5 class="font-size-15 text-truncate">
                 {{ staff?.firstName }} {{ staff?.lastName }}
               </h5>
-              <!-- <p class="text-muted mb-0 text-truncate">UI/UX Designer</p> -->
+              <p class="text-muted mb-0 text-truncate">{{ staff?.role }}</p>
             </div>
 
-            <div class="col-sm-8">
+            <!-- <div class="col-sm-8">
               <div class="pt-4">
                 <div class="row">
                   <div class="col-6">
@@ -61,7 +56,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -200,7 +195,8 @@
                 </ngx-simplebar>
               </ng-template>
             </li>
-            <li [ngbNavItem]="2">
+
+            <!-- <li [ngbNavItem]="2">
               <a ngbNavLink>My Applications</a>
               <ng-template ngbNavContent>
                 <ngx-simplebar style="height: 250px">
@@ -246,13 +242,6 @@
                       caption="Scheduled Date"
                     ></dxi-column>
 
-                    <!-- <dxi-column caption="View" name="delistBtn" type="buttons">
-                      <dxi-button
-                        text="View"
-                        [onClick]="viewRecord"
-                      ></dxi-button>
-                    </dxi-column> -->
-
                     <dxo-summary>
                       <dxi-total-item column="id" summaryType="count">
                       </dxi-total-item>
@@ -260,7 +249,7 @@
                   </dx-data-grid>
                 </ngx-simplebar>
               </ng-template>
-            </li>
+            </li> -->
           </ul>
           <div [ngbNavOutlet]="nav1" class="mt-4"></div>
         </div>

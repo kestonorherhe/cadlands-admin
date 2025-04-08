@@ -1,0 +1,627 @@
+<div class="container-fluid">
+  <!-- <app-page-title
+    title="Profile"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title> -->
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="row p-4">
+          <div class="col-6">
+            <h4 class="card-title" style="padding: 0px; font-size: 1.5rem">
+              All Cancelled Applications
+            </h4>
+            <p style="font-size: 1rem">List all cancelled applications.</p>
+          </div>
+          <!-- <div class="col-6">
+            <button
+              class="btn btn-primary btn-rounded text-right"
+              style="
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                float: right;
+              "
+              (click)="createRecordModal(createItemModal)"
+            >
+              <span style="margin-left: 6px">Create Property</span>
+            </button>
+          </div> -->
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-12">
+              <!-- search field goes here -->
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-middle gs-0 gy-4">
+              <thead>
+                <tr class="fw-bolder text-white bg-primary">
+                  <th
+                    class="min-w-10px text-gray-900 text-end rounded-end"
+                  ></th>
+                  <th class="min-w-100px text-gray-900">Estate</th>
+                  <th class="min-w-100px text-gray-900">Property Type</th>
+                  <th class="min-w-50px text-gray-900 text-center">
+                    Plot Size
+                  </th>
+                  <th class="min-w-50px text-gray-900 text-center">
+                    Price (per plot)
+                  </th>
+                  <th class="min-w-50px text-gray-900">Customer</th>
+                  <th class="min-w-50px text-gray-900">Phone</th>
+                  <th class="min-w-50px text-gray-900 text-center">
+                    Total Plots
+                  </th>
+                  <th class="min-w-50px text-gray-900 text-center">
+                    Total Amount
+                  </th>
+                  <th class="min-w-50px text-gray-900 text-center">
+                    Payment Status
+                  </th>
+                  <th class="min-w-50px text-gray-900 text-center">
+                    Payment Date
+                  </th>
+                  <th class="min-w-50px text-gray-900 text-center">Status</th>
+                  <th class="min-w-100px text-gray-900">Created At</th>
+                  <th class="min-w-100px text-gray-900"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="data?.applications != null">
+                  <tr *ngFor="let item of data?.applications">
+                    <td class="text-end">
+                      <a
+                        (click)="viewRecord(item)"
+                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                      >
+                        <!-- <app-keenicon name="pencil" class="fs-3"></app-keenicon> -->
+                        View Detail
+                      </a>
+                    </td>
+                    <td>
+                      {{ item?.propertyTemplate?.estate?.name }}
+                    </td>
+                    <td>
+                      {{ item.propertyTemplate?.templateName }}
+                    </td>
+                    <td class="text-center">
+                      {{ item.propertyTemplate?.size }} sqm
+                    </td>
+                    <td class="text-center">
+                      {{ item.currentPrice?.price | number }}
+                    </td>
+                    <td>
+                      {{ item.customer?.title || "" }}
+                      {{ item.customer?.firstName || "" }}
+                      {{ item.customer?.lastName || "" }}
+                    </td>
+                    <td>
+                      {{ item.customer?.phone }}
+                    </td>
+                    <td class="text-center">
+                      {{ item?.units }}
+                    </td>
+                    <td class="text-center">
+                      {{ item?.amount | number }}
+                    </td>
+                    <td class="text-center">
+                      {{ item?.paymentStatus }}
+                    </td>
+                    <td class="text-center">
+                      {{ (item?.paymentDate | date) ?? "---" }}
+                    </td>
+                    <td class="text-center">
+                      {{ item?.status }}
+                    </td>
+                    <td>
+                      {{ item?.createdAt | date }}
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #viewApplicationModal let-modal>
+  <div class="modal-header">
+    <h3 class="modal-title text-primary" id="exampleModalLabel">
+      Application Detail
+    </h3>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="row mt-4 mb-2">
+        <h4 class="text-primary" style="font-weight: bold">
+          Property Information
+        </h4>
+      </div>
+      <!-- <hr/> -->
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Estate <span class="text-danger">*</span></label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.propertyTemplate?.estate?.name }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Property Template <span class="text-danger">*</span></label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.propertyTemplate?.templateName }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Plot Size <span class="text-danger">*</span></label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.propertyTemplate?.size }} sqm</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Price Per Plot <span class="text-danger">*</span></label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.currentPrice?.price | number }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Plots <span class="text-danger">*</span></label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.units }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Total Amount <span class="text-danger">*</span></label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.amount | number }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Land Purpose <span class="text-danger">*</span></label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.propertyPurpose?.purpose }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Payment Plan <span class="text-danger">*</span></label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.paymentPlan?.name }}</p>
+        </div>
+      </div>
+
+      <div class="row mt-4 mb-2">
+        <h4 class="text-primary" style="font-weight: bold">
+          Customer's Information
+        </h4>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Title</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.title }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >First Name</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.firstName }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Last Name</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.lastName }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Othername</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.otherName || "" }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Phone</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.phone }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Email</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.email }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Gender</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.gender }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Marital Status</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.maritalStatus }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Birth Date</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.birthDate | date }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Mother Maiden Name</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.motherMaidenName }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Occupation</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.occupation }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Nationality</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nationality?.name || "---" }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row mt-4 mb-2">
+        <h4 class="text-primary" style="font-weight: bold">
+          Affiliate Information
+        </h4>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Title</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nok[0]?.title || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >First Name</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nok[0]?.firstName }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Last Name</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.nok[0]?.lastName }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Othername</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nok[0]?.otherName || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Phone</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.nok[0]?.phone }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Email</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.nok[0]?.email }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Address</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nok[0]?.address || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Country</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nok[0]?.country || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >State</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nok[0]?.state || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >City</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nok[0]?.city || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="row mt-4 mb-2">
+        <h4 class="text-primary" style="font-weight: bold">
+          Next of Kin's Information
+        </h4>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Title</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nok[0]?.title || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >First Name</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nok[0]?.firstName }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Last Name</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.nok[0]?.lastName }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Othername</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nok[0]?.otherName || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Phone</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.nok[0]?.phone }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Email</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.customer?.nok[0]?.email }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Address</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nok[0]?.address || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Country</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nok[0]?.country || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >State</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nok[0]?.state || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >City</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.customer?.nok[0]?.city || "---" }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row mt-4 mb-2">
+        <h4 class="text-primary" style="font-weight: bold">
+          Process Application
+        </h4>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Application Status</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.status || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Payment Status</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.paymentStatus || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Payment Date</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ (obj?.paymentDate | date) || "---" }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <!-- <button
+        *ngIf="!isLoading"
+        class="btn btn-primary btn-rounded"
+        (click)="confirmFullPaymentFn()"
+      >
+        Confirm Payment
+      </button> -->
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-danger btn-rounded"
+        (click)="closeModal()"
+      >
+        Cancel
+      </button>
+      <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
+        Processing <span><i class="bx bx-loader bx-spin"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>

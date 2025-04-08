@@ -137,7 +137,7 @@
                             <thead>
                               <tr class="fw-bolder text-white bg-primary">
                                 <th
-                                  class="min-w-10px text-gray-900 text-end rounded-end"
+                                  class="min-w-10px text-gray-900 text-end"
                                 ></th>
                                 <th class="min-w-100px text-gray-900">
                                   Template Name
@@ -238,7 +238,7 @@
                             <thead>
                               <tr class="fw-bolder text-white bg-primary">
                                 <th
-                                  class="min-w-10px text-gray-900 text-end rounded-end"
+                                  class="min-w-10px text-gray-900 text-end"
                                 ></th>
                                 <th class="min-w-100px text-gray-900">
                                   Property
@@ -375,7 +375,7 @@
                           )
                         "
                         style="cursor: pointer"
-                        >Edit</a
+                        ><i class="bx bx-pen"></i> Edit</a
                       >
                     </div>
 
@@ -527,7 +527,7 @@
             <ng-container *ngIf="tabType == 'prices'">
               <div class="card col-lg-12 h-50">
                 <div class="row p-4">
-                  <div class="col-12">
+                  <div class="col-6">
                     <h3 class="card-title d-flex align-items-start flex-column">
                       <span class="card-label fw-bolder fs-5 mb-1"
                         >Property Price History</span
@@ -537,9 +537,8 @@
                       >
                     </h3>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-12">
+
+                  <div class="col-6">
                     <button
                       (click)="
                         showCreatePropertyTemplatePriceModal(
@@ -621,7 +620,7 @@
 
 <ng-template #editEstateTemplate let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Create Estate</h5>
+    <h5 class="modal-title" id="exampleModalLabel">Edit Estate</h5>
     <button
       type="button"
       class="btn-close"
@@ -759,7 +758,21 @@
 
 <ng-template #createPropertyTemplateRecordModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Create Estate</h5>
+    <div class="row">
+      <div class="col-12">
+        <h3 class="card-title d-flex align-items-start flex-column">
+          <span class="card-label fw-bolder fs-5 mb-1"
+            >Create Property Template</span
+          >
+          <p style="font-size: normal" class="mt-1">
+            A <strong>property template</strong> is like a ready-made form or
+            structure that helps you quickly and consistently record details
+            about a property.
+          </p>
+        </h3>
+      </div>
+    </div>
+
     <button
       type="button"
       class="btn-close"
@@ -807,7 +820,7 @@
             >
             <ng-select
               [items]="(propertyTypes$ | async)?.data"
-              bindValue="id"
+              bindValue="name"
               bindLabel="name"
               name="propertyTypeId"
               #propertyTypeId="ngModel"
@@ -828,7 +841,13 @@
           </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <div
+          *ngIf="
+            obj?.propertyTypeId &&
+            obj.propertyTypeId.toLowerCase().includes('plot')
+          "
+          class="col-lg-6 col-md-6 col-sm-12"
+        >
           <div class="mb-3">
             <label
               for="propertySubTypeId"
@@ -860,7 +879,12 @@
           </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <div
+          *ngIf="
+            obj?.propertyTypeId && obj?.propertyTypeId?.includes('building')
+          "
+          class="col-lg-6 col-md-6 col-sm-12"
+        >
           <div class="mb-3">
             <label
               for="buildingStructure"
@@ -1132,7 +1156,7 @@
 
 <ng-template #updatePropertyTemplate let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Create Estate</h5>
+    <h5 class="modal-title" id="exampleModalLabel">Edit Property Template</h5>
     <button
       type="button"
       class="btn-close"
@@ -1180,7 +1204,7 @@
             >
             <ng-select
               [items]="(propertyTypes$ | async)?.data"
-              bindValue="id"
+              bindValue="name"
               bindLabel="name"
               name="propertyTypeId"
               #propertyTypeId="ngModel"
@@ -1201,7 +1225,13 @@
           </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <div
+          *ngIf="
+            obj?.propertyTypeId !== null &&
+            obj?.propertyTypeId?.includes('Plot')
+          "
+          class="col-lg-6 col-md-6 col-sm-12"
+        >
           <div class="mb-3">
             <label
               for="propertySubTypeId"
@@ -1233,7 +1263,13 @@
           </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <div
+          *ngIf="
+            obj?.propertyTypeId !== null &&
+            obj?.propertyTypeId?.includes('Building')
+          "
+          class="col-lg-6 col-md-6 col-sm-12"
+        >
           <div class="mb-3">
             <label
               for="buildingStructure"
@@ -1319,33 +1355,6 @@
             </div>
           </div>
         </div>
-
-        <!-- <div class="col-lg-6 col-md-6 col-sm-12">
-          <div class="mb-3">
-            <label
-              for="prices"
-              [class.text-danger]="prices.invalid &amp;&amp; prices.touched"
-              class="form-label"
-              >Property Price <span class="text-danger">*</span></label
-            >
-            <input
-              type="number"
-              class="form-control"
-              name="prices"
-              #prices="ngModel"
-              [(ngModel)]="propertyTemplate.propertyPrice"
-              [class.is-invalid]="prices.invalid &amp;&amp; prices.touched"
-              placeholder="Enter Property price"
-              required
-            />
-
-            <div *ngIf="prices.invalid &amp;&amp; prices.touched">
-              <small *ngIf="size.errors?.required" class="text-danger"
-                >Property price is Required</small
-              >
-            </div>
-          </div>
-        </div> -->
 
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="mb-3">
@@ -1751,7 +1760,6 @@
     ></button>
   </div>
   <div class="modal-body">
-    <!-- {{ updateProperty?.propertyTemplateId | json }} -->
     <form #form="ngForm">
       <div class="row">
         <div class="col-lg-12 col-md-12">

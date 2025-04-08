@@ -35,6 +35,7 @@ export class EstateProfileComponent implements OnInit {
 
   estates$: Observable<any>;
   propertyTypes$: Observable<any>;
+  propertyTypes: any[];
   propertySubTypeList = [];
   buildingStructures$: Observable<any>;
   negotiationStatus$: Observable<any>;
@@ -241,6 +242,11 @@ export class EstateProfileComponent implements OnInit {
   ngOnInit() {
     this.estates$ = this.propertyService.getAllEstate({});
     this.propertyTypes$ = this.settingsService.getAllPropertyTypes({});
+    this.settingsService.getAllPropertyTypes({}).subscribe((response: any) => {
+      this.propertyTypes = response?.data
+    }, error => {
+      console.log("🚀 ~ EstateProfileComponent ~ this.settingsService.getAllPropertyTypes ~ error:", error)
+    });
     this.negotiationStatus$ = this.settingsService.getAllNegotiationStatus({});
     this.facilities$ = this.settingsService.getAllPropertyFacilities({});
     this.propertyTemplates$ = this.propertyService.getAllPropertyTemplates({
@@ -271,6 +277,7 @@ export class EstateProfileComponent implements OnInit {
   }
 
   onSelectPropertyType(evt: any) {
+    console.log("🚀 ~ EstateProfileComponent ~ onSelectPropertyType ~ evt:", evt)
     this.propertySubTypeList = evt.propertySubTypes;
   }
 
@@ -376,6 +383,10 @@ export class EstateProfileComponent implements OnInit {
     );
   }
 
+  getPropertyTypeId() {
+    return this.propertyTypes.find((item: any) => item.id == this.obj.propertyTypeId);
+  }
+
   async onSubmit() {
     this.isLoading = true;
     let formData: FormData = new FormData();
@@ -386,7 +397,7 @@ export class EstateProfileComponent implements OnInit {
     const images = await this.propertyService.uploadImages(formData);
     const data = {
       estateId: +this.estateId,
-      propertyTypeId: this.obj.propertyTypeId,
+      propertyTypeId: this.getPropertyTypeId(),
       propertySubTypeId: this.obj.propertySubTypeId,
       templateName: this.obj.templateName,
       buildingStructure: this.obj.buildingStructure,

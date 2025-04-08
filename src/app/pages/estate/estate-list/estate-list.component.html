@@ -36,9 +36,7 @@
             <table class="table align-middle gs-0 gy-4">
               <thead>
                 <tr class="fw-bolder text-white bg-primary">
-                  <th
-                    class="min-w-10px text-gray-900 text-end rounded-end"
-                  ></th>
+                  <th class="min-w-10px text-gray-900 text-end"></th>
                   <th class="min-w-100px text-gray-900">Estate</th>
                   <th class="min-w-50px text-gray-900">Status</th>
                   <th class="min-w-100px text-gray-900">Created At</th>
@@ -49,7 +47,11 @@
                 <ng-container *ngIf="data != null">
                   <tr *ngFor="let item of data?.estates">
                     <td class="text-end">
-                      <a class="text-primary" (click)="viewRecord(item)" style="cursor: pointer">
+                      <a
+                        class="text-primary"
+                        (click)="viewRecord(item)"
+                        style="cursor: pointer"
+                      >
                         <i class="bx bx-pen"></i>
                         Manage
                       </a>
@@ -111,59 +113,6 @@
             </div>
           </div>
         </div>
-
-        <!-- <div class="col-lg-6 col-md-6 col-sm-12">
-          <div class="mb-3">
-            <label
-              for="imageUrl"
-              [class.text-danger]="imageUrl.invalid &amp;&amp; imageUrl.touched"
-              class="form-label"
-              >Estate Image <span class="text-danger">*</span></label
-            >
-            <input
-              type="file"
-              class="form-control"
-              name="imageUrl"
-              #imageUrl="ngModel"
-              [(ngModel)]="obj.imageUrl"
-              [class.is-invalid]="imageUrl.invalid &amp;&amp; imageUrl.touched"
-              required
-              (change)="processImage($event)"
-            />
-  
-            <div *ngIf="estateName.invalid &amp;&amp; estateName.touched">
-              <small *ngIf="estateName.errors?.required" class="text-danger"
-                >Estate Image is Required</small
-              >
-            </div>
-          </div>
-        </div> -->
-
-        <!-- <div class="col-lg-12 col-md-12 col-sm-12">
-          <div class="mb-3">
-            <label
-              for="description"
-              [class.text-danger]="description.invalid &amp;&amp; description.touched"
-              class="form-label"
-              >Estate Description <span class="text-danger">*</span></label
-            >
-            <textarea
-              class="form-control"
-              name="description"
-              #description="ngModel"
-              [(ngModel)]="obj.description"
-              [class.is-invalid]="description.invalid &amp;&amp; description.touched"
-              placeholder="Enter Estate Description"
-              required
-            ></textarea>
-  
-            <div *ngIf="description.invalid &amp;&amp; description.touched">
-              <small *ngIf="description.errors?.required" class="text-danger"
-                >Estate Description is Required</small
-              >
-            </div>
-          </div>
-        </div> -->
 
         <label class="form-label"
           >Images <span class="text-danger">*</span></label
@@ -227,11 +176,7 @@
         >
           Cancel
         </button>
-        <button
-          *ngIf="isLoading"
-          class="btn btn-primary btn-rounded"
-          disabled
-        >
+        <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
           Processing <span><i class="bx bx-loader bx-spin"></i></span>
         </button>
       </div>
