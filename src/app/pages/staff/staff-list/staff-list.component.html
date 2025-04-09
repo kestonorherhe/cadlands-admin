@@ -165,13 +165,8 @@
           <div class="modal-footer" style="margin-top: 2%">
             <button
               type="button"
-              class="btn"
-              style="
-                background-color: #2a3042;
-                color: #ffffff;
-                display: flex;
-                cursor: pointer;
-              "
+              class="btn btn-primary"
+              style="color: #ffffff; display: flex; cursor: pointer"
               [disabled]="pageable.pageNumber === 0"
               (click)="gotoPage(pageable.pageNumber - 1)"
             >
@@ -186,13 +181,8 @@
             </div>
             <button
               type="button"
-              class="btn"
-              style="
-                background-color: #2a3042;
-                color: #ffffff;
-                display: flex;
-                cursor: pointer;
-              "
+              class="btn btn-primary"
+              style="color: #ffffff; display: flex; cursor: pointer"
               (click)="gotoPage(pageable.pageNumber + 1)"
               [disabled]="
                 pageable.pageNumber > 1 &&
@@ -513,11 +503,7 @@
       >
         Create Admin
       </button>
-      <button
-        *ngIf="isLoading"
-        class="btn btn-primary btn-rounded"
-        disabled
-      >
+      <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
         Processing <span><i class="bx bx-loader bx-spin"></i></span>
       </button>
     </div>

@@ -414,18 +414,18 @@
                         <br />
                         {{ propertyTemplate?.subType?.name }}
                       </div>
-                      <div class="col-lg-3 fv-row mb-3">
+                      <!-- <div class="col-lg-3 fv-row mb-3">
                         <label class="fw-semibold fs-6 mb-2">
                           Building Structure
                         </label>
                         <br />
                         {{ propertyTemplate?.buildingStructure }}
-                      </div>
-                      <div class="col-lg-3 fv-row mb-3">
+                      </div> -->
+                      <!-- <div class="col-lg-3 fv-row mb-3">
                         <label class="fw-semibold fs-6 mb-2"> Map Url </label>
                         <br />
                         {{ propertyTemplate?.mapUrl }}
-                      </div>
+                      </div> -->
                       <div class="col-lg-3 fv-row mb-3">
                         <label class="fw-semibold fs-6 mb-2"> Land Size </label>
                         <br />
@@ -438,12 +438,19 @@
                         <br />
                         {{ getAcivePrice(propertyTemplate?.prices) | number }}
                       </div>
-                      <div class="col-lg-3 fv-row mb-3">
+                      <!-- <div class="col-lg-3 fv-row mb-3">
                         <label class="fw-semibold fs-6 mb-2">
                           Negotiation Status
                         </label>
                         <br />
                         {{ propertyTemplate?.negotiationStatus?.name }}
+                      </div> -->
+                      <div class="col-lg-3 fv-row mb-3">
+                        <label class="fw-semibold fs-6 mb-2">
+                          Is default Template
+                        </label>
+                        <br />
+                        {{ propertyTemplate?.default ? "Yes" : "No" }}
                       </div>
                     </div>
                     <div class="row fw-bold mb-3">
@@ -685,12 +692,15 @@
           >Images <span class="text-danger">*</span></label
         >
         <div class="col-lg-12 col-md-12 col-sm-12">
-          <ngx-dropzone [multiple]="false" (change)="onSelect($event)">
+          <ngx-dropzone
+            [multiple]="false"
+            (change)="onSelectEstateImage($event)"
+          >
             <ngx-dropzone-label>Drop images!</ngx-dropzone-label>
 
             <ngx-dropzone-image-preview
               ngProjectAs="ngx-dropzone-preview"
-              *ngFor="let f of files"
+              *ngFor="let f of estateFiles"
               [file]="f"
               required
             >
@@ -743,12 +753,7 @@
         >
           Cancel
         </button>
-        <button
-          *ngIf="isLoading"
-          class="btn"
-          style="background-color: #2a3042; color: #ffffff"
-          disabled
-        >
+        <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
           Processing <span><i class="bx bx-loader bx-spin"></i></span>
         </button>
       </div>
@@ -916,7 +921,7 @@
           </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <!-- <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="mb-3">
             <label
               for="mapUrl"
@@ -941,7 +946,7 @@
               >
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="mb-3">
@@ -998,7 +1003,7 @@
           </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <!-- <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="mb-3">
             <label
               for="negotiationStatusId"
@@ -1025,6 +1030,34 @@
                 *ngIf="negotiationStatusId.errors?.required"
                 class="text-danger"
                 >Negotiation Status is Required</small
+              >
+            </div>
+          </div>
+        </div> -->
+
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="mb-3">
+            <label
+              for="default"
+              [class.text-danger]="default.invalid &amp;&amp; default.touched"
+              class="form-label"
+              >Status <span class="text-danger">*</span></label
+            >
+            <ng-select
+              [items]="statusList"
+              bindValue="id"
+              bindLabel="name"
+              name="default"
+              #default="ngModel"
+              [(ngModel)]="obj.default"
+              [class.is-invalid]="default.invalid &amp;&amp; default.touched"
+              placeholder="--Select Status--"
+              required
+            ></ng-select>
+
+            <div *ngIf="default.invalid &amp;&amp; default.touched">
+              <small *ngIf="default.errors?.required" class="text-danger"
+                >Status is Required</small
               >
             </div>
           </div>
@@ -1227,8 +1260,8 @@
 
         <div
           *ngIf="
-            obj?.propertyTypeId !== null &&
-            obj?.propertyTypeId?.includes('Plot')
+            propertyTemplate?.propertyTypeId !== null &&
+            propertyTemplate?.propertyTypeId?.includes('Plot')
           "
           class="col-lg-6 col-md-6 col-sm-12"
         >
@@ -1301,7 +1334,7 @@
           </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <!-- <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="mb-3">
             <label
               for="mapUrl"
@@ -1326,7 +1359,7 @@
               >
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="mb-3">
@@ -1356,7 +1389,7 @@
           </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <!-- <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="mb-3">
             <label
               for="negotiationStatusId"
@@ -1383,6 +1416,34 @@
                 *ngIf="negotiationStatusId.errors?.required"
                 class="text-danger"
                 >Negotiation Status is Required</small
+              >
+            </div>
+          </div>
+        </div> -->
+
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="mb-3">
+            <label
+              for="default"
+              [class.text-danger]="default.invalid &amp;&amp; default.touched"
+              class="form-label"
+              >Make Default? <span class="text-danger">*</span></label
+            >
+            <ng-select
+              [items]="statusList"
+              bindValue="id"
+              bindLabel="name"
+              name="default"
+              #default="ngModel"
+              [(ngModel)]="propertyTemplate.default"
+              [class.is-invalid]="default.invalid &amp;&amp; default.touched"
+              placeholder="--Select Status--"
+              required
+            ></ng-select>
+
+            <div *ngIf="default.invalid &amp;&amp; default.touched">
+              <small *ngIf="default.errors?.required" class="text-danger"
+                >Status is Required</small
               >
             </div>
           </div>

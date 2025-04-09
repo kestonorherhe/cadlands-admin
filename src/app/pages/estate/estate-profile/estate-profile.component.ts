@@ -24,6 +24,10 @@ export class EstateProfileComponent implements OnInit {
     imageUrl: null,
     description: null,
   };
+  statusList = [
+    { id: true, name: "Yes, make default" },
+    { id: false, name: "No, not default" },
+  ];
   data = [];
 
   propertyTemplate: any;
@@ -64,6 +68,7 @@ export class EstateProfileComponent implements OnInit {
     images: null,
     facilities: [],
     titles: [],
+    default: false,
   };
 
   propertyObj = {
@@ -110,10 +115,6 @@ export class EstateProfileComponent implements OnInit {
   }
 
   viewPropertyTemplateRecord(item: any) {
-    console.log(
-      "🚀 ~ EstateProfileComponent ~ viewPropertyTemplateRecord ~ item:",
-      item
-    );
     this.getPropertyTemplateInfo(item.id);
     this.showPropertyTemplateInfo = true;
   }
@@ -131,7 +132,7 @@ export class EstateProfileComponent implements OnInit {
             response
           );
           this.propertyTemplate = response.data;
-          this.propertyTemplate.propertyTypeId = response.data.type.id;
+          this.propertyTemplate.propertyTypeId = response.data.type.name;
           this.propertyTemplate.propertySubTypeId = response.data.subType.id;
           this.propertyTemplate.negotiationStatusId =
             response.data.negotiationStatus.id;
@@ -283,10 +284,6 @@ export class EstateProfileComponent implements OnInit {
   }
 
   onSelectPropertyType(evt: any) {
-    console.log(
-      "🚀 ~ EstateProfileComponent ~ onSelectPropertyType ~ evt:",
-      evt
-    );
     this.propertySubTypeList = evt.propertySubTypes;
   }
 
@@ -305,6 +302,7 @@ export class EstateProfileComponent implements OnInit {
       images: null,
       facilities: [],
       titles: [],
+      default: false,
     };
 
     this.propertyObj = {
@@ -336,6 +334,10 @@ export class EstateProfileComponent implements OnInit {
 
     // Validate file type (optional, but recommended)
     const file = event.addedFiles[0];
+    console.log(
+      "🚀 ~ EstateProfileComponent ~ onSelectEstateImage ~ file:",
+      file
+    );
     const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
 
     if (!allowedTypes.includes(file.type)) {
@@ -352,46 +354,55 @@ export class EstateProfileComponent implements OnInit {
   }
 
   async onUpdateEstate() {
-    this.isLoading = true;
+    try {
+      this.isLoading = true;
 
-    let imageUrl;
-    if (this.estateFiles.length > 0) {
-      let formData: FormData = new FormData();
-      for (let i = 0; i < this.estateFiles.length; i++) {
-        formData.append("file", this.files[i]);
+      console.log("this.estateFiles ::", this.estateFiles);
+      let imageUrl;
+      if (this.estateFiles.length > 0) {
+        let formData: FormData = new FormData();
+        for (let i = 0; i < this.estateFiles.length; i++) {
+          formData.append("file", this.estateFiles[i]);
+        }
+
+        imageUrl = await this.propertyService.uploadImage(formData);
+        this.estateFiles = [];
       }
 
-      imageUrl = await this.propertyService.uploadImage(formData);
+      const data = {
+        id: this.estate.id,
+        name: this.estate.name,
+        imageUrl: this.estateFiles.length > 0 ? imageUrl : this.estate.imageUrl,
+        description: this.estate.description,
+      };
+      this.propertyService.updateEstate(data).subscribe(
+        (response: any) => {
+          this.isLoading = false;
+          Swal.fire(
+            "Process Successful!",
+            "Estate successfully updated!",
+            "success"
+          );
+          this.getRecord();
+          this.modalService.dismissAll();
+        },
+        (error) => {
+          this.isLoading = false;
+          Swal.fire("Process Failed!", "Failed to update estate", "error");
+        }
+      );
+    } catch (err) {
+      this.isLoading = false;
+      Swal.fire("Process Failed!", "Failed to update estate", "error");
     }
-
-    const data = {
-      id: this.estate.id,
-      name: this.estate.name,
-      imageUrl: this.estateFiles.length > 0 ? imageUrl : this.estate.imageUrl,
-      description: this.estate.description,
-    };
-    this.propertyService.updateEstate(data).subscribe(
-      (response: any) => {
-        this.isLoading = false;
-        Swal.fire(
-          "Process Successful!",
-          "Estate successfully updated!",
-          "success"
-        );
-        this.getRecord();
-        this.modalService.dismissAll();
-      },
-      (error) => {
-        this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to update estate", "error");
-      }
-    );
   }
 
   getPropertyTypeId() {
     return this.propertyTypes.find(
-      (item: any) => item.id == this.obj.propertyTypeId
-    );
+      (item: any) =>
+        item.name ==
+        (this.obj.propertyTypeId ?? this.propertyTemplate.propertyTypeId)
+    ).id;
   }
 
   async onSubmit() {
@@ -418,6 +429,7 @@ export class EstateProfileComponent implements OnInit {
       }),
       facilities: this.obj.facilities,
       titles: this.obj.titles,
+      default: this.obj.default,
     };
     this.propertyService.createPropertyTemplate(data).subscribe(
       (response: any) => {
@@ -460,7 +472,8 @@ export class EstateProfileComponent implements OnInit {
       description: this.propertyTemplate.description,
       mapUrl: this.propertyTemplate.mapUrl,
       size: this.propertyTemplate.size,
-      propertyTypeId: this.propertyTemplate.propertyTypeId,
+      // propertyTypeId: this.propertyTemplate.propertyTypeId,
+      propertyTypeId: this.getPropertyTypeId(),
       propertySubTypeId: this.propertyTemplate.propertySubTypeId,
       images:
         this.files.length > 0

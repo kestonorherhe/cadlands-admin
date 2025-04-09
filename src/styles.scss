@@ -45,6 +45,26 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 1px #dc3545;
 }
 
+// .ng-select .ng-value-container .ng-value {
+//   color: #ff0000; /* Replace with your desired color */
+// }
+
+// /* For single selection */
+// .ng-select.ng-single .ng-value-container .ng-value {
+//   color: #ff0000; /* Replace with your desired color */
+// }
+
+// /* For the highlighted/selected option in the dropdown */
+// .ng-select .ng-dropdown-panel .ng-option.ng-option-selected {
+//   color: #ff0000; /* Text color for selected option */
+//   background-color: #f0f0f0; /* Background color for selected option */
+// }
+
+// /* For the currently focused/highlighted option as you navigate with keyboard */
+// .ng-select .ng-dropdown-panel .ng-option.ng-option-marked {
+//   color: #0000ff; /* Text color for marked/highlighted option */
+//   background-color: #e0e0e0; /* Background color for marked option */
+// }
 
 .form-control {
   height: 48px !important;
@@ -64,7 +84,8 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
 }
 
 /* Optional: Style for both buttons at once */
-.swal2-confirm, .swal2-cancel {
+.swal2-confirm,
+.swal2-cancel {
   padding: 8px 25px !important; /* Adjust padding for better rounded appearance */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important; /* Optional: adds subtle shadow */
 }

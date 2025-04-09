@@ -5,9 +5,9 @@
         <div class="row p-4">
           <div class="col-6">
             <h4 class="card-title" style="padding: 0px; font-size: 1.5rem">
-              Property Locations
+              Property Position
             </h4>
-            <p style="font-size: 1rem">List available property locations.</p>
+            <p style="font-size: 1rem">List available property position.</p>
           </div>
           <div class="col-6">
             <button
@@ -20,7 +20,7 @@
               "
               (click)="createRecordModal(createItemModal)"
             >
-              <span style="margin-left: 6px">Create Property Location</span>
+              <span style="margin-left: 6px">Create Property Position</span>
             </button>
           </div>
         </div>
@@ -36,7 +36,7 @@
               <thead>
                 <tr class="fw-bolder text-white bg-primary">
                   <th class="min-w-10px text-gray-900 text-end"></th>
-                  <th class="min-w-100px text-gray-900">Property Location</th>
+                  <th class="min-w-100px text-gray-900">Property Position</th>
                   <th class="min-w-50px text-gray-900">Description</th>
                   <th class="min-w-100px text-gray-900">Created At</th>
                   <th class="min-w-100px text-gray-900"></th>
@@ -89,7 +89,7 @@
             "
           >
             <div class="fw-bold fs-5 text-gray-800 mb-4">
-              Property Location Detail
+              Property Position Detail
             </div>
             <a
               (click)="closeDetail()"
@@ -194,7 +194,7 @@
                     padding: '0.5rem 1rem'
                   }"
                 >
-                  Commissions
+                  Fees
                 </a>
               </li>
             </ul>
@@ -208,10 +208,10 @@
             <div class="col-12">
               <h3 class="card-title d-flex align-items-start flex-column">
                 <span class="card-label fw-bolder fs-5 mb-1"
-                  >Commission History</span
+                  >Fee History</span
                 >
                 <span class="text-muted mt-1 fw-bold fs-7"
-                  >List commission history</span
+                  >List fee history</span
                 >
               </h3>
             </div>
@@ -234,7 +234,7 @@
                 "
               >
                 <span style="margin-left: 6px">
-                  Update Commission
+                  Update Fee
                 </span>
               </button>
             </div>
@@ -247,7 +247,7 @@
                   <thead>
                     <tr class="fw-bolder text-white bg-primary">
                       <th class="min-w-20px text-gray-900 text-center">ID</th>
-                      <th class="min-w-350px text-gray-900 text-center">Commission</th>
+                      <th class="min-w-350px text-gray-900 text-center">Fee (%)</th>
                       <th class="min-w-350px text-gray-900 text-center">Status</th>
                       <th class="min-w-100px text-gray-900">Created By</th>
                       <th class="min-w-100px text-gray-900">Created At</th>
@@ -286,7 +286,7 @@
 
 <ng-template #createItemModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Create Property Location</h5>
+    <h5 class="modal-title" id="exampleModalLabel">Create Property Position</h5>
     <button
       type="button"
       class="btn-close"
@@ -302,7 +302,7 @@
             for="name"
             [class.text-danger]="name.invalid &amp;&amp; name.touched"
             class="form-label"
-            >Property Location <span class="text-danger">*</span></label
+            >Property Position <span class="text-danger">*</span></label
           >
           <input
             type="text"
@@ -311,13 +311,13 @@
             #name="ngModel"
             [(ngModel)]="obj.name"
             [class.is-invalid]="name.invalid &amp;&amp; name.touched"
-            placeholder="Enter Property Location"
+            placeholder="Enter Property Position"
             required
           />
 
           <div *ngIf="name.invalid &amp;&amp; name.touched">
             <small *ngIf="name.errors?.required" class="text-danger"
-              >Property Location is Required</small
+              >Property Position is Required</small
             >
           </div>
         </div>
@@ -372,7 +372,7 @@
 
 <ng-template #updateItemModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Update Property Location</h5>
+    <h5 class="modal-title" id="exampleModalLabel">Update Property Position</h5>
     <button
       type="button"
       class="btn-close"
@@ -388,7 +388,7 @@
             for="name"
             [class.text-danger]="name.invalid &amp;&amp; name.touched"
             class="form-label"
-            >Property Location <span class="text-danger">*</span></label
+            >Property Position <span class="text-danger">*</span></label
           >
           <input
             type="text"
@@ -397,13 +397,13 @@
             #name="ngModel"
             [(ngModel)]="obj.name"
             [class.is-invalid]="name.invalid &amp;&amp; name.touched"
-            placeholder="Enter Property Location"
+            placeholder="Enter Property Position"
             required
           />
 
           <div *ngIf="name.invalid &amp;&amp; name.touched">
             <small *ngIf="name.errors?.required" class="text-danger"
-              >Property Location is Required</small
+              >Property Position is Required</small
             >
           </div>
         </div>
@@ -459,7 +459,7 @@
 <ng-template #createPropertyLocationCommissionTemplate let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">
-      Update Commission
+      Update Fee
     </h5>
     <button
       type="button"
@@ -476,7 +476,7 @@
             for="commission"
             [class.text-danger]="commission.invalid &amp;&amp; commission.touched"
             class="form-label"
-            >Location Commission <span class="text-danger">*</span></label
+            >Location Fee <span class="text-danger">*</span></label
           >
           <input
             type="number"
@@ -485,13 +485,13 @@
             #commission="ngModel"
             [(ngModel)]="propertyLocationCommission.commission"
             [class.is-invalid]="commission.invalid &amp;&amp; commission.touched"
-            placeholder="Enter Location Commission"
+            placeholder="Enter Location Fee"
             required
           />
 
           <div *ngIf="commission.invalid &amp;&amp; commission.touched">
             <small *ngIf="commission.errors?.required" class="text-danger"
-              >Location commission is Required</small
+              >Location fee is Required</small
             >
           </div>
         </div>
