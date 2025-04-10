@@ -29,29 +29,61 @@
         <div class="card-body">
           <div class="media">
             <div class="media-body">
-              <p class="text-muted fs-5 fw-medium">
-                Affiliate Signup Commission
-              </p>
-              <h2 class="mb-0">NGN {{ 0 | number }}</h2>
-              <h6 class="mb-0 mt-2">Affiliate Referral: 0</h6>
+              <p class="text-muted fs-5 fw-medium">My Land Sales Commission</p>
+              <h2 class="mb-0">
+                NGN
+                {{
+                  getTotalAmount(
+                    (mySales$ | async)?.data?.applicationRequests || []
+                  ).totalAmount | number
+                }}
+              </h2>
+              <h6 class="mb-0 mt-2">
+                Land Sold:
+                {{
+                  getTotalAmount(
+                    (mySales$ | async)?.data?.applicationRequests || []
+                  ).count
+                    | number
+                    | number
+                }}
+              </h6>
             </div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="col-md-3 col-sm-12 table-card">
       <div class="card mini-stats-wid">
         <div class="card-body">
           <div class="media">
             <div class="media-body">
-              <p class="text-muted fs-5 fw-medium">My Land Sales Commission</p>
-              <h2 class="mb-0">NGN {{ 0 | number }}</h2>
-              <h6 class="mb-0 mt-2">Land Sold: {{ 0 | number }}</h6>
+              <p class="text-muted fs-5 fw-medium">
+                Affiliate Signup Commission
+              </p>
+              <h2 class="mb-0">
+                NGN
+                {{
+                  getTotalAmount(
+                    (referralBonuses$ | async)?.data?.subscriptionBonuses || []
+                  ).totalAmount | number
+                }}
+              </h2>
+              <h6 class="mb-0 mt-2">
+                Affiliate Referral:
+                {{
+                  getTotalAmount(
+                    (referralBonuses$ | async)?.data?.subscriptionBonuses || []
+                  ).count | number
+                }}
+              </h6>
             </div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="col-md-3 col-sm-12 table-card">
       <div class="card mini-stats-wid">
         <div class="card-body">
@@ -60,13 +92,30 @@
               <p class="text-muted fs-5 fw-medium">
                 Direct-Affiliate Land Sales
               </p>
-              <h2 class="mb-0">NGN {{ 0 | number }}</h2>
-              <h6 class="mb-0 mt-2">Land Sold: {{ 0 | number }}</h6>
+              <h2 class="mb-0">
+                NGN
+                {{
+                  getTotalAmount(
+                    (directCommissions$ | async)?.data?.applicationRequests ||
+                      []
+                  ).totalAmount | number
+                }}
+              </h2>
+              <h6 class="mb-0 mt-2">
+                Land Sold:
+                {{
+                  getTotalAmount(
+                    (directCommissions$ | async)?.data?.subscriptionBonuses ||
+                      []
+                  ).count | number
+                }}
+              </h6>
             </div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="col-md-3 col-sm-12 table-card">
       <div class="card mini-stats-wid">
         <div class="card-body">
@@ -75,8 +124,28 @@
               <p class="text-muted fs-5 fw-medium">
                 Indirect-Affiliate Land Sales
               </p>
-              <h2 class="mb-0">NGN {{ 0 | number }}</h2>
-              <h6 class="mb-0 mt-2">Land Sold: {{ 0 | number }}</h6>
+              <h2 class="mb-0">
+                NGN
+                {{
+                  getTotalAmount(
+                    (indirectCommissions$ | async)?.data?.applicationRequests ||
+                      []
+                  ).totalAmount
+                    | number
+                    | number
+                }}
+              </h2>
+              <h6 class="mb-0 mt-2">
+                Land Sold:
+                {{
+                  getTotalAmount(
+                    (indirectCommissions$ | async)?.data?.subscriptionBonuses ||
+                      []
+                  ).count
+                    | number
+                    | number
+                }}
+              </h6>
             </div>
           </div>
         </div>
@@ -207,200 +276,3 @@
     </div>
   </div>
 </div>
-<!-- container-fluid -->
-<ng-template #appointmentDetailModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">
-      Appointment Details - Appointment Status ({{ appointmentDetail?.status }})
-    </h5>
-    <button
-      type="button"
-      class="btn-close"
-      (click)="modal.close('by: close icon')"
-      aria-label="Close"
-    ></button>
-  </div>
-  <div class="modal-body">
-    <div class="row">
-      <div class="row">
-        <h5>Customer Information</h5>
-        <br />
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="userId" class="form-label">Customer Name</label>
-            <br />
-            <b>{{ appointmentDetail?.customer }}</b>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="userId" class="form-label">Customer Phone</label>
-            <br />
-            <b>{{ appointmentDetail?.customer_phone }}</b>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="userId" class="form-label">Customer Email</label>
-            <br />
-            <b>{{ appointmentDetail?.customer_email }}</b>
-          </div>
-        </div>
-      </div>
-
-      <hr />
-
-      <div class="row">
-        <h5>Staff Information</h5>
-        <br />
-
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="adminId" class="form-label">Admin Name</label>
-            <br />
-            <b>{{ appointmentDetail?.admin_name }}</b>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="userId" class="form-label">Admin Phone</label>
-            <br />
-            <b>{{ appointmentDetail?.admin_phone }}</b>
-          </div>
-        </div>
-      </div>
-
-      <hr />
-
-      <div class="row">
-        <h5>Appointment Information</h5>
-
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="categoryId" class="form-label">Service Category</label>
-            <br />
-            <b>{{ appointmentDetail?.category_name }}</b>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="serviceId" class="form-label">Service Name</label>
-            <br />
-            <b>{{ appointmentDetail?.service_name }}</b>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="serviceId" class="form-label">Service Duration</label>
-            <br />
-            <b>{{ appointmentDetail?.service_duration }}</b>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="serviceId" class="form-label">Service Price</label>
-            <br />
-            <b>{{ appointmentDetail?.service_price }}</b>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="locationId" class="form-label">Location Name</label>
-            <br />
-            <b>{{ appointmentDetail?.location_name }}</b>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="locationId" class="form-label">Location Address</label>
-            <br />
-            <b>{{ appointmentDetail?.location_address }}</b>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="locationId" class="form-label">Location Phone</label>
-            <br />
-            <b>{{ appointmentDetail?.location_phone }}</b>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="locationId" class="form-label">Note</label>
-            <br />
-            <b>{{
-              appointmentDetail?.note != null
-                ? appointmentDetail?.note
-                : "Not Available"
-            }}</b>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="appointmentDate" class="form-label"
-              >Appointment Date</label
-            >
-            <br />
-            <b>{{ appointmentDetail?.appointment_date | date }}</b>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="appointmentTime" class="form-label"
-              >Appointment Time</label
-            >
-            <br />
-            <b>{{ appointmentDetail?.appointment_time }}</b>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="mb-3">
-            <label for="appointmentTime" class="form-label"
-              >Document Name</label
-            >
-            <br />
-            <b>{{
-              appointmentDetail?.document_name != null
-                ? appointmentDetail?.document_name
-                : "Not Available"
-            }}</b>
-          </div>
-        </div>
-
-        <div class="col-lg-12 col-md-12 col-sm-12">
-          <div class="mb-3">
-            <label for="appointmentTime" class="form-label"
-              >Payment Link:</label
-            >
-            <br />
-            <a
-              target="_blank"
-              href="https://app.credodemo.com/pay/lagppad-portal"
-              >Payment Link</a
-            >
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <a
-        target="_blank"
-        href="{{ appointmentDetail?.document_url }}"
-        class="btn btn-primary btn-rounded"
-      >
-        View Document
-      </a>
-    </div>
-  </div>
-</ng-template>

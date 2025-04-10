@@ -19,8 +19,14 @@
             </div>
           </div>
 
-          <div class="table-responsive">
-            <table class="table align-middle gs-0 gy-4">
+          <div
+            class="table-responsive"
+            style="overflow-x: auto; max-width: 100%"
+          >
+            <table
+              class="table align-middle gs-0 gy-4"
+              style="width: max-content; min-width: 100%"
+            >
               <thead>
                 <tr class="fw-bolder text-white bg-primary">
                   <th
@@ -111,9 +117,13 @@
                       <td colspan="14" class="p-0">
                         <div class="bg-light-primary p-4">
                           <h6 class="text-primary mb-4">Request Details</h6>
-                          <div class="table-responsive">
+                          <div
+                            class="table-responsive"
+                            style="overflow-x: auto; max-width: 100%"
+                          >
                             <table
                               class="table table-bordered table-striped mb-0"
+                              style="width: max-content; min-width: 100%"
                             >
                               <thead>
                                 <tr class="fw-bold">
@@ -258,7 +268,8 @@
                                         }}
                                         <span
                                           *ngIf="isAllocating(detail.id)"
-                                          class="spinner-border spinner-border-sm me-1" style="font-size: 12px;"
+                                          class="spinner-border spinner-border-sm me-1"
+                                          style="font-size: 12px"
                                         ></span>
                                       </button>
                                       <button

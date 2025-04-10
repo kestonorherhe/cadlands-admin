@@ -1,8 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { EventService } from "../../../core/services/event.service";
-import { QueryService } from "src/app/core/services/query.service";
-import { StaffService } from "../../staff/staff.service";
+import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { SalesCommissionService } from "../../sales-commission/sales-commission.service";
 
@@ -15,111 +11,72 @@ import { SalesCommissionService } from "../../sales-commission/sales-commission.
 export class AffiliateDashboardComponent implements OnInit {
   isLoading = false;
   transactions$: Observable<any>;
+  referralBonuses$: Observable<any>;
+  mySales$: Observable<any>;
+  directCommissions$: Observable<any>;
+  indirectCommissions$: Observable<any>;
 
   data = [];
   first_name = "";
   user;
-  adminCount = 0;
-  agentCount = 0;
-  farmerCount = 0;
-  appointments;
-  appointmentDetail;
-  tractorOwnerCount = 0;
   tractorCount = 0;
 
   isVisible: string;
   isActive: string;
 
-  @ViewChild("appointmentDetailModal")
-  appointmentDetailModalRef: TemplateRef<any>;
   constructor(
-    private modalService: NgbModal,
     private readonly salesCommissionService: SalesCommissionService
-  ) {
-    this.viewDetail = this.viewDetail.bind(this);
-  }
-
-  showAppointmentDetailModal(content: TemplateRef<any>) {
-    this.modalService
-      .open(content, {
-        centered: true,
-        size: "lg",
-        animation: true,
-        backdrop: "static",
-        keyboard: false,
-      })
-      .result.then((result) => {
-        console.log("Modal closed" + result);
-      })
-      .catch((res) => {});
-  }
-
-  onShowAppointmentDetailModal() {
-    this.showAppointmentDetailModal(this.appointmentDetailModalRef);
-  }
-
-  viewDetail(evt: any) {
-    console.log(
-      "🚀 ~ AppointmentListComponent ~ viewDetail ~ evt:",
-      evt.row.data
-    );
-    this.appointmentDetail = evt.row.data;
-    this.onShowAppointmentDetailModal();
-  }
-
-  edit(evt: any) {
-
-  };
+  ) {}
 
   ngOnInit() {
-    /**
-     * horizontal-vertical layput set
-     */
-    // const attribute = document.body.getAttribute("data-layout");
-    // this.isVisible = attribute;
-
     this.first_name = JSON.parse(
       localStorage.getItem("currentUser")
     ).first_name;
     this.user = JSON.parse(localStorage.getItem("currentUser"));
 
-    // const vertical = document.getElementById("layout-vertical");
-    // if (vertical != null) {
-    //   vertical.setAttribute("checked", "true");
-    // }
-    // if (attribute == "horizontal") {
-    //   const horizontal = document.getElementById("layout-horizontal");
-    //   if (horizontal != null) {
-    //     horizontal.setAttribute("checked", "true");
-    //     console.log(horizontal);
-    //   }
-    // }
-
-    /**
-     * Fetches the data
-     */
-    // this.fetchData();
-
-    // this.staffService.getAllAdmins({ role: "admin" }).subscribe(
-    //   (response: any) => {
-    //     console.log("🚀 ~ DefaultComponent ~ ngOnInit ~ response:", response);
-    //     this.adminCount = response.length;
-    //   },
-    //   (error) => {}
-    // );
-    // this.staffService.getAllAdmins({ role: "agent" }).subscribe(
-    //   (response: any) => {
-    //     this.agentCount = response.length;
-    //   },
-    //   (error) => {}
-    // );
-
     this.transactions$ = this.salesCommissionService.getMySalesHistory({
+      // status: "PENDING",
+    });
+    this.getSubscriptionBonuses();
+    this.getSales();
+    this.getAffiliateSales();
+  }
+  getSubscriptionBonuses() {
+    this.referralBonuses$ =
+      this.salesCommissionService.getMySubscriptionBonuses({
+        // status: "PENDING",
+      });
+  }
+
+  getSales() {
+    this.mySales$ = this.salesCommissionService.getMySalesHistory({
       // status: "PENDING",
     });
   }
 
-  // changeLayout(layout: string) {
-  //   this.eventService.broadcast("changeLayout", layout);
-  // }
+  getAffiliateSales() {
+    this.indirectCommissions$ =
+      this.salesCommissionService.getMyAffiliateSalesHistory({
+        // status: "PENDING",
+      });
+  }
+
+  getTotalAmount(data: any[]) {
+    const filteredSales = data;
+    return {
+      totalAmount: filteredSales.reduce(
+        (acc, item) => acc + Number(item.amount),
+        0
+      ),
+      count: filteredSales.length,
+    };
+  }
+
+  getPaidSales(data: any[]) {
+    const filteredSales = data.filter((item: any) => item.status === "Paid");
+    return {
+      totalAmount: filteredSales.reduce((acc, item) => acc + item.amount, 0),
+      count: filteredSales.length,
+    };
+  }
 }

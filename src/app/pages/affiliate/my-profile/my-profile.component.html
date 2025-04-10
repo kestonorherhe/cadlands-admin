@@ -50,7 +50,7 @@
                     align-items: center;
                     float: right;
                   "
-                  (click)="editNokModal(editNokTemplate)"
+                  (click)="editAffiliateModal(editAffiliateTemplate)"
                 >
                   <i class="bx bx-pen"></i>
                   <span style="margin-left: 6px">Edit</span>
@@ -439,6 +439,314 @@
   </div>
 </div>
 
+<ng-template #editAffiliateTemplate let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title text-primary fs-bold" id="exampleModalLabel">
+      Edit Affiliate Info
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="title"
+            [class.text-danger]="title.invalid &amp;&amp; title.touched"
+            class="form-label"
+            >Title <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="titleList"
+            bindValue="name"
+            bindLabel="name"
+            name="title"
+            #title="ngModel"
+            [(ngModel)]="affiliate.title"
+            [class.is-invalid]="title.invalid &amp;&amp; title.touched"
+            placeholder="--Select Title--"
+            required
+          ></ng-select>
+
+          <div *ngIf="title.invalid &amp;&amp; title.touched">
+            <small *ngIf="title.errors?.required" class="text-danger"
+              >Title is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="firstName"
+            [class.text-danger]="firstName.invalid &amp;&amp; firstName.touched"
+            class="form-label"
+            >First Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="firstName"
+            #firstName="ngModel"
+            [(ngModel)]="nok.firstName"
+            [class.is-invalid]="firstName.invalid &amp;&amp; firstName.touched"
+            placeholder="Enter First Name"
+            required
+          />
+
+          <div *ngIf="firstName.invalid &amp;&amp; firstName.touched">
+            <small *ngIf="firstName.errors?.required" class="text-danger"
+              >First name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="lastName"
+            [class.text-danger]="lastName.invalid &amp;&amp; lastName.touched"
+            class="form-label"
+            >Last Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="lastName"
+            #lastName="ngModel"
+            [(ngModel)]="nok.lastName"
+            [class.is-invalid]="lastName.invalid &amp;&amp; lastName.touched"
+            placeholder="Enter Last Name"
+            required
+          />
+
+          <div *ngIf="lastName.invalid &amp;&amp; lastName.touched">
+            <small *ngIf="lastName.errors?.required" class="text-danger"
+              >Last name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="otherName"
+            [class.text-danger]="otherName.invalid &amp;&amp; otherName.touched"
+            class="form-label"
+            >Other Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="otherName"
+            #otherName="ngModel"
+            [(ngModel)]="nok.otherName"
+            [class.is-invalid]="otherName.invalid &amp;&amp; otherName.touched"
+            placeholder="Enter Other Name"
+            required
+          />
+
+          <div *ngIf="otherName.invalid &amp;&amp; otherName.touched">
+            <small *ngIf="otherName.errors?.required" class="text-danger"
+              >Other name is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="phone"
+            [class.text-danger]="phone.invalid &amp;&amp; phone.touched"
+            class="form-label"
+            >Phone <span class="text-danger">*</span></label
+          >
+          <input
+            type="tel"
+            class="form-control"
+            name="phone"
+            #phone="ngModel"
+            [(ngModel)]="nok.phone"
+            [class.is-invalid]="phone.invalid &amp;&amp; phone.touched"
+            placeholder="Enter Phone"
+            required
+          />
+
+          <div *ngIf="phone.invalid &amp;&amp; phone.touched">
+            <small *ngIf="phone.errors?.required" class="text-danger"
+              >Phone is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="email"
+            [class.text-danger]="email.invalid &amp;&amp; email.touched"
+            class="form-label"
+            >Email <span class="text-danger">*</span></label
+          >
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            #email="ngModel"
+            [(ngModel)]="nok.email"
+            [class.is-invalid]="email.invalid &amp;&amp; email.touched"
+            placeholder="Enter Email"
+            required
+          />
+
+          <div *ngIf="email.invalid &amp;&amp; email.touched">
+            <small *ngIf="email.errors?.required" class="text-danger"
+              >Email is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="address"
+            [class.text-danger]="address.invalid &amp;&amp; address.touched"
+            class="form-label"
+            >Address <span class="text-danger">*</span></label
+          >
+          <textarea
+            type="text"
+            class="form-control"
+            name="address"
+            #address="ngModel"
+            [(ngModel)]="nok.address"
+            [class.is-invalid]="address.invalid &amp;&amp; address.touched"
+            placeholder="Enter Address"
+            required
+          ></textarea>
+
+          <div *ngIf="address.invalid &amp;&amp; address.touched">
+            <small *ngIf="address.errors?.required" class="text-danger"
+              >Address is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="countryId"
+            [class.text-danger]="countryId.invalid &amp;&amp; countryId.touched"
+            class="form-label"
+            >Country <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="countryList"
+            bindValue="id"
+            bindLabel="name"
+            name="countryId"
+            #countryId="ngModel"
+            [(ngModel)]="nok.countryId"
+            [class.is-invalid]="countryId.invalid &amp;&amp; countryId.touched"
+            placeholder="--Select Country--"
+            required
+          ></ng-select>
+
+          <div *ngIf="countryId.invalid &amp;&amp; countryId.touched">
+            <small *ngIf="countryId.errors?.required" class="text-danger"
+              >Country is Required</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="stateId"
+            [class.text-danger]="stateId.invalid &amp;&amp; stateId.touched"
+            class="form-label"
+            >State <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="countryList"
+            bindValue="id"
+            bindLabel="name"
+            name="stateId"
+            #stateId="ngModel"
+            [(ngModel)]="nok.stateId"
+            [class.is-invalid]="stateId.invalid &amp;&amp; stateId.touched"
+            placeholder="--Select State--"
+            required
+          ></ng-select>
+
+          <div *ngIf="stateId.invalid &amp;&amp; stateId.touched">
+            <small *ngIf="stateId.errors?.required" class="text-danger"
+              >State is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="cityId"
+            [class.text-danger]="cityId.invalid &amp;&amp; cityId.touched"
+            class="form-label"
+            >City <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="countryList"
+            bindValue="id"
+            bindLabel="name"
+            name="cityId"
+            #cityId="ngModel"
+            [(ngModel)]="nok.cityId"
+            [class.is-invalid]="cityId.invalid &amp;&amp; cityId.touched"
+            placeholder="--Select City--"
+            required
+          ></ng-select>
+
+          <div *ngIf="cityId.invalid &amp;&amp; cityId.touched">
+            <small *ngIf="cityId.errors?.required" class="text-danger"
+              >City is Required</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-primary btn-rounded"
+        (click)="onSubmit()"
+      >
+        Update Info
+      </button>
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-danger btn-rounded"
+        (click)="closeModal()"
+      >
+        Cancel
+      </button>
+      <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
+        Processing <span><i class="bx bx-loader bx-spin"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
 <ng-template #editNokTemplate let-modal>
   <div class="modal-header">
     <h5 class="modal-title text-primary fs-bold" id="exampleModalLabel">

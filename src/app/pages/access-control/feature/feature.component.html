@@ -31,8 +31,14 @@
             </div>
           </div>
 
-          <div class="table-responsive">
-            <table class="table align-middle gs-0 gy-4">
+          <div
+            class="table-responsive"
+            style="overflow-x: auto; max-width: 100%"
+          >
+            <table
+              class="table align-middle gs-0 gy-4"
+              style="width: max-content; min-width: 100%"
+            >
               <thead>
                 <tr class="fw-bolder text-white bg-primary">
                   <th
@@ -158,14 +164,14 @@
       >
         Submit
       </button>
-      <button *ngIf="!isLoading" class="btn btn-danger btn-rounded" (click)="closeModal()">
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-danger btn-rounded"
+        (click)="closeModal()"
+      >
         Cancel
       </button>
-      <button
-        *ngIf="isLoading"
-        class="btn btn-primary btn-rounded"
-        disabled
-      >
+      <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
         Processing <span><i class="bx bx-loader bx-spin"></i></span>
       </button>
     </div>
@@ -246,14 +252,14 @@
       >
         Update
       </button>
-      <button *ngIf="!isLoading" class="btn btn-danger btn-rounded" (click)="closeModal()">
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-danger btn-rounded"
+        (click)="closeModal()"
+      >
         Cancel
       </button>
-      <button
-        *ngIf="isLoading"
-        class="btn btn-primary btn-rounded"
-        disabled
-      >
+      <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
         Processing <span><i class="bx bx-loader bx-spin"></i></span>
       </button>
     </div>

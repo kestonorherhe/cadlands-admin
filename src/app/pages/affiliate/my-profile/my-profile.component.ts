@@ -48,6 +48,14 @@ export class MyProfileComponent implements OnInit {
     private affiliateService: AffiliateService
   ) {}
 
+  editAffiliateModal(content: any) {
+    this.modalService.open(content, {
+      backdrop: "static",
+      centered: true,
+      size: "lg",
+    });
+  }
+
   editNokModal(content: any) {
     this.modalService.open(content, {
       backdrop: "static",

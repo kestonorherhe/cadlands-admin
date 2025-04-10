@@ -511,6 +511,7 @@ export class EstateProfileComponent implements OnInit {
       titles: this.propertyTemplate.titles,
       negotiationStatusId: this.propertyTemplate.negotiationStatusId,
       buildingStructure: this.propertyTemplate.buildingStructure,
+      default: this.propertyTemplate.default,
       // price: this.obj.propertyPrice,
     };
     this.propertyService.updatePropertyTemplate(data).subscribe(

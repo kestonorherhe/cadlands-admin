@@ -36,8 +36,14 @@
             </div>
           </div>
 
-          <div class="table-responsive">
-            <table class="table align-middle gs-0 gy-4">
+          <div
+            class="table-responsive"
+            style="overflow-x: auto; max-width: 100%"
+          >
+            <table
+              class="table align-middle gs-0 gy-4"
+              style="width: max-content; min-width: 100%"
+            >
               <thead>
                 <tr class="fw-bolder text-white bg-primary">
                   <th
@@ -361,115 +367,6 @@
 
       <div class="row mt-4 mb-2">
         <h4 class="text-primary" style="font-weight: bold">
-          Affiliate Information
-        </h4>
-      </div>
-      <div class="col-lg-3 col-md-3 col-sm-12">
-        <div class="mb-3">
-          <label class="form-label text-primary" style="font-size: 14px"
-            >Title</label
-          >
-          <br />
-          <p style="font-size: 14px">
-            {{ obj?.customer?.nok[0]?.title || "---" }}
-          </p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-3 col-sm-12">
-        <div class="mb-3">
-          <label class="form-label text-primary" style="font-size: 14px"
-            >First Name</label
-          >
-          <br />
-          <p style="font-size: 14px">
-            {{ obj?.customer?.nok[0]?.firstName }}
-          </p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-3 col-sm-12">
-        <div class="mb-3">
-          <label class="form-label text-primary" style="font-size: 14px"
-            >Last Name</label
-          >
-          <br />
-          <p style="font-size: 14px">{{ obj?.customer?.nok[0]?.lastName }}</p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-3 col-sm-12">
-        <div class="mb-3">
-          <label class="form-label text-primary" style="font-size: 14px"
-            >Othername</label
-          >
-          <br />
-          <p style="font-size: 14px">
-            {{ obj?.customer?.nok[0]?.otherName || "---" }}
-          </p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-3 col-sm-12">
-        <div class="mb-3">
-          <label class="form-label text-primary" style="font-size: 14px"
-            >Phone</label
-          >
-          <br />
-          <p style="font-size: 14px">{{ obj?.customer?.nok[0]?.phone }}</p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-3 col-sm-12">
-        <div class="mb-3">
-          <label class="form-label text-primary" style="font-size: 14px"
-            >Email</label
-          >
-          <br />
-          <p style="font-size: 14px">{{ obj?.customer?.nok[0]?.email }}</p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-3 col-sm-12">
-        <div class="mb-3">
-          <label class="form-label text-primary" style="font-size: 14px"
-            >Address</label
-          >
-          <br />
-          <p style="font-size: 14px">
-            {{ obj?.customer?.nok[0]?.address || "---" }}
-          </p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-3 col-sm-12">
-        <div class="mb-3">
-          <label class="form-label text-primary" style="font-size: 14px"
-            >Country</label
-          >
-          <br />
-          <p style="font-size: 14px">
-            {{ obj?.customer?.nok[0]?.country || "---" }}
-          </p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-3 col-sm-12">
-        <div class="mb-3">
-          <label class="form-label text-primary" style="font-size: 14px"
-            >State</label
-          >
-          <br />
-          <p style="font-size: 14px">
-            {{ obj?.customer?.nok[0]?.state || "---" }}
-          </p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-3 col-sm-12">
-        <div class="mb-3">
-          <label class="form-label text-primary" style="font-size: 14px"
-            >City</label
-          >
-          <br />
-          <p style="font-size: 14px">
-            {{ obj?.customer?.nok[0]?.city || "---" }}
-          </p>
-        </div>
-      </div>
-      <div class="row mt-4 mb-2">
-        <h4 class="text-primary" style="font-weight: bold">
           Next of Kin's Information
         </h4>
       </div>
@@ -580,6 +477,105 @@
 
       <div class="row mt-4 mb-2">
         <h4 class="text-primary" style="font-weight: bold">
+          Affiliate Information
+        </h4>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >First Name</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.directAffiliate?.firstName }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Last Name</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.directAffiliate?.lastName }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Othername</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.directAffiliate?.otherName || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Phone</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.directAffiliate?.phone }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Email</label
+          >
+          <br />
+          <p style="font-size: 14px">{{ obj?.directAffiliate?.email }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Address</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.directAffiliate?.address || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >Country</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.directAffiliate?.country || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >State</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.directAffiliate?.state || "---" }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mb-3">
+          <label class="form-label text-primary" style="font-size: 14px"
+            >City</label
+          >
+          <br />
+          <p style="font-size: 14px">
+            {{ obj?.directAffiliate?.city || "---" }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row mt-4 mb-2">
+        <h4 class="text-primary" style="font-weight: bold">
           Process Application
         </h4>
       </div>
@@ -638,8 +634,12 @@
             required
           ></ng-select>
 
-          <div *ngIf="applicationStatus.invalid &amp;&amp; applicationStatus.touched">
-            <small *ngIf="applicationStatus.errors?.required" class="text-danger"
+          <div
+            *ngIf="applicationStatus.invalid &amp;&amp; applicationStatus.touched"
+          >
+            <small
+              *ngIf="applicationStatus.errors?.required"
+              class="text-danger"
               >Application status is Required</small
             >
           </div>

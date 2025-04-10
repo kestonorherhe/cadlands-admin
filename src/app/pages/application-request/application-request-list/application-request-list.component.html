@@ -36,8 +36,14 @@
             </div>
           </div>
 
-          <div class="table-responsive">
-            <table class="table align-middle gs-0 gy-4">
+          <div
+              class="table-responsive"
+              style="overflow-x: auto; max-width: 100%"
+            >
+              <table
+                class="table align-middle gs-0 gy-4"
+                style="width: max-content; min-width: 100%"
+              >
               <thead>
                 <tr class="fw-bolder text-white bg-primary">
                   <th
@@ -456,6 +462,7 @@
           </p>
         </div>
       </div>
+
       <div class="row mt-4 mb-2">
         <h4 class="text-primary" style="font-weight: bold">
           Affiliate Information
@@ -464,20 +471,11 @@
       <div class="col-lg-3 col-md-3 col-sm-12">
         <div class="mb-3">
           <label class="form-label text-primary" style="font-size: 14px"
-            >Title</label
-          >
-          <br />
-          <p style="font-size: 14px">{{ obj?.customer?.nok[0]?.title || "---" }}</p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-3 col-sm-12">
-        <div class="mb-3">
-          <label class="form-label text-primary" style="font-size: 14px"
             >First Name</label
           >
           <br />
           <p style="font-size: 14px">
-            {{ obj?.customer?.nok[0]?.firstName }}
+            {{ obj?.directAffiliate?.firstName }}
           </p>
         </div>
       </div>
@@ -487,7 +485,7 @@
             >Last Name</label
           >
           <br />
-          <p style="font-size: 14px">{{ obj?.customer?.nok[0]?.lastName }}</p>
+          <p style="font-size: 14px">{{ obj?.directAffiliate?.lastName }}</p>
         </div>
       </div>
       <div class="col-lg-3 col-md-3 col-sm-12">
@@ -497,7 +495,7 @@
           >
           <br />
           <p style="font-size: 14px">
-            {{ obj?.customer?.nok[0]?.otherName || "---" }}
+            {{ obj?.directAffiliate?.otherName || "---" }}
           </p>
         </div>
       </div>
@@ -507,7 +505,7 @@
             >Phone</label
           >
           <br />
-          <p style="font-size: 14px">{{ obj?.customer?.nok[0]?.phone }}</p>
+          <p style="font-size: 14px">{{ obj?.directAffiliate?.phone }}</p>
         </div>
       </div>
       <div class="col-lg-3 col-md-3 col-sm-12">
@@ -516,7 +514,7 @@
             >Email</label
           >
           <br />
-          <p style="font-size: 14px">{{ obj?.customer?.nok[0]?.email }}</p>
+          <p style="font-size: 14px">{{ obj?.directAffiliate?.email }}</p>
         </div>
       </div>
       <div class="col-lg-3 col-md-3 col-sm-12">
@@ -526,7 +524,7 @@
           >
           <br />
           <p style="font-size: 14px">
-            {{ obj?.customer?.nok[0]?.address || "---" }}
+            {{ obj?.directAffiliate?.address || "---" }}
           </p>
         </div>
       </div>
@@ -537,7 +535,7 @@
           >
           <br />
           <p style="font-size: 14px">
-            {{ obj?.customer?.nok[0]?.country || "---" }}
+            {{ obj?.directAffiliate?.country || "---" }}
           </p>
         </div>
       </div>
@@ -548,7 +546,7 @@
           >
           <br />
           <p style="font-size: 14px">
-            {{ obj?.customer?.nok[0]?.state || "---" }}
+            {{ obj?.directAffiliate?.state || "---" }}
           </p>
         </div>
       </div>
@@ -559,20 +557,12 @@
           >
           <br />
           <p style="font-size: 14px">
-            {{ obj?.customer?.nok[0]?.city || "---" }}
+            {{ obj?.directAffiliate?.city || "---" }}
           </p>
         </div>
       </div>
-      <!-- </div> -->
     </div>
     <div class="modal-footer">
-      <!-- <button
-        *ngIf="!isLoading"
-        class="btn btn-primary btn-rounded btn-rounded"
-        (click)="onSubmit()"
-      >
-        Submit
-      </button> -->
       <button
         *ngIf="!isLoading"
         class="btn btn-danger btn-rounded"
