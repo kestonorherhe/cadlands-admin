@@ -275,11 +275,39 @@
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="mb-3">
+          <label
+            for="bankId"
+            [class.text-danger]="bankId.invalid &amp;&amp; bankId.touched"
+            class="form-label"
+            >Select Bank <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="activeBankDetails"
+            bindValue="id"
+            bindLabel="bankName"
+            name="bankId"
+            #bankId="ngModel"
+            [(ngModel)]="obj.bankId"
+            [class.is-invalid]="bankId.invalid &amp;&amp; bankId.touched"
+            placeholder="--Select Bank--"
+            required
+            (change)="onSelectBank($event)"
+          ></ng-select>
+
+          <div *ngIf="bankId.invalid &amp;&amp; bankId.touched">
+            <small *ngIf="bankId.errors?.required" class="text-danger"
+              >Bank is Required</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
           <label class="form-label"
             >Bank Name <span class="text-danger">*</span></label
           >
           <br />
-          {{ activeBankDetails[0]?.bankName }}
+          {{ obj?.bankName ?? "---" }}
         </div>
       </div>
 
@@ -289,7 +317,7 @@
             >Account Name <span class="text-danger">*</span></label
           >
           <br />
-          {{ activeBankDetails[0]?.accountName }}
+          {{ obj?.accountName ?? "---" }}
         </div>
       </div>
 
@@ -299,7 +327,7 @@
             >Account Number <span class="text-danger">*</span></label
           >
           <br />
-          {{ activeBankDetails[0]?.accountNumber }}
+          {{ obj?.accountNumber ?? "---" }}
         </div>
       </div>
 

@@ -1280,106 +1280,220 @@
   </div>
   <div class="modal-body">
     <div class="row">
-      <div class="col-lg-12 col-md-12 col-sm-12">
-        <div class="mb-3">
-          <label
-            for="currentPassword"
-            [class.text-danger]="currentPassword.invalid &amp;&amp; currentPassword.touched"
-            class="form-label"
-            >Current Password <span class="text-danger">*</span></label
-          >
-          <input
-            type="password"
-            class="form-control"
-            name="currentPassword"
-            #currentPassword="ngModel"
-            [(ngModel)]="changePassword.currentPassword"
-            [class.is-invalid]="currentPassword.invalid &amp;&amp; currentPassword.touched"
-            placeholder="Enter Current Password"
-            required
-          />
-
-          <div
-            *ngIf="currentPassword.invalid &amp;&amp; currentPassword.touched"
-          >
-            <small *ngIf="currentPassword.errors?.required" class="text-danger"
-              >Current Password is Required</small
+      <form class="justify-content: center" [formGroup]="loginForm">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="mb-3">
+            <label
+              for="currentPassword"
+              [ngClass]="{
+                'text-danger':
+                  (f.currentPassword.touched && f.currentPassword.errors) ||
+                  (submitted && f.currentPassword.errors),
+                'text-success': submitted && !f.currentPassword.errors
+              }"
+              >Enter Current Password</label
             >
+            <div class="input-group">
+              <input
+                [type]="currentPasswordFieldType"
+                class="form-control"
+                id="currentPassword"
+                formControlName="currentPassword"
+                [ngClass]="{
+                  'is-invalid':
+                    (f.currentPassword.touched && f.currentPassword.errors) ||
+                    (submitted && f.currentPassword.errors),
+                  'is-valid': submitted && !f.currentPassword.errors
+                }"
+                placeholder="Enter Current Password"
+              />
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                (click)="togglePasswordVisibility('currentPassword')"
+              >
+                <i
+                  class="bx"
+                  [ngClass]="
+                    currentPasswordFieldType === 'password' ? 'bx-show' : 'bx-hide'
+                  "
+                ></i>
+              </button>
+              <div
+                *ngIf="
+                  (f.currentPassword.touched && f.currentPassword.errors) ||
+                  (submitted && f.currentPassword.errors)
+                "
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.currentPassword.errors?.required">
+                  Current Password is required
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-lg-12 col-md-12 col-sm-12">
-        <div class="mb-3">
-          <label
-            for="newPassword"
-            [class.text-danger]="newPassword.invalid &amp;&amp; newPassword.touched"
-            class="form-label"
-            >New Password <span class="text-danger">*</span></label
-          >
-          <input
-            type="password"
-            class="form-control"
-            name="newPassword"
-            #newPassword="ngModel"
-            [(ngModel)]="changePassword.newPassword"
-            [class.is-invalid]="newPassword.invalid &amp;&amp; newPassword.touched"
-            placeholder="Enter New Password"
-            required
-          />
 
-          <div *ngIf="newPassword.invalid &amp;&amp; newPassword.touched">
-            <small *ngIf="newPassword.errors?.required" class="text-danger"
-              >New Password is Required</small
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="mb-3">
+            <label
+              for="newPassword"
+              [ngClass]="{
+                'text-danger':
+                  (f.newPassword.touched && f.newPassword.errors) ||
+                  (submitted && f.newPassword.errors),
+                'text-success': submitted && !f.newPassword.errors
+              }"
+              >Enter New Password</label
             >
+            <div class="input-group">
+              <input
+                [type]="newPasswordFieldType"
+                class="form-control"
+                id="newPassword"
+                formControlName="newPassword"
+                [ngClass]="{
+                  'is-invalid':
+                    (f.newPassword.touched && f.newPassword.errors) ||
+                    (submitted && f.newPassword.errors),
+                  'is-valid': submitted && !f.newPassword.errors
+                }"
+                placeholder="Enter New Password"
+              />
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                (click)="togglePasswordVisibility('newPassword')"
+              >
+                <i
+                  class="bx"
+                  [ngClass]="
+                    newPasswordFieldType === 'password' ? 'bx-show' : 'bx-hide'
+                  "
+                ></i>
+              </button>
+              <div
+                *ngIf="
+                  (f.newPassword.touched && f.newPassword.errors) ||
+                  (submitted && f.newPassword.errors)
+                "
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.newPassword.errors?.required">
+                  Password is required
+                </div>
+                <div *ngIf="f.newPassword.errors?.minlength">
+                  Password must be at least 6 characters
+                </div>
+                <div *ngIf="f.newPassword.errors?.passwordStrength">
+                  Password must include uppercase, lowercase, number, and
+                  special character
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-lg-12 col-md-12 col-sm-12">
-        <div class="mb-3">
-          <label
-            for="confirmPassword"
-            [class.text-danger]="confirmPassword.invalid &amp;&amp; confirmPassword.touched"
-            class="form-label"
-            >Confirm Password <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="confirmPassword"
-            #confirmPassword="ngModel"
-            [(ngModel)]="changePassword.confirmPassword"
-            [class.is-invalid]="confirmPassword.invalid &amp;&amp; confirmPassword.touched"
-            placeholder="Enter Confirm Password"
-            required
-          />
-
-          <div
-            *ngIf="confirmPassword.invalid &amp;&amp; confirmPassword.touched"
-          >
-            <small *ngIf="confirmPassword.errors?.required" class="text-danger"
-              >Confirm Password is Required</small
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="mb-3">
+            <label
+              for="confirmPassword"
+              [ngClass]="{
+                'text-danger':
+                  (f.confirmPassword.touched &&
+                    (f.confirmPassword.errors ||
+                      f.confirmPassword.hasError('passwordMismatch'))) ||
+                  (submitted &&
+                    (f.confirmPassword.errors ||
+                      f.confirmPassword.hasError('passwordMismatch'))),
+                'text-success':
+                  submitted &&
+                  !f.confirmPassword.errors &&
+                  !f.confirmPassword.hasError('passwordMismatch')
+              }"
+              >Confirm Password</label
             >
+            <div class="input-group">
+              <input
+                [type]="confirmPasswordFieldType"
+                class="form-control"
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                [ngClass]="{
+                  'is-invalid':
+                    (f.confirmPassword.touched &&
+                      (f.confirmPassword.errors ||
+                        f.confirmPassword.hasError('passwordMismatch'))) ||
+                    (submitted &&
+                      (f.confirmPassword.errors ||
+                        f.confirmPassword.hasError('passwordMismatch'))),
+                  'is-valid':
+                    submitted &&
+                    !f.confirmPassword.errors &&
+                    !f.confirmPassword.hasError('passwordMismatch')
+                }"
+                placeholder="Confirm Password"
+              />
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                (click)="togglePasswordVisibility('confirmPassword')"
+              >
+                <i
+                  class="bx"
+                  [ngClass]="
+                    confirmPasswordFieldType === 'password'
+                      ? 'bx-show'
+                      : 'bx-hide'
+                  "
+                ></i>
+              </button>
+              <div
+                *ngIf="
+                  f.confirmPassword.touched &&
+                  (f.confirmPassword.errors ||
+                    f.confirmPassword.hasError('passwordMismatch'))
+                "
+                class="invalid-feedback"
+              >
+                <div
+                  *ngIf="
+                    f.confirmPassword.touched &&
+                    f.confirmPassword.errors?.required
+                  "
+                >
+                  Confirm password is required
+                </div>
+                <div
+                  *ngIf="
+                    f.confirmPassword.touched &&
+                    f.confirmPassword.hasError('passwordMismatch')
+                  "
+                >
+                  Passwords do not match
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
     <div class="modal-footer">
       <button
-        *ngIf="!isLoading"
+        *ngIf="!submitted"
         class="btn btn-primary btn-rounded"
         (click)="onChangePassword()"
       >
         Change Password
       </button>
       <button
-        *ngIf="!isLoading"
+        *ngIf="!submitted"
         class="btn btn-danger btn-rounded"
         (click)="closeModal()"
       >
         Cancel
       </button>
-      <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
+      <button *ngIf="submitted" class="btn btn-primary btn-rounded" disabled>
         Processing <span><i class="bx bx-loader bx-spin"></i></span>
       </button>
     </div>

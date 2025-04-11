@@ -128,6 +128,17 @@ export class AuthenticationService {
       );
   }
 
+  updatePassword(data) {
+    return this.http
+      .put<any>(`${this.envService.httpService}/auth/update-password`, data)
+      .pipe(
+        map((response) => {
+          console.log("🚀 ~ AuthenticationService ~ map ~ response:", response);
+          return response;
+        })
+      );
+  }
+
   /**
    * Logout the user
    */

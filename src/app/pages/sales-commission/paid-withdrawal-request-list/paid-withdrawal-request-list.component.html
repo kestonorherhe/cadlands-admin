@@ -26,6 +26,9 @@
                     ></th>
                     <th class="min-w-250px text-gray-900">Date</th>
                     <th class="min-w-250px text-gray-900">Narration</th>
+                    <th class="min-w-300px text-gray-900">Bank Name</th>
+                    <th class="min-w-300px text-gray-900">Account Name</th>
+                    <th class="min-w-300px text-gray-900">Account Number</th>
                     <th class="min-w-300px text-gray-900 text-center">Amount</th>
                     <th class="min-w-150px text-gray-900 text-center">Status</th>
                     <th class="min-w-150px text-gray-900 text-center">Payment Status</th>
@@ -50,6 +53,15 @@
                       </td>
                       <td>
                         {{ item.narration }}
+                      </td>
+                      <td>
+                        {{ item?.withdrawalAccount?.bankName }}
+                      </td>
+                      <td>
+                        {{ item?.withdrawalAccount?.accountName }}
+                      </td>
+                      <td>
+                        {{ item?.withdrawalAccount?.accountNumber }}
                       </td>
                       <td class="text-center">
                         {{ item.amount | number }}

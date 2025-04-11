@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { UIModule } from "src/app/shared/ui/ui.module";
 import { NgSelectModule } from "@ng-select/ng-select";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {
   NgbDropdownModule,
   NgbNavModule,
@@ -48,6 +48,7 @@ import { DeactivatedAffiliateListComponent } from "./deactivated-affiliate-list/
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     AffiliateRoutingModule,
     UIModule,
     NgSelectModule,

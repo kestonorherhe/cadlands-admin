@@ -17,6 +17,10 @@ export class MyCommissionWithdrawalComponent implements OnInit {
   affiliate: any;
 
   obj = {
+    bankId: null,
+    bankName: null,
+    accountName: null,
+    accountNumber: null,
     amount: null,
   };
   activeBankDetails: any[] = [];
@@ -53,6 +57,16 @@ export class MyCommissionWithdrawalComponent implements OnInit {
         this.modalService.dismissAll();
       }
     });
+  }
+
+  onSelectBank(evt: any) {
+    console.log(
+      "🚀 ~ MyCommissionWithdrawalComponent ~ onSelectBank ~ evt:",
+      evt
+    );
+    this.obj.bankName = evt.bankName;
+    this.obj.accountName = evt.accountName;
+    this.obj.accountNumber = evt.accountNumber;
   }
 
   ngOnInit() {
@@ -103,7 +117,6 @@ export class MyCommissionWithdrawalComponent implements OnInit {
     const filteredWithdrawals = data.filter(
       (item: any) => item.paymentStatus === "NOT_PAID"
     );
-    console.log("🚀 ~ MyCommissionWithdrawalComponent ~ getPendingWithdrawals ~ filteredWithdrawals:", filteredWithdrawals)
     return {
       totalAmount: filteredWithdrawals.reduce(
         (acc, item) => acc + Number(item.amount),
@@ -129,6 +142,10 @@ export class MyCommissionWithdrawalComponent implements OnInit {
 
   resetForm() {
     this.obj = {
+      bankId: null,
+      bankName: null,
+      accountName: null,
+      accountNumber: null,
       amount: null,
     };
   }
@@ -136,6 +153,7 @@ export class MyCommissionWithdrawalComponent implements OnInit {
   onSubmit() {
     this.isLoading = true;
     const withdrawalDto = {
+      bankId: this.obj.bankId,
       amount: this.obj.amount,
     };
     this.salesCommissionService.createWithdrawal(withdrawalDto).subscribe(

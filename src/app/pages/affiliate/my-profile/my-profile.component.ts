@@ -3,6 +3,12 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import Swal from "sweetalert2";
 import { AffiliateService } from "../affiliate.service";
 import { SettingsService } from "../../settings/settings.service";
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from "@angular/forms";
+import { AuthenticationService } from "src/app/core/services/auth.service";
 
 @Component({
   selector: "app-my-profile",
@@ -10,6 +16,9 @@ import { SettingsService } from "../../settings/settings.service";
   styleUrls: ["./my-profile.component.scss"],
 })
 export class MyProfileComponent implements OnInit {
+  loginForm: UntypedFormGroup;
+  submitted = false;
+
   affiliate: any;
   isLoading = false;
   submittingUpgradeRequest = false;
@@ -46,10 +55,16 @@ export class MyProfileComponent implements OnInit {
     confirmPassword: null,
   };
 
+  // Password visibility toggle
+  currentPasswordFieldType: "password" | "text" = "password";
+  newPasswordFieldType: "password" | "text" = "password";
+  confirmPasswordFieldType: "password" | "text" = "password";
   constructor(
     private modalService: NgbModal,
+    private formBuilder: UntypedFormBuilder,
     private affiliateService: AffiliateService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private authenticationService: AuthenticationService
   ) {}
 
   editAffiliateModal(content: any) {
@@ -112,7 +127,49 @@ export class MyProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loginForm = this.formBuilder.group(
+      {
+        currentPassword: [
+          null,
+          [
+            Validators.required,
+            Validators.minLength(6),
+            // this.passwordStrengthValidator,
+          ],
+        ],
+        newPassword: [
+          null,
+          [
+            Validators.required,
+            Validators.minLength(6),
+            this.passwordStrengthValidator,
+          ],
+        ],
+        confirmPassword: [null, [Validators.required]],
+      },
+      {
+        validators: this.passwordMatchValidator,
+      }
+    );
+
+    // Add real-time validation for confirm password
+    this.loginForm.get("confirmPassword").valueChanges.subscribe(() => {
+      const newPasswordControl = this.loginForm.get("newPassword");
+      const confirmPasswordControl = this.loginForm.get("confirmPassword");
+
+      if (newPasswordControl.value && confirmPasswordControl.value) {
+        if (newPasswordControl.value !== confirmPasswordControl.value) {
+          confirmPasswordControl.setErrors({ passwordMismatch: true });
+        } else {
+          confirmPasswordControl.setErrors(null);
+        }
+      }
+    });
     this.getProfileInfo();
+  }
+
+  get f() {
+    return this.loginForm.controls;
   }
 
   getProfileInfo() {
@@ -149,6 +206,58 @@ export class MyProfileComponent implements OnInit {
         console.log("🚀 ~ MyProfileComponent ~ getProfileInfo ~ error:", error);
       }
     );
+  }
+
+  passwordStrengthValidator(control) {
+    const value = control.value;
+
+    if (!value) {
+      return null;
+    }
+
+    // Check for at least one uppercase letter
+    const hasUpperCase = /[A-Z]/.test(value);
+    // Check for at least one lowercase letter
+    const hasLowerCase = /[a-z]/.test(value);
+    // Check for at least one number
+    const hasNumber = /[0-9]/.test(value);
+    // Check for at least one special character
+    const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(value);
+
+    const passwordValid =
+      hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
+
+    return passwordValid ? null : { passwordStrength: true };
+  }
+
+  // Custom validator to check if passwords match
+  passwordMatchValidator(form: UntypedFormGroup) {
+    const newPassword = form.get("newPassword");
+    const confirmPassword = form.get("confirmPassword");
+
+    if (newPassword.value !== confirmPassword.value) {
+      confirmPassword.setErrors({ passwordMismatch: true });
+    } else {
+      confirmPassword.setErrors(null);
+    }
+
+    return null;
+  }
+
+  // Toggle password visibility
+  togglePasswordVisibility(
+    field: "newPassword" | "confirmPassword" | "currentPassword"
+  ) {
+    if (field === "newPassword") {
+      this.newPasswordFieldType =
+        this.newPasswordFieldType === "password" ? "text" : "password";
+    } else if (field === "currentPassword") {
+      this.currentPasswordFieldType =
+        this.currentPasswordFieldType === "password" ? "text" : "password";
+    } else {
+      this.confirmPasswordFieldType =
+        this.confirmPasswordFieldType === "password" ? "text" : "password";
+    }
   }
 
   resetForm() {
@@ -262,7 +371,7 @@ export class MyProfileComponent implements OnInit {
         });
       },
       (error) => {
-        console.log("🚀 ~ MyProfileComponent ~ onUpdateNok ~ error:", error)
+        console.log("🚀 ~ MyProfileComponent ~ onUpdateNok ~ error:", error);
         this.isLoading = false;
         Swal.fire({
           text: error,
@@ -280,47 +389,41 @@ export class MyProfileComponent implements OnInit {
   }
 
   onChangePassword() {
-    this.isLoading = true;
+    this.submitted = true;
 
-    // const createRoomTypeDto: any = {
-    //   name: this.obj.feature,
-    //   description: this.obj.description,
-    // };
-
-    // this.accessControlService.createFeature(createRoomTypeDto).subscribe(
-    //   (response: any) => {
-    //     Swal.fire({
-    //       text: "Feature was created successfully!",
-    //       icon: "success",
-    //       confirmButtonText: "Ok, got it!",
-    //       confirmButtonColor: "#1B84FF",
-    //     }).then((res) => {
-    //       if (res.isConfirmed) {
-    //         this.modalService.dismissAll();
-    //         this.resetForm();
-    //         this.isLoading = false;
-    //         this.getFeatures();
-    //       }
-    //     });
-    //   },
-    //   (error) => {
-    //     Swal.fire({
-    //       text: `Failed to create feature! ${
-    //         error.error.statusCode === 401
-    //           ? "User not authorized!"
-    //           : error.error.message
-    //       }`,
-    //       icon: "error",
-    //       confirmButtonText: "Ok, got it!",
-    //       confirmButtonColor: "#1B84FF",
-    //     }).then((res) => {
-    //       if (res.isConfirmed) {
-    //         this.isLoading = false;
-    //         // this.getRoomTypes();
-    //       }
-    //     });
-    //   }
-    // );
+    if (this.loginForm.invalid) {
+      return;
+    } else {
+      console.log("this.loginForm.value ::", this.loginForm.value);
+      this.authenticationService.updatePassword(this.loginForm.value).subscribe(
+        (response: any) => {
+          Swal.fire({
+            text: "Successfully updated password!",
+            icon: "success",
+            confirmButtonText: "Re-authenticate your account!",
+            confirmButtonColor: "#1B84FF",
+          }).then((res) => {
+            if (res.isConfirmed) {
+              this.modalService.dismissAll();
+              this.authenticationService.logout();
+              this.submitted = false;
+            }
+          });
+        },
+        (error) => {
+          Swal.fire({
+            text: error,
+            icon: "error",
+            confirmButtonText: "Ok, got it!",
+            confirmButtonColor: "#1B84FF",
+          }).then((res) => {
+            if (res.isConfirmed) {
+              this.submitted = false;
+            }
+          });
+        }
+      );
+    }
   }
 
   upgradeAccount() {

@@ -24,6 +24,7 @@ export class AffiliateService {
   addBankAccount(data: any) {
     return this.httpService.post(`admins/add-bank-account`, data);
   }
+  
   getAffiliateBanks() {
     return this.httpService.get(`admins/get-bank-accounts`);
   }

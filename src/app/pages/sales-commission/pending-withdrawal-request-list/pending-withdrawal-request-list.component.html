@@ -26,6 +26,9 @@
                   ></th>
                   <th class="min-w-250px text-gray-900">Date</th>
                   <th class="min-w-250px text-gray-900">Narration</th>
+                  <th class="min-w-300px text-gray-900">Bank Name</th>
+                  <th class="min-w-300px text-gray-900">Account Name</th>
+                  <th class="min-w-300px text-gray-900">Account Number</th>
                   <th class="min-w-300px text-gray-900 text-center">Amount</th>
                   <th class="min-w-150px text-gray-900 text-center">Status</th>
                   <th class="min-w-150px text-gray-900 text-center">
@@ -57,6 +60,15 @@
                     </td>
                     <td>
                       {{ item.narration }}
+                    </td>
+                    <td>
+                      {{ item?.withdrawalAccount?.bankName }}
+                    </td>
+                    <td>
+                      {{ item?.withdrawalAccount?.accountName }}
+                    </td>
+                    <td>
+                      {{ item?.withdrawalAccount?.accountNumber }}
                     </td>
                     <td class="text-center">
                       {{ item.amount | number }}
@@ -107,7 +119,7 @@
                         >
                           <a
                             class="dropdown-item"
-                            style="cursor: pointer;"
+                            style="cursor: pointer"
                             (click)="approveRequest(item)"
                             ><i
                               class="bx bx-check-square font-size-16 text-success align-middle me-1"
@@ -117,7 +129,7 @@
                           <div class="dropdown-divider"></div>
                           <a
                             class="dropdown-item text-danger"
-                            style="cursor: pointer;"
+                            style="cursor: pointer"
                             (click)="cancelRequest(item)"
                             ><i
                               class="bx bx-x-square font-size-16 text-danger align-middle me-1 text-danger"

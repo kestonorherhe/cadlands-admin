@@ -17,6 +17,10 @@ export class MyBonusWithdrawalComponent implements OnInit {
   affiliate: any;
 
   obj = {
+    bankId: null,
+    bankName: null,
+    accountName: null,
+    accountNumber: null,
     amount: null,
   };
   activeBankDetails: any[] = [];
@@ -53,6 +57,16 @@ export class MyBonusWithdrawalComponent implements OnInit {
         this.modalService.dismissAll();
       }
     });
+  }
+
+  onSelectBank(evt: any) {
+    console.log(
+      "🚀 ~ MyCommissionWithdrawalComponent ~ onSelectBank ~ evt:",
+      evt
+    );
+    this.obj.bankName = evt.bankName;
+    this.obj.accountName = evt.accountName;
+    this.obj.accountNumber = evt.accountNumber;
   }
 
   ngOnInit() {
@@ -130,6 +144,10 @@ export class MyBonusWithdrawalComponent implements OnInit {
 
   resetForm() {
     this.obj = {
+      bankId: null,
+      bankName: null,
+      accountName: null,
+      accountNumber: null,
       amount: null,
     };
   }
@@ -137,6 +155,7 @@ export class MyBonusWithdrawalComponent implements OnInit {
   onSubmit() {
     this.isLoading = true;
     const withdrawalDto = {
+      bankId: this.obj.bankId,
       amount: this.obj.amount,
     };
     this.salesCommissionService
