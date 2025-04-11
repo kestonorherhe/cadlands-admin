@@ -221,6 +221,17 @@
             <div class="col-lg-3 col-md-3 col-sm-12">
               <div class="mb-3">
                 <label class="form-label text-primary" style="font-size: 14px"
+                  >Relationship</label
+                >
+                <br />
+                <p style="font-size: 14px">
+                  {{ affiliate?.nok[0]?.relationship?.name || "---" }}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-3">
+                <label class="form-label text-primary" style="font-size: 14px"
                   >Title</label
                 >
                 <br />
@@ -494,7 +505,7 @@
             class="form-control"
             name="firstName"
             #firstName="ngModel"
-            [(ngModel)]="nok.firstName"
+            [(ngModel)]="affiliate.firstName"
             [class.is-invalid]="firstName.invalid &amp;&amp; firstName.touched"
             placeholder="Enter First Name"
             required
@@ -521,7 +532,7 @@
             class="form-control"
             name="lastName"
             #lastName="ngModel"
-            [(ngModel)]="nok.lastName"
+            [(ngModel)]="affiliate.lastName"
             [class.is-invalid]="lastName.invalid &amp;&amp; lastName.touched"
             placeholder="Enter Last Name"
             required
@@ -548,7 +559,7 @@
             class="form-control"
             name="otherName"
             #otherName="ngModel"
-            [(ngModel)]="nok.otherName"
+            [(ngModel)]="affiliate.otherName"
             [class.is-invalid]="otherName.invalid &amp;&amp; otherName.touched"
             placeholder="Enter Other Name"
             required
@@ -575,7 +586,7 @@
             class="form-control"
             name="phone"
             #phone="ngModel"
-            [(ngModel)]="nok.phone"
+            [(ngModel)]="affiliate.phone"
             [class.is-invalid]="phone.invalid &amp;&amp; phone.touched"
             placeholder="Enter Phone"
             required
@@ -602,7 +613,7 @@
             class="form-control"
             name="email"
             #email="ngModel"
-            [(ngModel)]="nok.email"
+            [(ngModel)]="affiliate.email"
             [class.is-invalid]="email.invalid &amp;&amp; email.touched"
             placeholder="Enter Email"
             required
@@ -611,6 +622,60 @@
           <div *ngIf="email.invalid &amp;&amp; email.touched">
             <small *ngIf="email.errors?.required" class="text-danger"
               >Email is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="birthDate"
+            [class.text-danger]="birthDate.invalid &amp;&amp; birthDate.touched"
+            class="form-label"
+            >Date of Birth <span class="text-danger">*</span></label
+          >
+          <input
+            type="date"
+            class="form-control"
+            name="birthDate"
+            #birthDate="ngModel"
+            [(ngModel)]="affiliate.birthDate"
+            [class.is-invalid]="birthDate.invalid &amp;&amp; birthDate.touched"
+            placeholder="Enter Email"
+            required
+          />
+
+          <div *ngIf="birthDate.invalid &amp;&amp; birthDate.touched">
+            <small *ngIf="birthDate.errors?.required" class="text-danger"
+              >Date of birth is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="gender"
+            [class.text-danger]="gender.invalid &amp;&amp; gender.touched"
+            class="form-label"
+            >Gender <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="genderList"
+            bindValue="name"
+            bindLabel="name"
+            name="gender"
+            #gender="ngModel"
+            [(ngModel)]="affiliate.gender"
+            [class.is-invalid]="gender.invalid &amp;&amp; gender.touched"
+            placeholder="--Select Gender--"
+          ></ng-select>
+
+          <div *ngIf="gender.invalid &amp;&amp; gender.touched">
+            <small *ngIf="gender.errors?.required" class="text-danger"
+              >Gender is Required</small
             >
           </div>
         </div>
@@ -629,7 +694,7 @@
             class="form-control"
             name="address"
             #address="ngModel"
-            [(ngModel)]="nok.address"
+            [(ngModel)]="affiliate.address"
             [class.is-invalid]="address.invalid &amp;&amp; address.touched"
             placeholder="Enter Address"
             required
@@ -646,25 +711,25 @@
       <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="mb-3">
           <label
-            for="countryId"
-            [class.text-danger]="countryId.invalid &amp;&amp; countryId.touched"
+            for="country"
+            [class.text-danger]="country.invalid &amp;&amp; country.touched"
             class="form-label"
             >Country <span class="text-danger">*</span></label
           >
           <ng-select
             [items]="countryList"
-            bindValue="id"
+            bindValue="name"
             bindLabel="name"
-            name="countryId"
-            #countryId="ngModel"
-            [(ngModel)]="nok.countryId"
-            [class.is-invalid]="countryId.invalid &amp;&amp; countryId.touched"
+            name="country"
+            #country="ngModel"
+            [(ngModel)]="affiliate.country"
+            [class.is-invalid]="country.invalid &amp;&amp; country.touched"
             placeholder="--Select Country--"
             required
           ></ng-select>
 
-          <div *ngIf="countryId.invalid &amp;&amp; countryId.touched">
-            <small *ngIf="countryId.errors?.required" class="text-danger"
+          <div *ngIf="country.invalid &amp;&amp; country.touched">
+            <small *ngIf="country.errors?.required" class="text-danger"
               >Country is Required</small
             >
           </div>
@@ -673,25 +738,24 @@
       <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="mb-3">
           <label
-            for="stateId"
-            [class.text-danger]="stateId.invalid &amp;&amp; stateId.touched"
+            for="state"
+            [class.text-danger]="state.invalid &amp;&amp; state.touched"
             class="form-label"
             >State <span class="text-danger">*</span></label
           >
-          <ng-select
-            [items]="countryList"
-            bindValue="id"
-            bindLabel="name"
-            name="stateId"
-            #stateId="ngModel"
-            [(ngModel)]="nok.stateId"
-            [class.is-invalid]="stateId.invalid &amp;&amp; stateId.touched"
-            placeholder="--Select State--"
+          <input
+            type="text"
+            class="form-control"
+            name="state"
+            #state="ngModel"
+            [(ngModel)]="affiliate.state"
+            [class.is-invalid]="state.invalid &amp;&amp; state.touched"
+            placeholder="Enter State"
             required
-          ></ng-select>
+          />
 
-          <div *ngIf="stateId.invalid &amp;&amp; stateId.touched">
-            <small *ngIf="stateId.errors?.required" class="text-danger"
+          <div *ngIf="state.invalid &amp;&amp; state.touched">
+            <small *ngIf="state.errors?.required" class="text-danger"
               >State is Required</small
             >
           </div>
@@ -701,25 +765,24 @@
       <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="mb-3">
           <label
-            for="cityId"
-            [class.text-danger]="cityId.invalid &amp;&amp; cityId.touched"
+            for="city"
+            [class.text-danger]="city.invalid &amp;&amp; city.touched"
             class="form-label"
             >City <span class="text-danger">*</span></label
           >
-          <ng-select
-            [items]="countryList"
-            bindValue="id"
-            bindLabel="name"
-            name="cityId"
-            #cityId="ngModel"
-            [(ngModel)]="nok.cityId"
-            [class.is-invalid]="cityId.invalid &amp;&amp; cityId.touched"
-            placeholder="--Select City--"
+          <input
+            type="text"
+            class="form-control"
+            name="city"
+            #city="ngModel"
+            [(ngModel)]="affiliate.city"
+            [class.is-invalid]="city.invalid &amp;&amp; city.touched"
+            placeholder="Enter City"
             required
-          ></ng-select>
+          />
 
-          <div *ngIf="cityId.invalid &amp;&amp; cityId.touched">
-            <small *ngIf="cityId.errors?.required" class="text-danger"
+          <div *ngIf="city.invalid &amp;&amp; city.touched">
+            <small *ngIf="city.errors?.required" class="text-danger"
               >City is Required</small
             >
           </div>
@@ -730,7 +793,7 @@
       <button
         *ngIf="!isLoading"
         class="btn btn-primary btn-rounded"
-        (click)="onSubmit()"
+        (click)="onUpdateAffiliate()"
       >
         Update Info
       </button>
@@ -747,6 +810,7 @@
     </div>
   </div>
 </ng-template>
+
 <ng-template #editNokTemplate let-modal>
   <div class="modal-header">
     <h5 class="modal-title text-primary fs-bold" id="exampleModalLabel">
@@ -761,6 +825,33 @@
   </div>
   <div class="modal-body">
     <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="relationshipId"
+            [class.text-danger]="relationshipId.invalid &amp;&amp; relationshipId.touched"
+            class="form-label"
+            >Relationship <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="relationshipList"
+            bindValue="id"
+            bindLabel="name"
+            name="relationshipId"
+            #relationshipId="ngModel"
+            [(ngModel)]="nok.relationshipId"
+            [class.is-invalid]="relationshipId.invalid &amp;&amp; relationshipId.touched"
+            placeholder="--Select Relationship--"
+            required
+          ></ng-select>
+
+          <div *ngIf="relationshipId.invalid &amp;&amp; relationshipId.touched">
+            <small *ngIf="relationshipId.errors?.required" class="text-danger"
+              >Relationship is Required</small
+            >
+          </div>
+        </div>
+      </div>
       <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="mb-3">
           <label
@@ -954,25 +1045,24 @@
       <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="mb-3">
           <label
-            for="countryId"
-            [class.text-danger]="countryId.invalid &amp;&amp; countryId.touched"
+            for="country"
+            [class.text-danger]="country.invalid &amp;&amp; country.touched"
             class="form-label"
             >Country <span class="text-danger">*</span></label
           >
           <ng-select
             [items]="countryList"
-            bindValue="id"
+            bindValue="name"
             bindLabel="name"
-            name="countryId"
-            #countryId="ngModel"
-            [(ngModel)]="nok.countryId"
-            [class.is-invalid]="countryId.invalid &amp;&amp; countryId.touched"
+            name="country"
+            #country="ngModel"
+            [(ngModel)]="nok.country"
+            [class.is-invalid]="country.invalid &amp;&amp; country.touched"
             placeholder="--Select Country--"
-            required
           ></ng-select>
 
-          <div *ngIf="countryId.invalid &amp;&amp; countryId.touched">
-            <small *ngIf="countryId.errors?.required" class="text-danger"
+          <div *ngIf="country.invalid &amp;&amp; country.touched">
+            <small *ngIf="country.errors?.required" class="text-danger"
               >Country is Required</small
             >
           </div>
@@ -981,25 +1071,23 @@
       <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="mb-3">
           <label
-            for="stateId"
-            [class.text-danger]="stateId.invalid &amp;&amp; stateId.touched"
+            for="state"
+            [class.text-danger]="state.invalid &amp;&amp; state.touched"
             class="form-label"
             >State <span class="text-danger">*</span></label
           >
-          <ng-select
-            [items]="countryList"
-            bindValue="id"
-            bindLabel="name"
-            name="stateId"
-            #stateId="ngModel"
-            [(ngModel)]="nok.stateId"
-            [class.is-invalid]="stateId.invalid &amp;&amp; stateId.touched"
-            placeholder="--Select State--"
-            required
-          ></ng-select>
+          <input
+            type="text"
+            class="form-control"
+            name="state"
+            #state="ngModel"
+            [(ngModel)]="nok.state"
+            [class.is-invalid]="state.invalid &amp;&amp; state.touched"
+            placeholder="Enter State"
+          />
 
-          <div *ngIf="stateId.invalid &amp;&amp; stateId.touched">
-            <small *ngIf="stateId.errors?.required" class="text-danger"
+          <div *ngIf="state.invalid &amp;&amp; state.touched">
+            <small *ngIf="state.errors?.required" class="text-danger"
               >State is Required</small
             >
           </div>
@@ -1009,25 +1097,23 @@
       <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="mb-3">
           <label
-            for="cityId"
-            [class.text-danger]="cityId.invalid &amp;&amp; cityId.touched"
+            for="city"
+            [class.text-danger]="city.invalid &amp;&amp; city.touched"
             class="form-label"
             >City <span class="text-danger">*</span></label
           >
-          <ng-select
-            [items]="countryList"
-            bindValue="id"
-            bindLabel="name"
-            name="cityId"
-            #cityId="ngModel"
-            [(ngModel)]="nok.cityId"
-            [class.is-invalid]="cityId.invalid &amp;&amp; cityId.touched"
-            placeholder="--Select City--"
-            required
-          ></ng-select>
+          <input
+            type="text"
+            class="form-control"
+            name="city"
+            #city="ngModel"
+            [(ngModel)]="nok.city"
+            [class.is-invalid]="city.invalid &amp;&amp; city.touched"
+            placeholder="Enter City"
+          />
 
-          <div *ngIf="cityId.invalid &amp;&amp; cityId.touched">
-            <small *ngIf="cityId.errors?.required" class="text-danger"
+          <div *ngIf="city.invalid &amp;&amp; city.touched">
+            <small *ngIf="city.errors?.required" class="text-danger"
               >City is Required</small
             >
           </div>
@@ -1038,7 +1124,7 @@
       <button
         *ngIf="!isLoading"
         class="btn btn-primary btn-rounded"
-        (click)="onSubmit()"
+        (click)="onUpdateNok()"
       >
         Update Info
       </button>
@@ -1169,11 +1255,7 @@
       >
         Cancel
       </button>
-      <button
-        *ngIf="isAddingBank"
-        class="btn btn-primary btn-rounded"
-        disabled
-      >
+      <button *ngIf="isAddingBank" class="btn btn-primary btn-rounded" disabled>
         Processing <span><i class="bx bx-loader bx-spin"></i></span>
       </button>
     </div>
@@ -1286,7 +1368,7 @@
       <button
         *ngIf="!isLoading"
         class="btn btn-primary btn-rounded"
-        (click)="onSubmit()"
+        (click)="onChangePassword()"
       >
         Change Password
       </button>
@@ -1297,11 +1379,7 @@
       >
         Cancel
       </button>
-      <button
-        *ngIf="isLoading"
-        class="btn btn-primary btn-rounded"
-        disabled
-      >
+      <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
         Processing <span><i class="bx bx-loader bx-spin"></i></span>
       </button>
     </div>

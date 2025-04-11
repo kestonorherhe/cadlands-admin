@@ -300,6 +300,30 @@ export class SettingsService {
     return this.httpService.get(url);
   }
 
+  //   faq routes
+  createFaq(data: any) {
+    return this.httpService.post(`faq`, data);
+  }
+
+  updateFaq(data: any) {
+    return this.httpService.put(`faq`, data);
+  }
+
+  getAllFaqs(payload: { estateId?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.estateId) {
+      params.set("estate_id", payload.estateId);
+    }
+
+    // Construct final URL
+    const url = `faq?${params.toString()}`;
+
+    return this.httpService.get(url);
+  }
+
   //   precautionary tip routes
   createPropertyFacility(data: any) {
     return this.httpService.post(`property-facility`, data);

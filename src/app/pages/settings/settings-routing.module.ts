@@ -11,6 +11,7 @@ import { PropertyPurposeListComponent } from "./property-purpose-list/property-p
 import { RelationshipListComponent } from "./relationship-list/relationship-list.component";
 import { AffiliatePackageListComponent } from "./affiliate-package-list/affiliate-package-list.component";
 import { PropertyLocationListComponent } from "./property-location-list/property-location-list.component";
+import { FaqComponent } from "./faq/faq.component";
 
 const routes: Routes = [
   {
@@ -56,6 +57,10 @@ const routes: Routes = [
   {
     path: "property-locations",
     component: PropertyLocationListComponent,
+  },
+  {
+    path: "faqs",
+    component: FaqComponent,
   },
 ];
 

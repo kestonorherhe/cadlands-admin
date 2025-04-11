@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import Swal from "sweetalert2";
 import { AffiliateService } from "../affiliate.service";
+import { SettingsService } from "../../settings/settings.service";
 
 @Component({
   selector: "app-my-profile",
@@ -14,11 +15,12 @@ export class MyProfileComponent implements OnInit {
   submittingUpgradeRequest = false;
   isAddingBank = false;
   titleList = [{ name: "Mr." }, { name: "Mrs." }];
+  genderList = [{ name: "Male" }, { name: "Female" }];
   countryList = [];
-  stateList = [];
-  cityList = [];
+  relationshipList = [];
 
   nok = {
+    id: null,
     title: null,
     firstName: null,
     lastName: null,
@@ -26,9 +28,10 @@ export class MyProfileComponent implements OnInit {
     phone: null,
     email: null,
     address: null,
-    countryId: null,
-    stateId: null,
-    cityId: null,
+    country: null,
+    state: null,
+    city: null,
+    relationshipId: null,
   };
 
   bank = {
@@ -45,7 +48,8 @@ export class MyProfileComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private affiliateService: AffiliateService
+    private affiliateService: AffiliateService,
+    private settingsService: SettingsService
   ) {}
 
   editAffiliateModal(content: any) {
@@ -119,6 +123,8 @@ export class MyProfileComponent implements OnInit {
           response
         );
         this.affiliate = response;
+        this.nok = response?.nok[0];
+        this.nok.relationshipId = response?.nok[0]?.relationship?.id;
       },
       (error) => {
         console.log(
@@ -127,10 +133,27 @@ export class MyProfileComponent implements OnInit {
         );
       }
     );
+    this.settingsService.getAllNationality({}).subscribe(
+      (response: any) => {
+        this.countryList = response.data;
+      },
+      (error) => {
+        console.log("🚀 ~ MyProfileComponent ~ getProfileInfo ~ error:", error);
+      }
+    );
+    this.settingsService.getAllRelationship({}).subscribe(
+      (response: any) => {
+        this.relationshipList = response.data;
+      },
+      (error) => {
+        console.log("🚀 ~ MyProfileComponent ~ getProfileInfo ~ error:", error);
+      }
+    );
   }
 
   resetForm() {
     this.nok = {
+      id: null,
       title: null,
       firstName: null,
       lastName: null,
@@ -138,9 +161,10 @@ export class MyProfileComponent implements OnInit {
       phone: null,
       email: null,
       address: null,
-      countryId: null,
-      stateId: null,
-      cityId: null,
+      country: null,
+      state: null,
+      city: null,
+      relationshipId: null,
     };
     this.bank = {
       bankName: null,
@@ -154,7 +178,108 @@ export class MyProfileComponent implements OnInit {
     };
   }
 
-  onSubmit() {
+  onUpdateAffiliate() {
+    this.isLoading = true;
+
+    const updateDto: any = {
+      id: this.affiliate.id,
+      firstName: this.affiliate.firstName,
+      lastName: this.affiliate.lastName,
+      phone: this.affiliate.phone,
+      email: this.affiliate.email,
+      address: this.affiliate.address,
+      birthDate: this.affiliate.birthDate,
+      gender: this.affiliate.gender,
+      country: this.affiliate.country,
+      state: this.affiliate.state,
+      city: this.affiliate.city,
+    };
+
+    this.affiliateService.updateAffiliate(updateDto).subscribe(
+      (response: any) => {
+        Swal.fire({
+          text: "Affiliate record updated successfully!",
+          icon: "success",
+          confirmButtonText: "Ok, got it!",
+          confirmButtonColor: "#1B84FF",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.modalService.dismissAll();
+            this.resetForm();
+            this.isLoading = false;
+            this.getProfileInfo();
+          }
+        });
+      },
+      (error) => {
+        Swal.fire({
+          text: error.error.message,
+          icon: "error",
+          confirmButtonText: "Ok, got it!",
+          confirmButtonColor: "#1B84FF",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.isLoading = false;
+            // this.getRoomTypes();
+          }
+        });
+      }
+    );
+  }
+
+  onUpdateNok() {
+    this.isLoading = true;
+
+    const createRoomTypeDto: any = {
+      id: this.nok.id ?? null,
+      title: this.nok.title,
+      firstName: this.nok.firstName,
+      lastName: this.nok.lastName,
+      otherName: this.nok.otherName,
+      phone: this.nok.phone,
+      email: this.nok.email,
+      address: this.nok.address,
+      country: this.nok.country,
+      state: this.nok.state,
+      city: this.nok.city,
+      relationshipId: this.nok.relationshipId,
+    };
+
+    this.affiliateService.updateAffiliateNok(createRoomTypeDto).subscribe(
+      (response: any) => {
+        Swal.fire({
+          text: "Successfully updated NoK information!",
+          icon: "success",
+          confirmButtonText: "Ok, got it!",
+          confirmButtonColor: "#1B84FF",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.modalService.dismissAll();
+            this.resetForm();
+            this.isLoading = false;
+            this.getProfileInfo();
+          }
+        });
+      },
+      (error) => {
+        console.log("🚀 ~ MyProfileComponent ~ onUpdateNok ~ error:", error)
+        this.isLoading = false;
+        Swal.fire({
+          text: error,
+          icon: "error",
+          confirmButtonText: "Ok, got it!",
+          confirmButtonColor: "#1B84FF",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.isLoading = false;
+            // this.getRoomTypes();
+          }
+        });
+      }
+    );
+  }
+
+  onChangePassword() {
     this.isLoading = true;
 
     // const createRoomTypeDto: any = {

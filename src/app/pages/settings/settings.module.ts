@@ -28,6 +28,8 @@ import { PropertyPurposeListComponent } from "./property-purpose-list/property-p
 import { RelationshipListComponent } from "./relationship-list/relationship-list.component";
 import { AffiliatePackageListComponent } from "./affiliate-package-list/affiliate-package-list.component";
 import { PropertyLocationListComponent } from "./property-location-list/property-location-list.component";
+import { FaqComponent } from "./faq/faq.component";
+import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { PropertyLocationListComponent } from "./property-location-list/property
     RelationshipListComponent,
     AffiliatePackageListComponent,
     PropertyLocationListComponent,
+    FaqComponent,
   ],
   imports: [
     CommonModule,
@@ -58,6 +61,7 @@ import { PropertyLocationListComponent } from "./property-location-list/property
     DxLoadIndicatorModule,
     DxTemplateModule,
     NgApexchartsModule,
+    CKEditorModule,
   ],
 })
 export class SettingsModule {}

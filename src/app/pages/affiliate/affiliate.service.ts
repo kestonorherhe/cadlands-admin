@@ -51,6 +51,13 @@ export class AffiliateService {
   upgradeAccount() {
     return this.httpService.post(`subscription-request/upgrade-account`, {});
   }
+  updateAffiliate(data: any) {
+    return this.httpService.put(`admins/update-affiliate`, data);
+  }
+
+  updateAffiliateNok(data: any) {
+    return this.httpService.put(`admins/update-affiliate-nok`, data);
+  }
 
   getAllSubscriptionRequests(payload: {
     approvalStatus?: string;
