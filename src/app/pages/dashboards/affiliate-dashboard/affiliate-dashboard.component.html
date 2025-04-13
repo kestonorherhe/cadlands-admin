@@ -29,7 +29,7 @@
         <div class="card-body">
           <div class="media">
             <div class="media-body">
-              <p class="text-muted fs-5 fw-medium">My Land Sales Commission</p>
+              <p class="text-muted fs-5 fw-medium">My Total Land Sales</p>
               <h2 class="mb-0">
                 NGN
                 {{
@@ -60,43 +60,13 @@
           <div class="media">
             <div class="media-body">
               <p class="text-muted fs-5 fw-medium">
-                Affiliate Signup Commission
+                Direct Land Sales Commission
               </p>
               <h2 class="mb-0">
                 NGN
                 {{
                   getTotalAmount(
-                    (referralBonuses$ | async)?.data?.subscriptionBonuses || []
-                  ).totalAmount | number
-                }}
-              </h2>
-              <h6 class="mb-0 mt-2">
-                Affiliate Referral:
-                {{
-                  getTotalAmount(
-                    (referralBonuses$ | async)?.data?.subscriptionBonuses || []
-                  ).count | number
-                }}
-              </h6>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-3 col-sm-12 table-card">
-      <div class="card mini-stats-wid">
-        <div class="card-body">
-          <div class="media">
-            <div class="media-body">
-              <p class="text-muted fs-5 fw-medium">
-                Direct-Affiliate Land Sales
-              </p>
-              <h2 class="mb-0">
-                NGN
-                {{
-                  getTotalAmount(
-                    (directCommissions$ | async)?.data?.applicationRequests ||
+                    (directCommissions$ | async)?.data?.affiliateCommissions ||
                       []
                   ).totalAmount | number
                 }}
@@ -105,7 +75,7 @@
                 Land Sold:
                 {{
                   getTotalAmount(
-                    (directCommissions$ | async)?.data?.subscriptionBonuses ||
+                    (directCommissions$ | async)?.data?.affiliateCommissions ||
                       []
                   ).count | number
                 }}
@@ -122,7 +92,7 @@
           <div class="media">
             <div class="media-body">
               <p class="text-muted fs-5 fw-medium">
-                Indirect-Affiliate Land Sales
+                Indirect Land Sales Commission
               </p>
               <h2 class="mb-0">
                 NGN
@@ -144,6 +114,36 @@
                   ).count
                     | number
                     | number
+                }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-12 table-card">
+      <div class="card mini-stats-wid">
+        <div class="card-body">
+          <div class="media">
+            <div class="media-body">
+              <p class="text-muted fs-5 fw-medium">
+                Affiliate Signup Bonus
+              </p>
+              <h2 class="mb-0">
+                NGN
+                {{
+                  getTotalAmount(
+                    (referralBonuses$ | async)?.data?.subscriptionBonuses || []
+                  ).totalAmount | number
+                }}
+              </h2>
+              <h6 class="mb-0 mt-2">
+                Affiliate Referral:
+                {{
+                  getTotalAmount(
+                    (referralBonuses$ | async)?.data?.subscriptionBonuses || []
+                  ).count | number
                 }}
               </h6>
             </div>

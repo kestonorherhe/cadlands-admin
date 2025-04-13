@@ -88,6 +88,40 @@ export class SalesCommissionService {
     return this.http.get(url);
   }
 
+  getMyDirectSalesCommissions(payload: { status?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.status) {
+      params.set("status", payload.status);
+    }
+
+    // Construct final URL
+    const url = `${
+      this.envService.httpService
+    }/application-request/my-direct-sales-commissions?${params.toString()}`;
+
+    return this.http.get(url);
+  }
+
+  getMyIndirectSalesCommissions(payload: { status?: string }) {
+    // Initialize URLSearchParams
+    const params = new URLSearchParams();
+
+    // Add the availability parameter conditionally
+    if (payload?.status) {
+      params.set("status", payload.status);
+    }
+
+    // Construct final URL
+    const url = `${
+      this.envService.httpService
+    }/application-request/my-indirect-sales-commissions?${params.toString()}`;
+
+    return this.http.get(url);
+  }
+
   getWithdrawalRequests(payload: { status?: string }) {
     // Initialize URLSearchParams
     const params = new URLSearchParams();

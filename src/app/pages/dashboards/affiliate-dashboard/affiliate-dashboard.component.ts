@@ -37,9 +37,10 @@ export class AffiliateDashboardComponent implements OnInit {
     this.transactions$ = this.salesCommissionService.getMySalesHistory({
       // status: "PENDING",
     });
-    this.getSubscriptionBonuses();
     this.getSales();
-    this.getAffiliateSales();
+    this.getSubscriptionBonuses();
+    this.getMyDirectSalesCommissions();
+    this.getMyIndirectSalesCommissions();
   }
   getSubscriptionBonuses() {
     this.referralBonuses$ =
@@ -54,9 +55,14 @@ export class AffiliateDashboardComponent implements OnInit {
     });
   }
 
-  getAffiliateSales() {
+  getMyDirectSalesCommissions() {
+    this.directCommissions$ =
+      this.salesCommissionService.getMyDirectSalesCommissions({});
+  }
+
+  getMyIndirectSalesCommissions() {
     this.indirectCommissions$ =
-      this.salesCommissionService.getMyAffiliateSalesHistory({
+      this.salesCommissionService.getMyIndirectSalesCommissions({
         // status: "PENDING",
       });
   }
