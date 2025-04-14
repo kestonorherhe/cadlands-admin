@@ -166,8 +166,8 @@ export class EstateProfileComponent implements OnInit {
           this.propertyTemplate = response.data;
           this.propertyTemplate.propertyTypeId = response.data.type.name;
           this.propertyTemplate.propertySubTypeId = response.data.subType.id;
-          this.propertyTemplate.negotiationStatusId =
-            response.data.negotiationStatus.id;
+          // this.propertyTemplate.negotiationStatusId =
+          //   response.data.negotiationStatus.id;
           this.propertySubTypeList = response.data.type.propertySubTypes;
           this.propertyTemplate.facilities = response.data.facilityItems.map(
             (item: any) => {
