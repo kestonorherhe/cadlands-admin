@@ -240,13 +240,13 @@
                         </div>
 
                         <div
-              class="table-responsive"
-              style="overflow-x: auto; max-width: 100%"
-            >
-              <table
-                class="table align-middle gs-0 gy-4"
-                style="width: max-content; min-width: 100%"
-              >
+                          class="table-responsive"
+                          style="overflow-x: auto; max-width: 100%"
+                        >
+                          <table
+                            class="table align-middle gs-0 gy-4"
+                            style="width: max-content; min-width: 100%"
+                          >
                             <thead>
                               <tr class="fw-bolder text-white bg-primary">
                                 <th
@@ -352,21 +352,6 @@
             </div>
 
             <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
-              <!-- <div class="me-7 mb-4">
-                <div
-                  class="symbol symbol-100px symbol-lg-70px symbol-fixed position-relative"
-                >
-                  <img
-                    src="./assets/images/users/default-img.jpg"
-                    width="50px"
-                    alt="Metronic"
-                  />
-                  <div
-                    class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"
-                  ></div>
-                </div>
-              </div> -->
-
               <div style="margin-left: 1rem" class="flex-grow-1">
                 <div
                   class="d-flex justify-content-between align-items-start flex-wrap mb-2"
@@ -583,13 +568,13 @@
                 <div class="card-body py-3" style="padding: 0px 0px">
                   <div class="row">
                     <div
-              class="table-responsive"
-              style="overflow-x: auto; max-width: 100%"
-            >
-              <table
-                class="table align-middle gs-0 gy-4"
-                style="width: max-content; min-width: 100%"
-              >
+                      class="table-responsive"
+                      style="overflow-x: auto; max-width: 100%"
+                    >
+                      <table
+                        class="table align-middle gs-0 gy-4"
+                        style="width: max-content; min-width: 100%"
+                      >
                         <thead>
                           <tr class="fw-bolder text-white bg-primary">
                             <th class="min-w-20px text-gray-900 text-center">
@@ -946,33 +931,6 @@
           </div>
         </div>
 
-        <!-- <div class="col-lg-6 col-md-6 col-sm-12">
-          <div class="mb-3">
-            <label
-              for="mapUrl"
-              [class.text-danger]="mapUrl.invalid &amp;&amp; mapUrl.touched"
-              class="form-label"
-              >Map Url <span class="text-danger">*</span></label
-            >
-            <input
-              type="text"
-              class="form-control"
-              name="mapUrl"
-              #mapUrl="ngModel"
-              [(ngModel)]="obj.mapUrl"
-              [class.is-invalid]="mapUrl.invalid &amp;&amp; mapUrl.touched"
-              placeholder="Enter Map Url"
-              required
-            />
-
-            <div *ngIf="mapUrl.invalid &amp;&amp; mapUrl.touched">
-              <small *ngIf="mapUrl.errors?.required" class="text-danger"
-                >Map Url is Required</small
-              >
-            </div>
-          </div>
-        </div> -->
-
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="mb-3">
             <label
@@ -1027,38 +985,6 @@
             </div>
           </div>
         </div>
-
-        <!-- <div class="col-lg-6 col-md-6 col-sm-12">
-          <div class="mb-3">
-            <label
-              for="negotiationStatusId"
-              [class.text-danger]="negotiationStatusId.invalid &amp;&amp; negotiationStatusId.touched"
-              class="form-label"
-              >Negotiation Status <span class="text-danger">*</span></label
-            >
-            <ng-select
-              [items]="(negotiationStatus$ | async)?.data"
-              bindValue="id"
-              bindLabel="name"
-              name="negotiationStatusId"
-              #negotiationStatusId="ngModel"
-              [(ngModel)]="obj.negotiationStatusId"
-              [class.is-invalid]="negotiationStatusId.invalid &amp;&amp; negotiationStatusId.touched"
-              placeholder="--Select Negotiation Status--"
-              required
-            ></ng-select>
-
-            <div
-              *ngIf="negotiationStatusId.invalid &amp;&amp; negotiationStatusId.touched"
-            >
-              <small
-                *ngIf="negotiationStatusId.errors?.required"
-                class="text-danger"
-                >Negotiation Status is Required</small
-              >
-            </div>
-          </div>
-        </div> -->
 
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="mb-3">

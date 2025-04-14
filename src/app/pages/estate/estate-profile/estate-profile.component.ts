@@ -36,7 +36,13 @@ export class EstateProfileComponent implements OnInit {
   tabType = "prices";
 
   buildingStructures = [{ name: "Duplex" }];
-  propertyTitles = [{ name: "C of O" }];
+  propertyTitles = [
+    { name: "C of O" },
+    { name: "Irrevocable Power Of Attorney" },
+    { name: "Registered Survey" },
+    { name: "Deed Of Assignment" },
+    { name: "Government Approval" },
+  ];
 
   estates$: Observable<any>;
   propertyTypes$: Observable<any>;
@@ -138,8 +144,10 @@ export class EstateProfileComponent implements OnInit {
     });
   }
 
-  viewPropertyTemplateRecord(item: any) {
-    this.getPropertyTemplateInfo(item.id);
+  viewPropertyTemplateRecord(data: any) {
+    this.getPropertyTemplateInfo(data.id);
+    // const propertyType = this.propertyTypes?.find((item: any) => item?.id == data)
+    this.onSelectPropertyType(data.type);
     this.showPropertyTemplateInfo = true;
   }
 
