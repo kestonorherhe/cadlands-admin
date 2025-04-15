@@ -1483,6 +1483,12 @@
         </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12">
+          <!-- <label
+              for="titles"
+              [class.text-danger]="titles.invalid &amp;&amp; titles.touched"
+              class="form-label"
+              >Property Titles <span class="text-danger">*</span></label
+            > -->
           <ngx-dropzone [multiple]="false" (change)="onSelect($event)">
             <ngx-dropzone-label>Drop images!</ngx-dropzone-label>
 
@@ -1792,7 +1798,6 @@
               [class.is-invalid]="propertyTemplateId.invalid &amp;&amp; propertyTemplateId.touched"
               placeholder="--Select Property Template--"
               (change)="onSelectPropertyType($event)"
-              disabled
             ></ng-select>
 
             <div
@@ -1884,7 +1889,7 @@
               for="propertyLocationId"
               [class.text-danger]="propertyLocationId.invalid &amp;&amp; propertyLocationId.touched"
               class="form-label"
-              >Property Location <span class="text-danger">*</span></label
+              >Property Position <span class="text-danger">*</span></label
             >
             <ng-select
               [items]="(propertyLocations$ | async)?.data"
