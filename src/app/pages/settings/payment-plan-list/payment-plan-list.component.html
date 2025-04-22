@@ -38,13 +38,13 @@
           </div>
 
           <div
-              class="table-responsive"
-              style="overflow-x: auto; max-width: 100%"
+            class="table-responsive"
+            style="overflow-x: auto; max-width: 100%"
+          >
+            <table
+              class="table align-middle gs-0 gy-4"
+              style="width: max-content; min-width: 100%"
             >
-              <table
-                class="table align-middle gs-0 gy-4"
-                style="width: max-content; min-width: 100%"
-              >
               <thead>
                 <tr class="fw-bolder text-white bg-primary">
                   <th
@@ -246,13 +246,13 @@
             <div class="card-body py-3" style="padding: 0px 0px">
               <div class="row">
                 <div
-              class="table-responsive"
-              style="overflow-x: auto; max-width: 100%"
-            >
-              <table
-                class="table align-middle gs-0 gy-4"
-                style="width: max-content; min-width: 100%"
-              >
+                  class="table-responsive"
+                  style="overflow-x: auto; max-width: 100%"
+                >
+                  <table
+                    class="table align-middle gs-0 gy-4"
+                    style="width: max-content; min-width: 100%"
+                  >
                     <thead>
                       <tr class="fw-bolder text-white bg-primary">
                         <!-- <th class="min-w-20px text-gray-900 text-center">ID</th> -->
@@ -292,7 +292,11 @@
                             {{ item.description }}
                           </td>
                           <td class="text-center">
-                            {{ item.commissions[0]?.commission ?? 0 | number }} %
+                            {{
+                              getActiveCommission(item?.commissions) ?? 0
+                                | number
+                            }}
+                            %
                           </td>
                           <td>{{ item?.firstName }} {{ item?.lastName }}</td>
                           <td>
@@ -360,7 +364,11 @@
                         {{ paymentSubPlan?.name }}
                       </a>
 
-                      <a style="margin-left: 1rem; cursor: pointer;" (click)="edit(paymentSubPlan)"><i class="bx bx-pen"></i> Edit</a>
+                      <a
+                        style="margin-left: 1rem; cursor: pointer"
+                        (click)="edit(paymentSubPlan)"
+                        ><i class="bx bx-pen"></i> Edit</a
+                      >
                     </div>
 
                     <div class="d-flex flex-wrap fw-bold fs-6 mb-1 pe-2">
@@ -464,13 +472,13 @@
             <div class="card-body py-3" style="padding: 0px 0px">
               <div class="row">
                 <div
-              class="table-responsive"
-              style="overflow-x: auto; max-width: 100%"
-            >
-              <table
-                class="table align-middle gs-0 gy-4"
-                style="width: max-content; min-width: 100%"
-              >
+                  class="table-responsive"
+                  style="overflow-x: auto; max-width: 100%"
+                >
+                  <table
+                    class="table align-middle gs-0 gy-4"
+                    style="width: max-content; min-width: 100%"
+                  >
                     <thead>
                       <tr class="fw-bolder text-white bg-primary">
                         <th class="min-w-20px text-gray-900 text-center">ID</th>
@@ -593,14 +601,14 @@
       >
         Submit
       </button>
-      <button *ngIf="!isLoading" class="btn btn-danger btn-rounded" (click)="closeModal()">
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-danger btn-rounded"
+        (click)="closeModal()"
+      >
         Cancel
       </button>
-      <button
-        *ngIf="isLoading"
-        class="btn btn-primary btn-rounded"
-        disabled
-      >
+      <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
         Processing <span><i class="bx bx-loader bx-spin"></i></span>
       </button>
     </div>
@@ -706,14 +714,14 @@
       >
         Submit
       </button>
-      <button *ngIf="!isLoading" class="btn btn-danger btn-rounded" (click)="closeModal()">
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-danger btn-rounded"
+        (click)="closeModal()"
+      >
         Cancel
       </button>
-      <button
-        *ngIf="isLoading"
-        class="btn btn-primary btn-rounded"
-        disabled
-      >
+      <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
         Processing <span><i class="bx bx-loader bx-spin"></i></span>
       </button>
     </div>
@@ -819,14 +827,14 @@
       >
         Submit
       </button>
-      <button *ngIf="!isLoading" class="btn btn-danger btn-rounded" (click)="closeModal()">
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-danger btn-rounded"
+        (click)="closeModal()"
+      >
         Cancel
       </button>
-      <button
-        *ngIf="isLoading"
-        class="btn btn-primary btn-rounded"
-        disabled
-      >
+      <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
         Processing <span><i class="bx bx-loader bx-spin"></i></span>
       </button>
     </div>
@@ -880,14 +888,14 @@
       >
         Submit
       </button>
-      <button *ngIf="!isLoading" class="btn btn-danger btn-rounded" (click)="closeModal()">
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-danger btn-rounded"
+        (click)="closeModal()"
+      >
         Cancel
       </button>
-      <button
-        *ngIf="isLoading"
-        class="btn btn-primary btn-rounded"
-        disabled
-      >
+      <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
         Processing <span><i class="bx bx-loader bx-spin"></i></span>
       </button>
     </div>

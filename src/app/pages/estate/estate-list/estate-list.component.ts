@@ -14,6 +14,13 @@ import { ChangeEvent } from "@ckeditor/ckeditor5-angular/ckeditor.component";
 export class EstateListComponent implements OnInit {
   breadCrumbItems: Array<{}>;
   data: any;
+  propertyTitles = [
+    { name: "C of O" },
+    { name: "Irrevocable Power Of Attorney" },
+    { name: "Registered Survey" },
+    { name: "Deed Of Assignment" },
+    { name: "Government Approval" },
+  ];
 
   isLoading = false;
 
@@ -22,6 +29,7 @@ export class EstateListComponent implements OnInit {
     imageUrl: null,
     description: null,
     otherListing: false,
+    titles: [],
   };
 
   files: File[] = [];
@@ -101,6 +109,7 @@ export class EstateListComponent implements OnInit {
       imageUrl: null,
       description: null,
       otherListing: false,
+      titles: [],
     };
   }
 
@@ -132,39 +141,45 @@ export class EstateListComponent implements OnInit {
   }
 
   async onSubmit() {
-    this.isLoading = true;
-
-    let formData: FormData = new FormData();
-    for (let i = 0; i < this.files.length; i++) {
-      formData.append("file", this.files[i]);
-    }
-
-    const imageUrl = await this.propertyService.uploadImage(formData);
-    console.log("🚀 ~ EstateListComponent ~ onSubmit ~ imageUrl:", imageUrl);
-
-    const data = {
-      name: this.obj.estateName,
-      imageUrl: imageUrl,
-      description: this.obj.description,
-      otherListing: false,
-    };
-    this.propertyService.createEstate(data).subscribe(
-      (response: any) => {
-        this.isLoading = false;
-        Swal.fire(
-          "Process Successful!",
-          "Estate successfully created!",
-          "success"
-        );
-        this.modalService.dismissAll();
-        this.resetForm();
-        this.getAllEstate();
-      },
-      (error) => {
-        this.isLoading = false;
-        Swal.fire("Process Failed!", "Failed to create estate", "error");
+    
+    try {
+      this.isLoading = true;
+      let formData: FormData = new FormData();
+      for (let i = 0; i < this.files.length; i++) {
+        formData.append("file", this.files[i]);
       }
-    );
+
+      const imageUrl = await this.propertyService.uploadImage(formData);
+      console.log("🚀 ~ EstateListComponent ~ onSubmit ~ imageUrl:", imageUrl);
+
+      const data = {
+        name: this.obj.estateName,
+        imageUrl: imageUrl,
+        description: this.obj.description,
+        otherListing: false,
+        titles: this.obj.titles,
+      };
+      this.propertyService.createEstate(data).subscribe(
+        (response: any) => {
+          this.isLoading = false;
+          Swal.fire(
+            "Process Successful!",
+            "Estate successfully created!",
+            "success"
+          );
+          this.modalService.dismissAll();
+          this.resetForm();
+          this.getAllEstate();
+        },
+        (error) => {
+          this.isLoading = false;
+          Swal.fire("Process Failed!", "Failed to create estate", "error");
+        }
+      );
+    } catch (error) {
+      this.isLoading = false;
+      Swal.fire("Process Failed!", "Failed to create estate", "error");
+    }
   }
 
   public onReady({ editor }: any) {

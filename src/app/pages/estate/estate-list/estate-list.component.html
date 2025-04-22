@@ -120,6 +120,35 @@
           </div>
         </div>
 
+         <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="mb-3">
+            <label
+              for="titles"
+              [class.text-danger]="titles.invalid &amp;&amp; titles.touched"
+              class="form-label"
+              >Property Titles <span class="text-danger">*</span></label
+            >
+            <ng-select
+              [items]="propertyTitles"
+              [multiple]="true"
+              bindValue="name"
+              bindLabel="name"
+              name="titles"
+              #titles="ngModel"
+              [(ngModel)]="obj.titles"
+              [class.is-invalid]="titles.invalid &amp;&amp; titles.touched"
+              placeholder="--Select Property Titles--"
+              required
+            ></ng-select>
+
+            <div *ngIf="titles.invalid &amp;&amp; titles.touched">
+              <small *ngIf="titles.errors?.required" class="text-danger"
+                >Property Titles is Required</small
+              >
+            </div>
+          </div>
+        </div>
+
         <label class="form-label"
           >Images <span class="text-danger">*</span></label
         >

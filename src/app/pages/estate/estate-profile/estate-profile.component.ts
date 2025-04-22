@@ -24,6 +24,7 @@ export class EstateProfileComponent implements OnInit {
     name: null,
     imageUrl: null,
     description: null,
+    titles: [],
   };
   statusList = [
     { id: true, name: "Yes, make default" },
@@ -307,6 +308,9 @@ export class EstateProfileComponent implements OnInit {
     this.propertyService.getAllEstate({ estateId: this.estateId }).subscribe({
       next: async (response: any) => {
         this.estate = response.data;
+        this.estate.titles = response.data.titles.map((item: any) => {
+          return item.name;
+        });
         // this.estateFiles.push(response.data?.imageUrl);
       },
       error: (error) => {
@@ -405,6 +409,7 @@ export class EstateProfileComponent implements OnInit {
         name: this.estate.name,
         imageUrl: this.estateFiles.length > 0 ? imageUrl : this.estate.imageUrl,
         description: this.estate.description,
+        titles: this.estate.titles,
       };
       this.propertyService.updateEstate(data).subscribe(
         (response: any) => {
@@ -899,5 +904,15 @@ export class EstateProfileComponent implements OnInit {
     // Key codes for keys that remove characters:
     // 8: Backspace, 46: Delete
     return [8, 46].includes(keyCode);
+  }
+
+  joinWithComma(data: any[] | null | undefined): string {
+    if (!data || data.length === 0) {
+      return "";
+    }
+    return data
+      .map((item) => item.name || "")
+      .filter(Boolean)
+      .join(", ");
   }
 }

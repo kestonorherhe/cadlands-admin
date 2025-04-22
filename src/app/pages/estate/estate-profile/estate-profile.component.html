@@ -68,6 +68,14 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title mb-4">Estate Information</h4>
+          <div style="margin-bottom: 1rem">
+            <p style="margin: 0px"><strong>Land Documents :</strong></p>
+            <br />
+            <p style="margin: 0px; font-weight: normal">
+              <!-- {{ joinWithComma(estate?.titles) }} -->
+              {{ estate?.titles.join(", ") }}
+            </p>
+          </div>
           <div>
             <p style="margin: 0px"><strong>Description :</strong></p>
             <br />
@@ -668,6 +676,35 @@
           </div>
         </div>
 
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="mb-3">
+            <label
+              for="titles"
+              [class.text-danger]="titles.invalid &amp;&amp; titles.touched"
+              class="form-label"
+              >Property Titles <span class="text-danger">*</span></label
+            >
+            <ng-select
+              [items]="propertyTitles"
+              [multiple]="true"
+              bindValue="name"
+              bindLabel="name"
+              name="titles"
+              #titles="ngModel"
+              [(ngModel)]="estate.titles"
+              [class.is-invalid]="titles.invalid &amp;&amp; titles.touched"
+              placeholder="--Select Property Titles--"
+              required
+            ></ng-select>
+
+            <div *ngIf="titles.invalid &amp;&amp; titles.touched">
+              <small *ngIf="titles.errors?.required" class="text-danger"
+                >Property Titles is Required</small
+              >
+            </div>
+          </div>
+        </div>
+
         <div class="row g-3">
           <div
             *ngFor="let image of [estate.imageUrl]; let i = index"
@@ -1140,7 +1177,7 @@
 
 <ng-template #updatePropertyTemplate let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Edit Property Template</h5>
+    <h5 class="modal-title" id="exampleModalLabel">Update Property Template</h5>
     <button
       type="button"
       class="btn-close"
@@ -1285,33 +1322,6 @@
           </div>
         </div>
 
-        <!-- <div class="col-lg-6 col-md-6 col-sm-12">
-          <div class="mb-3">
-            <label
-              for="mapUrl"
-              [class.text-danger]="mapUrl.invalid &amp;&amp; mapUrl.touched"
-              class="form-label"
-              >Map Url <span class="text-danger">*</span></label
-            >
-            <input
-              type="text"
-              class="form-control"
-              name="mapUrl"
-              #mapUrl="ngModel"
-              [(ngModel)]="propertyTemplate.mapUrl"
-              [class.is-invalid]="mapUrl.invalid &amp;&amp; mapUrl.touched"
-              placeholder="Enter Map Url"
-              required
-            />
-
-            <div *ngIf="mapUrl.invalid &amp;&amp; mapUrl.touched">
-              <small *ngIf="mapUrl.errors?.required" class="text-danger"
-                >Map Url is Required</small
-              >
-            </div>
-          </div>
-        </div> -->
-
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="mb-3">
             <label
@@ -1339,38 +1349,6 @@
             </div>
           </div>
         </div>
-
-        <!-- <div class="col-lg-6 col-md-6 col-sm-12">
-          <div class="mb-3">
-            <label
-              for="negotiationStatusId"
-              [class.text-danger]="negotiationStatusId.invalid &amp;&amp; negotiationStatusId.touched"
-              class="form-label"
-              >Negotiation Status <span class="text-danger">*</span></label
-            >
-            <ng-select
-              [items]="(negotiationStatus$ | async)?.data"
-              bindValue="id"
-              bindLabel="name"
-              name="negotiationStatusId"
-              #negotiationStatusId="ngModel"
-              [(ngModel)]="propertyTemplate.negotiationStatusId"
-              [class.is-invalid]="negotiationStatusId.invalid &amp;&amp; negotiationStatusId.touched"
-              placeholder="--Select Negotiation Status--"
-              required
-            ></ng-select>
-
-            <div
-              *ngIf="negotiationStatusId.invalid &amp;&amp; negotiationStatusId.touched"
-            >
-              <small
-                *ngIf="negotiationStatusId.errors?.required"
-                class="text-danger"
-                >Negotiation Status is Required</small
-              >
-            </div>
-          </div>
-        </div> -->
 
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="mb-3">

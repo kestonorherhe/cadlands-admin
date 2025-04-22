@@ -354,4 +354,12 @@ export class PaymentPlanListComponent implements OnInit {
       }
     );
   }
+
+  getActiveCommission(data: any[]): number {
+    if (data.length > 0) {
+      return data.find((item: any) => item.status == true).commission;
+    } else {
+      return 0;
+    }
+  }
 }
