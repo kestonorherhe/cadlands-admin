@@ -180,8 +180,11 @@ export class MyProfileComponent implements OnInit {
           response
         );
         this.affiliate = response;
-        this.nok = response?.nok[0];
-        this.nok.relationshipId = response?.nok[0]?.relationship?.id;
+        if (response?.nok[0]) {
+          console.log("did we get here?");
+          this.nok = response?.nok[0];
+          this.nok.relationshipId = response?.nok[0]?.relationship?.id;
+        }
       },
       (error) => {
         console.log(
