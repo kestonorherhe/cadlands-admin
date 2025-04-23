@@ -662,14 +662,14 @@
                       </td>
                     </tr>
                     <tr class="fw-bold bg-light">
-                      <td colspan="2" class="text-end text-danger">Total Amount:</td>
-                      <td class="text-center text-danger">
+                      <td colspan="2" class="text-end text-success">Total Amount:</td>
+                      <td class="text-center text-success">
                         {{ obj.amount | number }}
                       </td>
                     </tr>
                     <tr class="fw-bold bg-light">
-                      <td colspan="2" class="text-end text-success">Balance Amount:</td>
-                      <td class="text-center text-success">
+                      <td colspan="2" class="text-end text-danger">Balance Amount:</td>
+                      <td class="text-center text-danger">
                         {{ obj.amount - calculateTotalPayments() | number }}
                       </td>
                     </tr>

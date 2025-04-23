@@ -23,7 +23,7 @@ export class MyProfileComponent implements OnInit {
   isLoading = false;
   submittingUpgradeRequest = false;
   isAddingBank = false;
-  titleList = [{ name: "Mr." }, { name: "Mrs." }];
+  titleList = [{ name: "Mr." }, { name: "Mrs." }, { name: "Mss." }];
   genderList = [{ name: "Male" }, { name: "Female" }];
   countryList = [];
   relationshipList = [];
