@@ -7,6 +7,7 @@ import { PaidApplicationRequestListComponent } from './paid-application-request-
 import { OnGoingApplicationRequestListComponent } from './on-going-application-request-list/on-going-application-request-list.component';
 import { PendingAllocationListComponent } from './pending-allocation-list/pending-allocation-list.component';
 import { CancelledApplicationRequestListComponent } from './cancelled-application-request-list/cancelled-application-request-list.component';
+import { CompletedApplicationRequestListComponent } from './completed-application-request-list/completed-application-request-list.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: "paid-applications",
     component: PaidApplicationRequestListComponent,
+  },
+  {
+    path: "completed-applications",
+    component: CompletedApplicationRequestListComponent,
   },
   {
     path: "cancelled-applications",

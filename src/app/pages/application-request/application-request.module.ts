@@ -28,6 +28,7 @@ import { PaidApplicationRequestListComponent } from "./paid-application-request-
 import { OnGoingApplicationRequestListComponent } from "./on-going-application-request-list/on-going-application-request-list.component";
 import { PendingAllocationListComponent } from "./pending-allocation-list/pending-allocation-list.component";
 import { CancelledApplicationRequestListComponent } from "./cancelled-application-request-list/cancelled-application-request-list.component";
+import { CompletedApplicationRequestListComponent } from "./completed-application-request-list/completed-application-request-list.component";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { CancelledApplicationRequestListComponent } from "./cancelled-applicatio
     PendingApplicationRequestListComponent,
     ApprovedApplicationRequestListComponent,
     PaidApplicationRequestListComponent,
+    CompletedApplicationRequestListComponent,
     CancelledApplicationRequestListComponent,
     OnGoingApplicationRequestListComponent,
     PendingAllocationListComponent,

@@ -49,6 +49,13 @@ export class MyProfileComponent implements OnInit {
     accountNumber: null,
   };
 
+  updateBank = {
+    id: null,
+    bankName: null,
+    accountName: null,
+    accountNumber: null,
+  };
+
   changePassword = {
     currentPassword: null,
     newPassword: null,
@@ -84,6 +91,14 @@ export class MyProfileComponent implements OnInit {
   }
 
   addBankModal(content: any) {
+    this.modalService.open(content, {
+      backdrop: "static",
+      centered: true,
+      size: "md",
+    });
+  }
+  updateBankModal(content: any, data: any) {
+    this.updateBank = data;
     this.modalService.open(content, {
       backdrop: "static",
       centered: true,
@@ -488,7 +503,14 @@ export class MyProfileComponent implements OnInit {
   addBank() {
     this.isAddingBank = true;
 
-    this.affiliateService.addBankAccount(this.bank).subscribe(
+    const updateBankAccountDto = {
+      id: this.updateBank.id,
+      bankName: this.updateBank.bankName,
+      accountName: this.updateBank.accountName,
+      accountNumber: this.updateBank.accountNumber,
+    };
+
+    this.affiliateService.addBankAccount(updateBankAccountDto).subscribe(
       (response: any) => {
         Swal.fire({
           text: "Bank account was successfully added!",
@@ -506,7 +528,46 @@ export class MyProfileComponent implements OnInit {
       },
       (error) => {
         Swal.fire({
-          text: `Failed to create feature! ${
+          text: `Failed to update bank account! ${
+            error.error.statusCode === 401
+              ? "User not authorized!"
+              : error.error.message
+          }`,
+          icon: "error",
+          confirmButtonText: "Ok, got it!",
+          confirmButtonColor: "#1B84FF",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.isAddingBank = false;
+            // this.getRoomTypes();
+          }
+        });
+      }
+    );
+  }
+
+  onUpdateBank() {
+    this.isAddingBank = true;
+
+    this.affiliateService.updateBankAccount(this.updateBank).subscribe(
+      (response: any) => {
+        Swal.fire({
+          text: "Bank account was successfully updated!",
+          icon: "success",
+          confirmButtonText: "Ok, got it!",
+          confirmButtonColor: "#1B84FF",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.modalService.dismissAll();
+            this.resetForm();
+            this.isAddingBank = false;
+            this.getProfileInfo();
+          }
+        });
+      },
+      (error) => {
+        Swal.fire({
+          text: `Failed to create bank account! ${
             error.error.statusCode === 401
               ? "User not authorized!"
               : error.error.message

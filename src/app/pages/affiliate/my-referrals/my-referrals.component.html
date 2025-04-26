@@ -21,6 +21,93 @@
   <!-- end page title -->
 
   <div class="row">
+    <div
+      class="col-lg-6 col-md-6 col-sm-12 table-card"
+      style="width: 50% !important"
+    >
+      <div class="card mini-stats-wid">
+        <div class="card-body">
+          <div class="media">
+            <div class="media-body">
+              <span
+                style="
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-between;
+                "
+              >
+                <p class="text-muted fs-5 fw-medium">
+                  Affiliate Registration Link:
+                </p>
+                <i
+                  *ngIf="!copied"
+                  (click)="
+                    copyText(
+                      'https://ca.cadlands.com/account/affiliate-registration/referral/' +
+                        referralCode
+                    )
+                  "
+                  class="bx bx-copy fs-2 text-primary"
+                  style="cursor: pointer"
+                ></i>
+                <p *ngIf="copied" class="text-success fs-5">
+                  Copied successfully!
+                </p>
+              </span>
+              <h5 class="mb-0 text-primary">
+                https://ca.cadlands.com/account/affiliate-registration/referral/{{
+                  referralCode
+                }}
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-lg-6 col-md-6 col-sm-12 table-card"
+      style="width: 50% !important"
+    >
+      <div class="card mini-stats-wid">
+        <div class="card-body">
+          <div class="media">
+            <div class="media-body">
+              <span
+                style="
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-between;
+                "
+              >
+                <p class="text-muted fs-5 fw-medium">
+                  Buy Land:
+                </p>
+                <i
+                  *ngIf="!copied"
+                  (click)="
+                    copyText(
+                      'https://www.cadlands.com/buy-land-referral/' +
+                        referralCode
+                    )
+                  "
+                  class="bx bx-copy fs-2 text-primary"
+                  style="cursor: pointer"
+                ></i>
+                <p *ngIf="copied" class="text-success fs-5">
+                  Copied successfully!
+                </p>
+              </span>
+              <h5 class="mb-0 text-primary">
+                https://www.cadlands.com/buy-land-referral/{{ referralCode }}
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-md-3 col-sm-12 table-card">
       <div class="card mini-stats-wid">
         <div class="card-body">
@@ -29,11 +116,13 @@
               <p class="text-muted fs-5 fw-medium">
                 Total Referral Subscriptions
               </p>
-              <h2 class="mb-0 text-danger">{{
+              <h2 class="mb-0 text-danger">
+                {{
                   getTotalAmount(
                     (transactions$ | async)?.data?.subscriptionBonuses || []
                   ).count | number
-                }}</h2>
+                }}
+              </h2>
             </div>
           </div>
         </div>
@@ -47,11 +136,14 @@
               <p class="text-muted fs-5 fw-medium">
                 Total Referral Subscriptions Bonus
               </p>
-              <h2 class="mb-0 text-success">NGN {{
+              <h2 class="mb-0 text-success">
+                NGN
+                {{
                   getTotalAmount(
                     (transactions$ | async)?.data?.subscriptionBonuses || []
                   ).totalAmount | number
-                }}</h2>
+                }}
+              </h2>
             </div>
           </div>
         </div>

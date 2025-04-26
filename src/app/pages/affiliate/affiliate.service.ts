@@ -24,7 +24,10 @@ export class AffiliateService {
   addBankAccount(data: any) {
     return this.httpService.post(`admins/add-bank-account`, data);
   }
-  
+  updateBankAccount(data: any) {
+    return this.httpService.put(`admins/update-bank-account`, data);
+  }
+
   getAffiliateBanks() {
     return this.httpService.get(`admins/get-bank-accounts`);
   }
