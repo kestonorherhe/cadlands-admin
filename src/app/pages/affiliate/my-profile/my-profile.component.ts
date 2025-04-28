@@ -503,14 +503,14 @@ export class MyProfileComponent implements OnInit {
   addBank() {
     this.isAddingBank = true;
 
-    const updateBankAccountDto = {
-      id: this.updateBank.id,
-      bankName: this.updateBank.bankName,
-      accountName: this.updateBank.accountName,
-      accountNumber: this.updateBank.accountNumber,
+    const addBankAccountDto = {
+      // id: this.updateBank.id,
+      bankName: this.bank.bankName,
+      accountName: this.bank.accountName,
+      accountNumber: this.bank.accountNumber,
     };
 
-    this.affiliateService.addBankAccount(updateBankAccountDto).subscribe(
+    this.affiliateService.addBankAccount(addBankAccountDto).subscribe(
       (response: any) => {
         Swal.fire({
           text: "Bank account was successfully added!",
