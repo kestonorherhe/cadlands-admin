@@ -20,7 +20,7 @@ export class PaidsubScriptionRequestListComponent implements OnInit {
   getAllWithdrawalRequest() {
     this.subscriptionRequests$ =
       this.affiliateService.getAllSubscriptionRequests({
-        approvalStatus: "Cancelled",
+        approvalStatus: "Approved",
       });
   }
 }

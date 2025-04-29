@@ -467,7 +467,7 @@ export class MyProfileComponent implements OnInit {
     this.affiliateService.upgradeAccount().subscribe(
       (response: any) => {
         Swal.fire({
-          text: "Account upgrate request was created successfully!",
+          text: "Your account upgrade request was submitted successfully. Please check your email for payment instructions!",
           icon: "success",
           confirmButtonText: "Ok, got it!",
           confirmButtonColor: "#1B84FF",
