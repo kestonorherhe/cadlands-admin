@@ -18,142 +18,146 @@
           </div>
 
           <div
-              class="table-responsive"
-              style="overflow-x: auto; max-width: 100%"
+            class="table-responsive"
+            style="overflow-x: auto; max-width: 100%"
+          >
+            <table
+              class="table align-middle gs-0 gy-4"
+              style="width: max-content; min-width: 100%"
             >
-              <table
-                class="table align-middle gs-0 gy-4"
-                style="width: max-content; min-width: 100%"
-              >
-                <thead>
-                  <tr class="fw-bolder text-white bg-primary">
-                    <th
-                      class="min-w-10px text-gray-900 text-end text-center"
-                    ></th>
-                    <th class="min-w-250px text-gray-900">Narration</th>
-                    <th class="min-w-300px text-gray-900">Affiliate</th>
-                    <th class="min-w-300px text-gray-900">Package</th>
-                    <th class="min-w-300px text-gray-900 text-center">
-                      Package Price
-                    </th>
-                    <th class="min-w-300px text-gray-900 text-center">
-                      Subcription Type
-                    </th>
-                    <th class="min-w-300px text-gray-900 text-center">
-                      Subcription Status
-                    </th>
-                    <th class="min-w-300px text-gray-900 text-center">
-                      Start Date
-                    </th>
-                    <th class="min-w-300px text-gray-900 text-center">
-                      End Date
-                    </th>
-                    <th class="min-w-150px text-gray-900 text-center">
-                      Bonus Amount
-                    </th>
-                    <th class="min-w-150px text-gray-900 text-center">
-                      Bonus Commission (%)
-                    </th>
-                    <th class="min-w-150px text-gray-900 text-center">
-                      Approval Status
-                    </th>
-                    <th class="min-w-150px text-gray-900 text-center">
-                      Payment Status
-                    </th>
-                    <th class="min-w-150px text-gray-900 text-center">
-                      Payment Date
-                    </th>
-                    <th class="min-w-150px text-gray-900 text-center">
-                      Created At
-                    </th>
-                    <!-- <th class="min-w-100px text-gray-900"></th> -->
-                  </tr>
-                </thead>
-                <tbody>
-                  <ng-container
-                    *ngIf="
-                      (transactions$ | async)?.data?.subscriptionBonuses != null
+              <thead>
+                <tr class="fw-bolder text-white bg-primary">
+                  <th
+                    class="min-w-10px text-gray-900 text-end text-center"
+                  ></th>
+                  <th class="min-w-250px text-gray-900">Narration</th>
+                  <th class="min-w-300px text-gray-900">Affiliate</th>
+                  <th class="min-w-300px text-gray-900">Downline Affiliate</th>
+                  <th class="min-w-300px text-gray-900">Package</th>
+                  <th class="min-w-300px text-gray-900 text-center">
+                    Package Price
+                  </th>
+                  <th class="min-w-300px text-gray-900 text-center">
+                    Subcription Type
+                  </th>
+                  <th class="min-w-300px text-gray-900 text-center">
+                    Subcription Status
+                  </th>
+                  <th class="min-w-300px text-gray-900 text-center">
+                    Start Date
+                  </th>
+                  <th class="min-w-300px text-gray-900 text-center">
+                    End Date
+                  </th>
+                  <th class="min-w-150px text-gray-900 text-center">
+                    Bonus Amount
+                  </th>
+                  <th class="min-w-150px text-gray-900 text-center">
+                    Bonus Commission (%)
+                  </th>
+                  <th class="min-w-150px text-gray-900 text-center">
+                    Approval Status
+                  </th>
+                  <th class="min-w-150px text-gray-900 text-center">
+                    Payment Status
+                  </th>
+                  <th class="min-w-150px text-gray-900 text-center">
+                    Payment Date
+                  </th>
+                  <th class="min-w-150px text-gray-900 text-center">
+                    Created At
+                  </th>
+                  <!-- <th class="min-w-100px text-gray-900"></th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container
+                  *ngIf="
+                    (transactions$ | async)?.data?.subscriptionBonuses != null
+                  "
+                >
+                  <tr
+                    *ngFor="
+                      let item of (transactions$ | async)?.data
+                        ?.subscriptionBonuses
                     "
                   >
-                    <tr
-                      *ngFor="
-                        let item of (transactions$ | async)?.data
-                          ?.subscriptionBonuses
-                      "
-                    >
-                      <td class="text-center">
-                        {{ item.id }}
-                      </td>
-                      <td>
-                        {{ item.narration }}
-                      </td>
-                      <td>
-                        {{
-                          item?.affiliate
-                            ?.firstName
-                        }}
-                        {{
-                          item?.affiliate
-                            ?.lastName
-                        }}
-                      </td>
-                      <td>
-                        {{
-                          item?.subscriptionPayment?.subscription
-                            ?.affiliatePackage?.packageName
-                        }}
-                      </td>
-                      <td class="text-center">
-                        {{
-                          item?.subscriptionPayment?.subscription?.currentPrice
-                            ?.amount | number
-                        }}
-                      </td>
-                      <td class="text-center">
-                        {{
-                          item?.subscriptionPayment?.subscription
-                            ?.subscriptionType
-                        }}
-                      </td>
-                      <td class="text-center">
-                        {{
-                          item?.subscriptionPayment?.subscription
-                            ?.subscriptionStatus
-                        }}
-                      </td>
-                      <td class="text-center">
-                        {{
-                          item?.subscriptionPayment?.subscription?.startDate
-                            | date
-                        }}
-                      </td>
-                      <td class="text-center">
-                        {{
-                          item?.subscriptionPayment?.subscription?.endDate
-                            | date
-                        }}
-                      </td>
-                      <td class="text-center">
-                        {{ item?.amount | number }}
-                      </td>
-                      <td class="text-center">
-                        {{
-                          item?.currentDirectSaleCommission?.commission | number
-                        }}
-                      </td>
-                      <td class="text-center">
-                        {{ item.approvalStatus }}
-                      </td>
-                      <td class="text-center">
-                        {{ item.paymentStatus }}
-                      </td>
-                      <td class="text-center">
-                        {{ item.paymentDate | date }}
-                      </td>
-                      <td class="text-center">
-                        {{ item.createdAt | date }}
-                      </td>
-                      <!-- <td class="text-end">
+                    <td class="text-center">
+                      {{ item.id }}
+                    </td>
+                    <td>
+                      {{ item.narration }}
+                    </td>
+                    <td>
+                      {{ item?.affiliate?.firstName }}
+                      {{ item?.affiliate?.lastName }}
+                    </td>
+                    <td>
+                      {{
+                        item?.subscriptionPayment?.subscription?.affiliate
+                          ?.firstName
+                      }}
+                      {{
+                        item?.subscriptionPayment?.subscription?.affiliate
+                          ?.lastName
+                      }}
+                    </td>
+                    <td>
+                      {{
+                        item?.subscriptionPayment?.subscription
+                          ?.affiliatePackage?.packageName
+                      }}
+                    </td>
+                    <td class="text-center">
+                      {{
+                        item?.subscriptionPayment?.subscription?.currentPrice
+                          ?.amount | number
+                      }}
+                    </td>
+                    <td class="text-center">
+                      {{
+                        item?.subscriptionPayment?.subscription
+                          ?.subscriptionType
+                      }}
+                    </td>
+                    <td class="text-center">
+                      {{
+                        item?.subscriptionPayment?.subscription
+                          ?.subscriptionStatus
+                      }}
+                    </td>
+                    <td class="text-center">
+                      {{
+                        item?.subscriptionPayment?.subscription?.startDate
+                          | date
+                      }}
+                    </td>
+                    <td class="text-center">
+                      {{
+                        item?.subscriptionPayment?.subscription?.endDate | date
+                      }}
+                    </td>
+                    <td class="text-center">
+                      {{ item?.amount | number }}
+                    </td>
+                    <td class="text-center">
+                      {{
+                        item?.currentDirectSaleCommission?.commission | number
+                      }}
+                    </td>
+                    <td class="text-center">
+                      {{ item.approvalStatus }}
+                    </td>
+                    <td class="text-center">
+                      {{ item.paymentStatus }}
+                    </td>
+                    <td class="text-center">
+                      {{ item.paymentDate | date }}
+                    </td>
+                    <td class="text-center">
+                      {{ item.createdAt | date }}
+                    </td>
+                    <!-- <td class="text-end">
                         <a
                           (click)="edit(item)"
                           class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
@@ -161,11 +165,11 @@
                           View
                         </a>
                       </td> -->
-                    </tr>
-                  </ng-container>
-                </tbody>
-              </table>
-            </div>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
