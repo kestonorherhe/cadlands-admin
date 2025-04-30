@@ -13,7 +13,6 @@ import Swal from "sweetalert2";
   templateUrl: "./affiliate-registration.component.html",
   styleUrls: ["./affiliate-registration.component.scss"],
 })
-
 export class AffiliateRegistrationComponent implements OnInit {
   // set the currenr year
   year: number = new Date().getFullYear();
