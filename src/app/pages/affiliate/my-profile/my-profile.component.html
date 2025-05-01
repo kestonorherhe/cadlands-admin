@@ -16,7 +16,7 @@
             <button
               *ngIf="
                 !hasPendingSubscriptionRequest(
-                  affiliate.subscriptionRequests
+                  affiliate.subscriptionRequests ?? []
                 ) && affiliate.subscriptions.length === 1
               "
               class="btn btn-primary btn-rounded text-right"

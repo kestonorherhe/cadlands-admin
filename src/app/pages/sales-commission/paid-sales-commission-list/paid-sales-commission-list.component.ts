@@ -68,7 +68,7 @@ export class PaidSalesCommissionListComponent implements OnInit {
 
   getFeatures() {
     this.salesCommissions$ = this.salesCommissionService.getSalesCommissions({
-      status: "PENDING",
+      status: "PAID",
     });
   }
 
