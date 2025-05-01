@@ -584,4 +584,14 @@ export class MyProfileComponent implements OnInit {
       }
     );
   }
+
+  hasPendingSubscriptionRequest(data: any[]) {
+    const request = data.find((item: any) => item.approvalStatus === "Pending");
+
+    if (request) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

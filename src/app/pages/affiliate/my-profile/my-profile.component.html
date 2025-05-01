@@ -9,9 +9,16 @@
             </h4>
           </div>
 
+          <!-- {{
+            !hasPendingSubscriptionRequest(affiliate.subscriptionRequests) | json
+          }} -->
           <div class="col-6">
             <button
-              *ngIf="affiliate.subscriptions.length == 1"
+              *ngIf="
+                !hasPendingSubscriptionRequest(
+                  affiliate.subscriptionRequests
+                ) && affiliate.subscriptions.length === 1
+              "
               class="btn btn-primary btn-rounded text-right"
               style="
                 display: flex;
