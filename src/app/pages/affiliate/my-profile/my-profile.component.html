@@ -11,6 +11,7 @@
 
           <div class="col-6">
             <button
+              *ngIf="affiliate.subscriptions.length == 1"
               class="btn btn-primary btn-rounded text-right"
               style="
                 display: flex;
@@ -21,6 +22,21 @@
               (click)="upgradeAccountModal(upgradeAccountTemplate)"
             >
               <span style="margin-left: 6px">Upgrade Account</span>
+            </button>
+            <button
+              *ngIf="affiliate.subscriptions.length > 1"
+              class="btn btn-primary btn-rounded text-right"
+              style="
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                float: right;
+              "
+            >
+              <span style="margin-left: 6px">{{
+                affiliate.subscriptions[affiliate.subscriptions.length - 1]
+                  ?.affiliatePackage?.packageName
+              }}</span>
             </button>
 
             <p
