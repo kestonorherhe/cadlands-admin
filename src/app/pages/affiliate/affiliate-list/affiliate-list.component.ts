@@ -48,14 +48,12 @@ export class AffiliateListComponent implements OnInit {
     private modalService: NgbModal,
     private readonly _router: Router,
     private readonly affiliateService: AffiliateService
-  ) {
-    this.viewRecord = this.viewRecord.bind(this);
-  }
+  ) {}
 
   viewRecord(evt: any) {
     console.log("🚀 ~ FarmerListComponent ~ viewRecord ~ evt:", evt);
-    const id = evt.row.data.id;
-    this._router.navigate(["farmers", id]);
+    const id = evt.id;
+    this._router.navigate(["affiliate", id]);
   }
 
   showCreateRecordModal(content: TemplateRef<any>) {

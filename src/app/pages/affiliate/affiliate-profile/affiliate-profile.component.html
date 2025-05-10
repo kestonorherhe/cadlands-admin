@@ -11,7 +11,7 @@
           <div class="row">
             <div class="col-8">
               <div class="text-primary p-3">
-                <h5 class="text-primary">Farmer Profile</h5>
+                <h5 class="text-primary">Affiliate Profile</h5>
                 <p class="mb-4">View and Edit Profile</p>
               </div>
             </div>
@@ -43,21 +43,26 @@
                 />
               </div>
               <h5 class="font-size-15 text-truncate">
-                {{ farmer?.firstName }} {{ farmer?.lastName }}
+                {{ affiliate?.firstName }} {{ affiliate?.lastName }}
               </h5>
-              <!-- <p class="text-muted mb-0 text-truncate">UI/UX Designer</p> -->
             </div>
 
             <div class="col-sm-8">
               <div class="pt-4">
                 <div class="row">
                   <div class="col-6">
-                    <p class="text-muted mb-0 text-center">No. of Farms</p>
-                    <h5 class="font-size-13 text-center">6,700</h5>
+                    <p class="text-muted mb-0 text-center">Applications</p>
+                    <h5 class="font-size-13 text-center">
+                      {{ affiliate.applications.length | number }}
+                    </h5>
                   </div>
                   <div class="col-6">
-                    <p class="text-muted mb-0 text-center">Total Requests</p>
-                    <h5 class="font-size-13 text-center">{{ 0 | number }}</h5>
+                    <p class="text-muted mb-0 text-center">
+                      Referred Affiliates
+                    </p>
+                    <h5 class="font-size-13 text-center">
+                      {{ affiliate.referrals.length | number }}
+                    </h5>
                   </div>
                 </div>
               </div>
@@ -65,7 +70,6 @@
           </div>
         </div>
       </div>
-      <!-- end card -->
 
       <div class="card">
         <div class="card-body">
@@ -75,44 +79,49 @@
               <tbody>
                 <tr>
                   <th scope="row">Role :</th>
-                  <td>{{ farmer?.role }}</td>
+                  <td>{{ affiliate?.role }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Referrer :</th>
+                  <td>
+                    {{ affiliate?.referrer?.firstName }}
+                    {{ affiliate?.referrer?.lastName }}
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">First Name :</th>
-                  <td>{{ farmer?.firstName }}</td>
+                  <td>{{ affiliate?.firstName }}</td>
                 </tr>
                 <tr>
                   <th scope="row">last Name :</th>
-                  <td>{{ farmer?.lastName }}</td>
+                  <td>{{ affiliate?.lastName }}</td>
                 </tr>
                 <tr>
                   <th scope="row">Other Name :</th>
-                  <td>{{ farmer?.otherName }}</td>
+                  <td>{{ affiliate?.otherName }}</td>
                 </tr>
                 <tr>
                   <th scope="row">Phone Number :</th>
-                  <td>{{ farmer?.phone }}</td>
+                  <td>{{ affiliate?.phone }}</td>
                 </tr>
                 <tr>
                   <th scope="row">E-mail :</th>
-                  <td>{{ farmer?.email }}</td>
+                  <td>{{ affiliate?.email }}</td>
                 </tr>
                 <tr>
                   <th scope="row">Address :</th>
-                  <td>{{ farmer?.address }}</td>
+                  <td>{{ affiliate?.address }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-      <!-- end card -->
     </div>
 
     <div class="col-xl-8">
       <div class="card">
         <div class="card-body">
-          <!-- <h4 class="card-title mb-4">Tasks</h4> -->
           <ul
             ngbNav
             #nav1="ngbNav"
@@ -120,7 +129,7 @@
             class="nav-pills bg-light rounded"
           >
             <li [ngbNavItem]="1">
-              <a ngbNavLink>Farm Lands</a>
+              <a ngbNavLink>Affiliate Applications</a>
               <ng-template ngbNavContent>
                 <ngx-simplebar style="height: 250px">
                   <div class="row p-4">
@@ -129,93 +138,111 @@
                         class="card-title"
                         style="padding: 0px; font-size: 1.5rem"
                       >
-                        Manage Farm Land
+                        Affiliate's Applications History
                       </h4>
                       <p style="font-size: 1rem">
-                        List all tractors managed by owner.
+                        List all applications performed by affiliate.
                       </p>
-                    </div>
-                    <div class="col-6">
-                      <dx-button
-                        stylingMode="contained"
-                        text="Contained"
-                        type="normal"
-                        style="float: right; margin-left: 10px"
-                        [width]="150"
-                        (onClick)="onShowCreateRecordModal()"
-                      >
-                        <span style="margin-right: 10px"
-                          ><i class="bx bx-slider" style="font-size: 20px"></i
-                        ></span>
-                        <p
-                          style="margin: 0px; font-size: 14px; font-weight: 500"
-                        >
-                          Add Farm Land
-                        </p>
-                      </dx-button>
                     </div>
                   </div>
                   <!-- table goes here -->
-                  <dx-data-grid
-                    id="gridContainer"
-                    [dataSource]="farmer?.farmLands"
-                    keyExpr="id"
-                    [showBorders]="true"
-                    [showColumnLines]="true"
-                    [showRowLines]="true"
-                    [rowAlternationEnabled]="true"
-                    [columnAutoWidth]="true"
-                    [allowColumnResizing]="true"
+
+                  <div
+                    class="table-responsive"
+                    style="overflow-x: auto; max-width: 100%"
                   >
-                    <dxo-paging [pageSize]="10"> </dxo-paging>
-                    <dxo-selection mode="single"></dxo-selection>
-                    <div>
-                      <dx-button
-                        stylingMode="contained"
-                        text="Contained"
-                        type="normal"
-                        [width]="120"
-                      >
-                      </dx-button>
-                    </div>
-                    <dxo-export
-                      [enabled]="true"
-                      [allowExportSelectedData]="true"
-                    ></dxo-export>
-
-                    <dxo-search-panel
-                      [visible]="true"
-                      [width]="350"
-                    ></dxo-search-panel>
-
-                    <dxi-column
-                      dataField="location"
-                      caption="Location"
-                      [width]="800"
-                    ></dxi-column>
-                    <dxi-column
-                      dataField="farmSize"
-                      caption="Farm Size"
-                      [width]="200"
-                    ></dxi-column>
-
-                    <!-- <dxi-column caption="View" name="delistBtn" type="buttons">
-                      <dxi-button
-                        text="View"
-                        [onClick]="viewRecord"
-                      ></dxi-button>
-                    </dxi-column> -->
-
-                    <dxo-summary>
-                      <dxi-total-item column="id" summaryType="count">
-                      </dxi-total-item>
-                    </dxo-summary>
-                  </dx-data-grid>
+                    <table
+                      class="table align-middle gs-0 gy-4"
+                      style="width: max-content; min-width: 100%"
+                    >
+                      <thead>
+                        <tr class="fw-bolder text-white bg-primary">
+                          <th class="min-w-100px text-gray-900">ID</th>
+                          <th class="min-w-100px text-gray-900">Estate</th>
+                          <th class="min-w-100px text-gray-900">
+                            Property Type
+                          </th>
+                          <th class="min-w-50px text-gray-900 text-center">
+                            Plot Size
+                          </th>
+                          <th class="min-w-50px text-gray-900 text-center">
+                            Price (per plot)
+                          </th>
+                          <th class="min-w-50px text-gray-900">Customer</th>
+                          <th class="min-w-50px text-gray-900">Phone</th>
+                          <th class="min-w-50px text-gray-900 text-center">
+                            Total Plots
+                          </th>
+                          <th class="min-w-50px text-gray-900 text-center">
+                            Total Amount
+                          </th>
+                          <th class="min-w-50px text-gray-900 text-center">
+                            Payment Status
+                          </th>
+                          <th class="min-w-50px text-gray-900 text-center">
+                            Payment Date
+                          </th>
+                          <th class="min-w-50px text-gray-900 text-center">
+                            Status
+                          </th>
+                          <th class="min-w-100px text-gray-900">Created At</th>
+                          <th class="min-w-100px text-gray-900"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngIf="affiliate?.applications != null">
+                          <tr *ngFor="let item of affiliate?.applications">
+                            <td>
+                              {{ item?.id }}
+                            </td>
+                            <td>
+                              {{ item?.propertyTemplate?.estate?.name }}
+                            </td>
+                            <td>
+                              {{ item.propertyTemplate?.templateName }}
+                            </td>
+                            <td class="text-center">
+                              {{ item.propertyTemplate?.size }} sqm
+                            </td>
+                            <td class="text-center">
+                              {{ item.currentPrice?.price | number }}
+                            </td>
+                            <td>
+                              {{ item.customer?.title || "" }}
+                              {{ item.customer?.firstName || "" }}
+                              {{ item.customer?.lastName || "" }}
+                            </td>
+                            <td>
+                              {{ item.customer?.phone }}
+                            </td>
+                            <td class="text-center">
+                              {{ item?.units }}
+                            </td>
+                            <td class="text-center">
+                              {{ item?.amount | number }}
+                            </td>
+                            <td class="text-center">
+                              {{ item?.paymentStatus }}
+                            </td>
+                            <td class="text-center">
+                              {{ (item?.paymentDate | date) ?? "---" }}
+                            </td>
+                            <td class="text-center">
+                              {{ item?.status }}
+                            </td>
+                            <td>
+                              {{ item?.createdAt | date }}
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
                 </ngx-simplebar>
               </ng-template>
             </li>
             <li [ngbNavItem]="2">
-              <a ngbNavLink>Tractor Requests</a>
+              <a ngbNavLink>Referred Affiliates</a>
               <ng-template ngbNavContent>
                 <ngx-simplebar style="height: 250px">
                   <div class="row p-4">
@@ -224,84 +251,77 @@
                         class="card-title"
                         style="padding: 0px; font-size: 1.5rem"
                       >
-                        Tractor Requests
+                        Referred Affiliates
                       </h4>
-                      <p style="font-size: 1rem">List all tractor requests.</p>
-                    </div>
-                    <div class="col-6">
-                      <!-- <dx-button
-                        stylingMode="contained"
-                        text="Contained"
-                        type="normal"
-                        style="float: right; margin-left: 10px"
-                        [width]="150"
-                        (onClick)="onShowCreateRecordModal()"
-                      >
-                        <span style="margin-right: 10px"
-                          ><i class="bx bx-slider" style="font-size: 20px"></i
-                        ></span>
-                        <p
-                          style="margin: 0px; font-size: 14px; font-weight: 500"
-                        >
-                          Add Farm Land
-                        </p>
-                      </dx-button> -->
+                      <p style="font-size: 1rem">
+                        List all referred affiliates.
+                      </p>
                     </div>
                   </div>
-                  <dx-data-grid
-                    id="gridContainer"
-                    [dataSource]="data"
-                    keyExpr="id"
-                    [showBorders]="true"
-                    [showColumnLines]="true"
-                    [showRowLines]="true"
-                    [rowAlternationEnabled]="true"
-                    [columnAutoWidth]="true"
-                    [allowColumnResizing]="true"
+
+                  <div
+                    class="table-responsive"
+                    style="overflow-x: auto; max-width: 100%"
                   >
-                    <dxo-paging [pageSize]="10"> </dxo-paging>
-                    <dxo-selection mode="single"></dxo-selection>
-                    <div>
-                      <dx-button
-                        stylingMode="contained"
-                        text="Contained"
-                        type="normal"
-                        [width]="120"
-                      >
-                      </dx-button>
-                    </div>
-                    <dxo-export
-                      [enabled]="true"
-                      [allowExportSelectedData]="true"
-                    ></dxo-export>
-
-                    <dxo-search-panel
-                      [visible]="true"
-                      [width]="350"
-                    ></dxo-search-panel>
-
-                    <dxi-column
-                      dataField="firstName"
-                      caption="First Name"
-                    ></dxi-column>
-
-                    <dxi-column
-                      dataField="scheduledDate"
-                      caption="Scheduled Date"
-                    ></dxi-column>
-
-                    <!-- <dxi-column caption="View" name="delistBtn" type="buttons">
-                      <dxi-button
-                        text="View"
-                        [onClick]="viewRecord"
-                      ></dxi-button>
-                    </dxi-column> -->
-
-                    <dxo-summary>
-                      <dxi-total-item column="id" summaryType="count">
-                      </dxi-total-item>
-                    </dxo-summary>
-                  </dx-data-grid>
+                    <table
+                      class="table align-middle gs-0 gy-4"
+                      style="width: max-content; min-width: 100%"
+                    >
+                      <thead>
+                        <tr class="fw-bolder text-white bg-primary">
+                          <th
+                            class="min-w-10px text-gray-900 text-end rounded-end"
+                          ></th>
+                          <th class="min-w-100px text-gray-900">First Name</th>
+                          <th class="min-w-100px text-gray-900">Last Name</th>
+                          <th class="min-w-150px text-gray-900">Email</th>
+                          <th class="min-w-100px text-gray-900">Phone</th>
+                          <th class="min-w-100px text-gray-900">Birth Date</th>
+                          <th class="min-w-50px text-gray-900">Status</th>
+                          <th class="min-w-100px text-gray-900">Created At</th>
+                          <th class="min-w-100px text-gray-900"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngIf="affiliate.referrals != null">
+                          <tr *ngFor="let item of affiliate.referrals">
+                            <td>
+                              <div
+                                class="symbol-label fs-3 bg-light-success text-success"
+                                style="
+                                  display: flex;
+                                  justify-content: center;
+                                  border-radius: 50%;
+                                  padding: 5px;
+                                "
+                              >
+                                {{ item.firstName[0] }}
+                              </div>
+                            </td>
+                            <td>
+                              {{ item.firstName }}
+                            </td>
+                            <td>
+                              {{ item?.lastName }}
+                            </td>
+                            <td>
+                              {{ item?.email }}
+                            </td>
+                            <td>
+                              {{ item?.phone }}
+                            </td>
+                            <td>
+                              {{ item?.birthDate | date }}
+                            </td>
+                            <td>{{ item?.status }}</td>
+                            <td>
+                              {{ item?.createdAt | date }}
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
                 </ngx-simplebar>
               </ng-template>
             </li>
@@ -311,99 +331,4 @@
       </div>
     </div>
   </div>
-  <!-- end row -->
 </div>
-
-<ng-template #createFarmlandModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Register Tractor</h5>
-    <button
-      type="button"
-      class="btn-close"
-      (click)="closeModal()"
-      aria-label="Close"
-    ></button>
-  </div>
-  <div class="modal-body">
-    <div class="row">
-      <div class="col-lg-12 col-md-12 col-sm-12">
-        <div class="mb-3">
-          <label
-            for="farmSize"
-            [class.text-danger]="farmSize.invalid &amp;&amp; farmSize.touched"
-            class="form-label"
-            >Farm Size (meter square)<span class="text-danger">*</span></label
-          >
-          <input
-            type="number"
-            class="form-control"
-            name="farmSize"
-            #farmSize="ngModel"
-            [(ngModel)]="obj.farmSize"
-            [class.is-invalid]="farmSize.invalid &amp;&amp; farmSize.touched"
-            placeholder="Enter Farm Size"
-            required
-          />
-
-          <div *ngIf="farmSize.invalid &amp;&amp; farmSize.touched">
-            <small *ngIf="farmSize.errors?.required" class="text-danger"
-              >Farm Size is Required</small
-            >
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-12 col-md-12 col-sm-12">
-        <div class="mb-3">
-          <label
-            for="location"
-            [class.text-danger]="location.invalid &amp;&amp; location.touched"
-            class="form-label"
-            >Location <span class="text-danger">*</span></label
-          >
-          <!-- <input
-            type="text"
-            class="form-control"
-            name="location"
-            #location="ngModel"
-            [(ngModel)]="obj.location"
-            [class.is-invalid]="location.invalid &amp;&amp; location.touched"
-            placeholder="Enter Location"
-            required
-          /> -->
-          <textarea
-            type="text"
-            class="form-control"
-            name="location"
-            #location="ngModel"
-            [(ngModel)]="obj.location"
-            [class.is-invalid]="location.invalid &amp;&amp; location.touched"
-            placeholder="Enter Location"
-            required
-          ></textarea>
-
-          <div *ngIf="location.invalid &amp;&amp; location.touched">
-            <small *ngIf="location.errors?.required" class="text-danger"
-              >Location is Required</small
-            >
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button
-        *ngIf="!isLoading"
-        class="btn btn-primary btn-rounded"
-        (click)="onSubmit()"
-      >
-        Capture Farmland
-      </button>
-      <button
-        *ngIf="isLoading"
-        class="btn btn-primary btn-rounded"
-        disabled
-      >
-        Processing <span><i class="bx bx-loader bx-spin"></i></span>
-      </button>
-    </div>
-  </div>
-</ng-template>

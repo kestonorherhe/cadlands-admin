@@ -51,9 +51,7 @@ export class StaffListComponent implements OnInit {
     private modalService: NgbModal,
     private readonly _router: Router,
     private readonly staffService: StaffService
-  ) {
-    // this.viewRecord = this.viewRecord.bind(this);
-  }
+  ) {}
 
   viewRecord(evt: any) {
     const id = evt.id;
