@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { SalesCommissionService } from "../../sales-commission/sales-commission.service";
 import { ClipboardService } from "src/app/core/services/copyToClipboard";
+import { AffiliateService } from "../affiliate.service";
 
 @Component({
   selector: "app-my-referrals",
@@ -13,8 +14,10 @@ export class MyReferralsComponent implements OnInit {
   transactions$: Observable<any>;
   referralCode: string = "";
   copied = false;
+  affiliate: any;
 
   constructor(
+    private affiliateService: AffiliateService,
     private salesCommissionService: SalesCommissionService,
     private clipboardService: ClipboardService
   ) {}
@@ -27,6 +30,21 @@ export class MyReferralsComponent implements OnInit {
     ).referral_code;
     console.log("referralCode ::", this.referralCode);
     this.getSubscriptionBonuses();
+    this.affiliateService.getProfile().subscribe(
+      (response: any) => {
+        console.log(
+          "🚀 ~ MyProfileComponent ~ getFeatures ~ response:",
+          response
+        );
+        this.affiliate = response;
+      },
+      (error) => {
+        console.log(
+          "🚀 ~ MyProfileComponent ~ this.affiliateService.getProfile ~ error:",
+          error
+        );
+      }
+    );
   }
 
   getSubscriptionBonuses() {
