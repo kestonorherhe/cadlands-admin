@@ -51,7 +51,10 @@
                   Copied successfully!
                 </p>
               </span>
-              <h5 class="mb-0 text-primary">
+              <h5
+                class="mb-0 text-primary"
+                style="word-break: break-all; white-space: normal"
+              >
                 https://ca.cadlands.com/account/affiliate-registration/referral/{{
                   referralCode
                 }}
@@ -89,7 +92,10 @@
                   Copied successfully!
                 </p>
               </span>
-              <h5 class="mb-0 text-primary">
+              <h5
+                class="mb-0 text-primary"
+                style="word-break: break-all; white-space: normal"
+              >
                 https://www.cadlands.com/buy-land-referral/{{ referralCode }}
               </h5>
             </div>
@@ -153,90 +159,90 @@
             [activeId]="1"
             class="nav-pills bg-light rounded"
           >
-          <li [ngbNavItem]="1">
-            <a ngbNavLink>Referred Affiliates</a>
-            <ng-template ngbNavContent>
-              <ngx-simplebar style="height: 100%">
-                <div class="row p-4">
-                  <div class="col-6">
-                    <h4
-                      class="card-title"
-                      style="padding: 0px; font-size: 1.5rem"
-                    >
-                      Referred Affiliates
-                    </h4>
-                    <p style="font-size: 1rem">
-                      List all referred affiliates.
-                    </p>
+            <li [ngbNavItem]="1">
+              <a ngbNavLink>Referred Affiliates</a>
+              <ng-template ngbNavContent>
+                <ngx-simplebar style="height: 100%">
+                  <div class="row p-4">
+                    <div class="col-6">
+                      <h4
+                        class="card-title"
+                        style="padding: 0px; font-size: 1.5rem"
+                      >
+                        Referred Affiliates
+                      </h4>
+                      <p style="font-size: 1rem">
+                        List all referred affiliates.
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                <div
-                  class="table-responsive"
-                  style="overflow-x: auto; max-width: 100%"
-                >
-                  <table
-                    class="table align-middle gs-0 gy-4"
-                    style="width: max-content; min-width: 100%"
+                  <div
+                    class="table-responsive"
+                    style="overflow-x: auto; max-width: 100%"
                   >
-                    <thead>
-                      <tr class="fw-bolder text-white bg-primary">
-                        <th
-                          class="min-w-10px text-gray-900 text-end rounded-end"
-                        ></th>
-                        <th class="min-w-100px text-gray-900">First Name</th>
-                        <th class="min-w-100px text-gray-900">Last Name</th>
-                        <th class="min-w-150px text-gray-900">Email</th>
-                        <th class="min-w-100px text-gray-900">Phone</th>
-                        <th class="min-w-100px text-gray-900">Birth Date</th>
-                        <th class="min-w-50px text-gray-900">Status</th>
-                        <th class="min-w-100px text-gray-900">Created At</th>
-                        <th class="min-w-100px text-gray-900"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <ng-container *ngIf="affiliate.referrals != null">
-                        <tr *ngFor="let item of affiliate.referrals">
-                          <td>
-                            <div
-                              class="symbol-label fs-3 bg-light-success text-success"
-                              style="
-                                display: flex;
-                                justify-content: center;
-                                border-radius: 50%;
-                                padding: 5px;
-                              "
-                            >
-                              {{ item.firstName[0] }}
-                            </div>
-                          </td>
-                          <td>
-                            {{ item.firstName }}
-                          </td>
-                          <td>
-                            {{ item?.lastName }}
-                          </td>
-                          <td>
-                            {{ item?.email }}
-                          </td>
-                          <td>
-                            {{ item?.phone }}
-                          </td>
-                          <td>
-                            {{ item?.birthDate | date }}
-                          </td>
-                          <td>{{ item?.status }}</td>
-                          <td>
-                            {{ item?.createdAt | date }}
-                          </td>
+                    <table
+                      class="table align-middle gs-0 gy-4"
+                      style="width: max-content; min-width: 100%"
+                    >
+                      <thead>
+                        <tr class="fw-bolder text-white bg-primary">
+                          <th
+                            class="min-w-10px text-gray-900 text-end rounded-end"
+                          ></th>
+                          <th class="min-w-100px text-gray-900">First Name</th>
+                          <th class="min-w-100px text-gray-900">Last Name</th>
+                          <th class="min-w-150px text-gray-900">Email</th>
+                          <th class="min-w-100px text-gray-900">Phone</th>
+                          <th class="min-w-100px text-gray-900">Birth Date</th>
+                          <th class="min-w-50px text-gray-900">Status</th>
+                          <th class="min-w-100px text-gray-900">Created At</th>
+                          <th class="min-w-100px text-gray-900"></th>
                         </tr>
-                      </ng-container>
-                    </tbody>
-                  </table>
-                </div>
-              </ngx-simplebar>
-            </ng-template>
-          </li>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngIf="affiliate.referrals != null">
+                          <tr *ngFor="let item of affiliate.referrals">
+                            <td>
+                              <div
+                                class="symbol-label fs-3 bg-light-success text-success"
+                                style="
+                                  display: flex;
+                                  justify-content: center;
+                                  border-radius: 50%;
+                                  padding: 5px;
+                                "
+                              >
+                                {{ item.firstName[0] }}
+                              </div>
+                            </td>
+                            <td>
+                              {{ item.firstName }}
+                            </td>
+                            <td>
+                              {{ item?.lastName }}
+                            </td>
+                            <td>
+                              {{ item?.email }}
+                            </td>
+                            <td>
+                              {{ item?.phone }}
+                            </td>
+                            <td>
+                              {{ item?.birthDate | date }}
+                            </td>
+                            <td>{{ item?.status }}</td>
+                            <td>
+                              {{ item?.createdAt | date }}
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                </ngx-simplebar>
+              </ng-template>
+            </li>
             <li [ngbNavItem]="2">
               <a ngbNavLink>My Referral Bonuses</a>
               <ng-template ngbNavContent>
