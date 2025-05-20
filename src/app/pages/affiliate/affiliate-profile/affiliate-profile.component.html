@@ -272,6 +272,7 @@
                           <th
                             class="min-w-10px text-gray-900 text-end rounded-end"
                           ></th>
+                          <th class="min-w-100px text-gray-900">Package</th>
                           <th class="min-w-100px text-gray-900">First Name</th>
                           <th class="min-w-100px text-gray-900">Last Name</th>
                           <th class="min-w-150px text-gray-900">Email</th>
@@ -297,6 +298,12 @@
                               >
                                 {{ item.firstName[0] }}
                               </div>
+                            </td>
+                            <td>
+                              {{
+                                item.subscriptions[0]?.affiliatePackage
+                                  ?.packageName
+                              }}
                             </td>
                             <td>
                               {{ item.firstName }}
