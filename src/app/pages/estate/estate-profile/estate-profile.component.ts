@@ -43,6 +43,7 @@ export class EstateProfileComponent implements OnInit {
     { name: "Registered Survey" },
     { name: "Deed Of Assignment" },
     { name: "Government Approval" },
+    { name: "Gazzette" },
   ];
 
   estates$: Observable<any>;

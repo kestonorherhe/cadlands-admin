@@ -20,6 +20,7 @@ export class EstateListComponent implements OnInit {
     { name: "Registered Survey" },
     { name: "Deed Of Assignment" },
     { name: "Government Approval" },
+    { name: "Gazzette" },
   ];
 
   isLoading = false;
@@ -141,7 +142,6 @@ export class EstateListComponent implements OnInit {
   }
 
   async onSubmit() {
-    
     try {
       this.isLoading = true;
       let formData: FormData = new FormData();
