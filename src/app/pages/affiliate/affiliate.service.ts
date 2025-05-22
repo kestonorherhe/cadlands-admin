@@ -125,4 +125,18 @@ export class AffiliateService {
       id: requestId,
     });
   }
+
+  resendEmail(email: any) {
+    // return this.http
+    //   .get(
+    //     `${this.envService.apiService}/`
+    //   )
+    //   .pipe(
+    //     map((res: any) => {
+    //       return res.data;
+    //     })
+    //   );
+
+      return this.httpService.get(`auth/resend-onboarding-email/${email}`);
+  }
 }

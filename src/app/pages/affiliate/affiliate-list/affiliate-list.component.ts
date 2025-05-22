@@ -99,10 +99,10 @@ export class AffiliateListComponent implements OnInit {
       { label: "Profile", active: true },
     ];
 
-    this.getAllFarmers();
+    this.getAllAffiliates();
   }
 
-  getAllFarmers() {
+  getAllAffiliates() {
     this.affiliateService.getRecords({ role: "affiliate" }).subscribe(
       (response: any) => {
         console.log(
@@ -158,5 +158,60 @@ export class AffiliateListComponent implements OnInit {
       city: this.obj.city.toString(),
     };
     console.log("🚀 ~ FarmerListComponent ~ onSubmit ~ data:", data);
+  }
+
+  resendEmail(user: any) {
+    Swal.fire({
+      icon: "warning",
+      text: "Are you sure you want to resend onboarding email?",
+      showDenyButton: true,
+      allowOutsideClick: false,
+      confirmButtonText: "Yes, resend email!",
+      confirmButtonColor: "#1B84FF",
+      denyButtonText: `No, return`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.resendEmailFn(user);
+        this.modalService.dismissAll();
+      }
+    });
+  }
+
+  resendEmailFn(user: any) {
+    this.affiliateService.resendEmail(user.email).subscribe(
+      (response: any) => {
+        Swal.fire({
+          text: "Onboarding email sent successfully!",
+          icon: "success",
+          confirmButtonText: "Ok, got it!",
+          confirmButtonColor: "#1B84FF",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.modalService.dismissAll();
+            this.resetForm();
+            this.isLoading = false;
+            this.getAllAffiliates();
+          }
+        });
+      },
+      (error: any) => {
+        Swal.fire({
+          text: `Failed to send onboarding email! ${
+            error.error.statusCode === 401
+              ? "User not authorized!"
+              : error.error.message
+          }`,
+          icon: "error",
+          confirmButtonText: "Ok, got it!",
+          confirmButtonColor: "#1B84FF",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.isLoading = false;
+            // this.getRoomTypes();
+          }
+        });
+      }
+    );
   }
 }

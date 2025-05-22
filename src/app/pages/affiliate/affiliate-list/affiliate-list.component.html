@@ -114,6 +114,20 @@
                     <td>
                       {{ item?.createdAt | date }}
                     </td>
+                    <td class="text-end">
+                      <button
+                        class="btn btn-primary"
+                        style="
+                          display: flex;
+                          flex-direction: row;
+                          align-items: center;
+                        "
+                        (click)="resendEmail(item)"
+                      >
+                        <!-- <app-keenicon name="sms" class="fs-3"></app-keenicon> -->
+                        <span style="margin-left: 6px">Resend Email</span>
+                      </button>
+                    </td>
                   </tr>
                 </ng-container>
               </tbody>
