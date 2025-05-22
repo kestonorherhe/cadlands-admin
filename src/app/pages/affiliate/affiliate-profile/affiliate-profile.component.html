@@ -82,6 +82,10 @@
                   <td>{{ affiliate?.role }}</td>
                 </tr>
                 <tr>
+                  <th scope="row">Package :</th>
+                  <td>{{ affiliate?.subscriptions[0]?.affiliatePackage?.packageName }}</td>
+                </tr>
+                <tr>
                   <th scope="row">Referrer :</th>
                   <td>
                     {{ affiliate?.referrer?.firstName }}
