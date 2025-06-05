@@ -33,7 +33,7 @@
               <h2 class="mb-0">
                 NGN
                 {{
-                  getTotalAmount(
+                  getPaidSales(
                     (mySales$ | async)?.data?.applicationRequests || []
                   ).totalAmount | number
                 }}
@@ -41,7 +41,7 @@
               <h6 class="mb-0 mt-2">
                 Land Sold:
                 {{
-                  getTotalAmount(
+                  getPaidSales(
                     (mySales$ | async)?.data?.applicationRequests || []
                   ).count
                     | number
