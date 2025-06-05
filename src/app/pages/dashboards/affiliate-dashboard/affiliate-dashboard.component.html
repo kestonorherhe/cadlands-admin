@@ -98,7 +98,7 @@
                 NGN
                 {{
                   getTotalAmount(
-                    (indirectCommissions$ | async)?.data?.applicationRequests ||
+                    (indirectCommissions$ | async)?.data?.affiliateCommissions ||
                       []
                   ).totalAmount
                     | number
