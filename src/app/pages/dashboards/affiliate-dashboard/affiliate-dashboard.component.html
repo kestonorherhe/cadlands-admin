@@ -110,7 +110,7 @@
                 Land Sold:
                 {{
                   getTotalAmount(
-                    (indirectCommissions$ | async)?.data?.subscriptionBonuses ||
+                    (indirectCommissions$ | async)?.data?.affiliateCommissions ||
                       []
                   ).count
                     | number
