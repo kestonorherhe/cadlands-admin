@@ -99,22 +99,18 @@
                 NGN
                 {{
                   getTotalAmount(
-                    (indirectCommissions$ | async)?.data?.affiliateCommissions ||
-                      []
-                  ).totalAmount
-                    | number
-                    | number
+                    (indirectCommissions$ | async)?.data
+                      ?.affiliateCommissions || []
+                  ).totalAmount | number
                 }}
               </h2>
               <h6 class="mb-0 mt-2">
                 Land Sold:
                 {{
                   getTotalAmount(
-                    (indirectCommissions$ | async)?.data?.affiliateCommissions ||
-                      []
-                  ).count
-                    | number
-                    | number
+                    (indirectCommissions$ | async)?.data
+                      ?.affiliateCommissions || []
+                  ).count | number
                 }}
               </h6>
             </div>
@@ -128,9 +124,7 @@
         <div class="card-body">
           <div class="media">
             <div class="media-body">
-              <p class="text-muted fs-5 fw-medium">
-                Affiliate Signup Bonus
-              </p>
+              <p class="text-muted fs-5 fw-medium">Affiliate Signup Bonus</p>
               <h2 class="mb-0">
                 NGN
                 {{

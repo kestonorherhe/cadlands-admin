@@ -68,13 +68,18 @@ export class AffiliateDashboardComponent implements OnInit {
   }
 
   getTotalAmount(data: any[]) {
-    console.log("🚀 ~ AffiliateDashboardComponent ~ getTotalAmount ~ data:", data)
+    console.log(
+      "🚀 ~ AffiliateDashboardComponent ~ getTotalAmount ~ data:",
+      data
+    );
     const filteredSales = data;
+
+    const totalAmount = filteredSales.reduce(
+      (acc, item) => acc + parseInt(item.amount),
+      0
+    );
     return {
-      totalAmount: filteredSales.reduce(
-        (acc, item) => acc + parseInt(item.amount),
-        0
-      ),
+      totalAmount: totalAmount,
       count: filteredSales.length,
     };
   }
