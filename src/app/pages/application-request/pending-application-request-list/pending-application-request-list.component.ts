@@ -33,6 +33,7 @@ export class PendingApplicationRequestListComponent implements OnInit {
   negotiationStatus$: Observable<any>;
   facilities$: Observable<any>;
   propertyTitles$: Observable<any>;
+  discountTypes = [{ name: "Percentage" }, { name: "Fixed_Amount" }];
 
   files: File[] = [];
   public Editor = ClassicEditor;
@@ -40,6 +41,13 @@ export class PendingApplicationRequestListComponent implements OnInit {
   isLoading = false;
 
   obj: any = {};
+  applicationRequest: any = {};
+
+  discountObj = {
+    discountType: null,
+    discountPercent: null,
+    discountAmount: null,
+  };
 
   @ViewChild("viewApplicationModal")
   viewApplicationModalRef: TemplateRef<any>;
@@ -60,6 +68,22 @@ export class PendingApplicationRequestListComponent implements OnInit {
       .open(content, {
         centered: true,
         size: "xl",
+        animation: true,
+        backdrop: "static",
+        keyboard: false,
+      })
+      .result.then((result) => {
+        console.log("Modal closed" + result);
+      })
+      .catch((res) => {});
+  }
+
+  showDiscountModal(content: TemplateRef<any>, data: any) {
+    this.applicationRequest = data;
+    this.modalService
+      .open(content, {
+        centered: true,
+        size: "md",
         animation: true,
         backdrop: "static",
         keyboard: false,
@@ -149,6 +173,11 @@ export class PendingApplicationRequestListComponent implements OnInit {
       facilities: [],
       titles: [],
     };
+    this.discountObj = {
+      discountType: null,
+      discountPercent: null,
+      discountAmount: null,
+    };
   }
 
   // dropzone methods
@@ -174,7 +203,10 @@ export class PendingApplicationRequestListComponent implements OnInit {
     };
     this.applicationRequestService.processApplicationRequest(data).subscribe(
       (response: any) => {
-        console.log("🚀 ~ PendingApplicationRequestListComponent ~ onSubmit ~ response:", response)
+        console.log(
+          "🚀 ~ PendingApplicationRequestListComponent ~ onSubmit ~ response:",
+          response
+        );
         this.isLoading = false;
         Swal.fire(
           "Process Successful!",
@@ -188,6 +220,76 @@ export class PendingApplicationRequestListComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         Swal.fire("Process Failed!", "Failed to process application", "error");
+      }
+    );
+  }
+
+  onDiscountTypeChange() {
+    this.discountObj.discountPercent = null;
+    this.discountObj.discountAmount = null;
+  }
+
+  onDiscountPercentChange(event: any) {
+    console.log(
+      "🚀 ~ PendingApplicationRequestListComponent ~ event:",
+      event.target.value,
+      this.applicationRequest.originalAmount
+    );
+
+    const discountAmount =
+      this.applicationRequest.originalAmount * (event.target.value / 100);
+    console.log(
+      "🚀 ~ PendingApplicationRequestListComponent ~ onDiscountPercentChange ~ discountAmount:",
+      discountAmount
+    );
+    this.discountObj.discountAmount = discountAmount;
+  }
+
+  onApplyDiscount() {
+    Swal.fire({
+      icon: "warning",
+      text: `Are you sure you want to apply a discount of ₦ ${this.discountObj.discountAmount} to this application?`,
+      showDenyButton: true,
+      allowOutsideClick: false,
+      confirmButtonText: "Yes, cancel it!",
+      confirmButtonColor: "#1B84FF",
+      denyButtonText: `No, return`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.applyDiscountFn();
+      }
+    });
+  }
+
+  async applyDiscountFn() {
+    this.isLoading = true;
+
+    const data = {
+      applicationId: this.applicationRequest.id,
+      discountType: this.discountObj.discountType,
+      discountPercent: this.discountObj.discountPercent,
+      discountAmount: this.discountObj.discountAmount,
+    };
+    this.applicationRequestService.applyDiscount(data).subscribe(
+      (response: any) => {
+        console.log(
+          "🚀 ~ PendingApplicationRequestListComponent ~ onSubmit ~ response:",
+          response
+        );
+        this.isLoading = false;
+        Swal.fire(
+          "Process Successful!",
+          "Discount successfully applied!",
+          "success"
+        );
+        this.modalService.dismissAll();
+        this.resetForm();
+        this.getAllApplicationRequests();
+      },
+      (error) => {
+        this.isLoading = false;
+        Swal.fire("Process Failed!", "Failed to apply discount", "error");
       }
     );
   }

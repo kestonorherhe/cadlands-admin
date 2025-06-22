@@ -46,9 +46,8 @@
             >
               <thead>
                 <tr class="fw-bolder text-white bg-primary">
-                  <th
-                    class="min-w-10px text-gray-900 text-end rounded-end"
-                  ></th>
+                  <th class="min-w-30px text-gray-900 text-center"></th>
+                  <th class="min-w-100px text-gray-900 text-center"></th>
                   <th class="min-w-100px text-gray-900">ID</th>
                   <th class="min-w-100px text-gray-900">Estate</th>
                   <th class="min-w-100px text-gray-900">Property Type</th>
@@ -81,12 +80,17 @@
                 <ng-container *ngIf="data?.applications != null">
                   <tr *ngFor="let item of data?.applications">
                     <td class="text-end">
-                      <a
-                        (click)="viewRecord(item)"
-                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                      >
-                        <!-- <app-keenicon name="pencil" class="fs-3"></app-keenicon> -->
+                      <a (click)="viewRecord(item)" style="font-weight: bold">
                         View Detail
+                      </a>
+                    </td>
+                    <td class="text-end">
+                      <a
+                        (click)="showDiscountModal(applyDiscountTemplate, item)"
+                        class="btn btn-secondary"
+                        style="font-weight: bold"
+                      >
+                        Apply Discount
                       </a>
                     </td>
                     <td>
@@ -653,6 +657,135 @@
         (click)="onSubmit()"
       >
         Process Application
+      </button>
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-danger btn-rounded"
+        (click)="closeModal()"
+      >
+        Cancel
+      </button>
+      <button *ngIf="isLoading" class="btn btn-primary btn-rounded" disabled>
+        Processing <span><i class="bx bx-loader bx-spin"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #applyDiscountTemplate let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">
+      Apply Application Discount
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mb-3">
+          <label
+            for="discountType"
+            [class.text-danger]="discountType.invalid &amp;&amp; discountType.touched"
+            class="form-label"
+            >Discount Type <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="discountTypes"
+            bindValue="name"
+            bindLabel="name"
+            name="discountType"
+            #discountType="ngModel"
+            [(ngModel)]="discountObj.discountType"
+            [class.is-invalid]="discountType.invalid &amp;&amp; discountType.touched"
+            placeholder="--Select Discount Type--"
+            (change)="onDiscountTypeChange()"
+            required
+          ></ng-select>
+
+          <div *ngIf="discountType.invalid &amp;&amp; discountType.touched">
+            <small *ngIf="discountType.errors?.required" class="text-danger"
+              >Discount Type is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="discountObj.discountType === 'Percentage'"
+        class="col-lg-12 col-md-12 col-sm-12"
+      >
+        <div class="mb-3">
+          <label
+            for="discountPercent"
+            [class.text-danger]="discountPercent.invalid &amp;&amp; discountPercent.touched"
+            class="form-label"
+            >Discount Percent (%) <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="discountPercent"
+            #discountPercent="ngModel"
+            [(ngModel)]="discountObj.discountPercent"
+            [class.is-invalid]="discountPercent.invalid &amp;&amp; discountPercent.touched"
+            placeholder="Enter Discount Percent"
+            (keyup)="onDiscountPercentChange($event)"
+            required
+          />
+
+          <div
+            *ngIf="discountPercent.invalid &amp;&amp; discountPercent.touched"
+          >
+            <small *ngIf="discountPercent.errors?.required" class="text-danger"
+              >Discount Percent is Required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="discountObj.discountType !== null"
+        class="col-lg-12 col-md-12 col-sm-12"
+      >
+        <div class="mb-3">
+          <label
+            for="discountAmount"
+            [class.text-danger]="discountAmount.invalid &amp;&amp; discountAmount.touched"
+            class="form-label"
+            >Discount Amount <span class="text-danger">*</span></label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="discountAmount"
+            #discountAmount="ngModel"
+            [(ngModel)]="discountObj.discountAmount"
+            [class.is-invalid]="discountAmount.invalid &amp;&amp; discountAmount.touched"
+            placeholder="Enter Discount Amount"
+            [disabled]="discountObj.discountType === 'Percentage'"
+            required
+          />
+
+          <div *ngIf="discountAmount.invalid &amp;&amp; discountAmount.touched">
+            <small *ngIf="discountAmount.errors?.required" class="text-danger"
+              >Discount Amount is Required</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        *ngIf="!isLoading"
+        class="btn btn-primary btn-rounded"
+        (click)="onApplyDiscount()"
+      >
+        Submit
       </button>
       <button
         *ngIf="!isLoading"

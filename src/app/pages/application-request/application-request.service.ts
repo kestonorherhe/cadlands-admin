@@ -84,6 +84,10 @@ export class ApplicationRequestService {
     return this.httpService.post(`application-request/allocate-plot`, data);
   }
 
+  applyDiscount(data: any) {
+    return this.httpService.post(`application-request/apply-discount`, data);
+  }
+
   makePartPayment(data: any) {
     return this.httpService.put(
       `application-request/confirm-part-payment`,
