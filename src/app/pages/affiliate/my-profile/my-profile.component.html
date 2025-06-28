@@ -13,22 +13,22 @@
             <button
               *ngIf="
                 !hasPendingSubscriptionRequest(
-                  affiliate.subscriptionRequests ?? []
-                ) && affiliate.subscriptions.length === 1
+                  affiliate?.subscriptionRequests ?? []
+                ) && +affiliate?.subscriptions[0]?.total === 0
               "
-              class="btn btn-primary btn-rounded text-right"
+              class="btn btn-secondary btn-rounded text-right"
               style="
                 display: flex;
                 flex-direction: row;
                 align-items: center;
                 float: right;
+                margin-left: 1rem;
               "
               (click)="upgradeAccountModal(upgradeAccountTemplate)"
             >
               <span style="margin-left: 6px">Upgrade Account</span>
             </button>
             <button
-              *ngIf="affiliate.subscriptions.length > 1"
               class="btn btn-primary btn-rounded text-right"
               style="
                 display: flex;

@@ -160,10 +160,13 @@ export class AffiliateRegistrationComponent implements OnInit {
           });
         },
         (error) => {
+          console.log(
+            "🚀 ~ AffiliateRegistrationComponent ~ onSubmit ~ error:",
+            error
+          );
           this.isLoggingIn = false;
           this.showErr = true;
-          this.error =
-            error?.message || "Registration failed. Please try again.";
+          this.error = error || "Registration failed. Please try again.";
         }
       );
   }
