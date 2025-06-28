@@ -52,18 +52,6 @@ function matches(tables: any, term: string, pipe: PipeTransform) {
   );
 }
 
-// function matches(tables: any, term: string, pipe: PipeTransform) {
-//   // console.log("term ::", term);
-//   const keys = Object.keys(tables);
-//   // console.log(
-//   //   "keys ::",
-//   //   keys.some((key) => tables[key].toLowerCase().includes(term.toLowerCase()))
-//   // );
-//   return keys.some((key) =>
-//     tables[key].toLowerCase().includes(term.toLowerCase())
-//   );
-// }
-
 @Injectable({
   providedIn: "root",
 })
@@ -102,7 +90,6 @@ export class AdvancedService {
   constructor(private pipe: DecimalPipe, private http: HttpClient) {}
 
   searchTable(data: any) {
-    console.log("this is the data ::", data);
     this._search$
       .pipe(
         tap(() => this._loading$.next(true)),
@@ -119,7 +106,6 @@ export class AdvancedService {
   }
 
   searchLogs(data: any) {
-    console.log("this is the data log ::", data);
     this._tablesLogs$.next(data)
     this._totalLogs$.next(data.length)
     // this._searchLogs$
@@ -140,7 +126,6 @@ export class AdvancedService {
   }
 
   private _searchLogs(data): Observable<SearchResult> {
-    // console.log("this is the sort data ::", data)
     const { sortColumn, sortDirection, pageSize, page, searchTerm } =
       this._stateLogs;
 

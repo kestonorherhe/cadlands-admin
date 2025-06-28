@@ -58,7 +58,6 @@ export class PendingApplicationRequestListComponent implements OnInit {
   ) {}
 
   viewRecord(evt: any) {
-    console.log("🚀 ~ FarmerListComponent ~ viewRecord ~ evt:", evt);
     this.obj = evt;
     this.showApplicationModal(this.viewApplicationModalRef);
   }
@@ -73,7 +72,6 @@ export class PendingApplicationRequestListComponent implements OnInit {
         keyboard: false,
       })
       .result.then((result) => {
-        console.log("Modal closed" + result);
       })
       .catch((res) => {});
   }
@@ -89,7 +87,6 @@ export class PendingApplicationRequestListComponent implements OnInit {
         keyboard: false,
       })
       .result.then((result) => {
-        console.log("Modal closed" + result);
       })
       .catch((res) => {});
   }
@@ -150,10 +147,6 @@ export class PendingApplicationRequestListComponent implements OnInit {
   }
 
   onSelectPropertyType(evt: any) {
-    console.log(
-      "🚀 ~ PropertyListComponent ~ onSelectPropertyType ~ evt:",
-      evt
-    );
     this.propertySubTypeList = evt.propertySubTypes;
   }
 
@@ -182,7 +175,6 @@ export class PendingApplicationRequestListComponent implements OnInit {
 
   // dropzone methods
   onSelect(event: any) {
-    console.log(event);
     if (this.files.length > 1) {
       Swal.fire("", "You can add only one image", "warning");
     }
@@ -190,7 +182,6 @@ export class PendingApplicationRequestListComponent implements OnInit {
   }
 
   onRemove(event: any) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 
@@ -203,10 +194,6 @@ export class PendingApplicationRequestListComponent implements OnInit {
     };
     this.applicationRequestService.processApplicationRequest(data).subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ PendingApplicationRequestListComponent ~ onSubmit ~ response:",
-          response
-        );
         this.isLoading = false;
         Swal.fire(
           "Process Successful!",
@@ -230,18 +217,8 @@ export class PendingApplicationRequestListComponent implements OnInit {
   }
 
   onDiscountPercentChange(event: any) {
-    console.log(
-      "🚀 ~ PendingApplicationRequestListComponent ~ event:",
-      event.target.value,
-      this.applicationRequest.originalAmount
-    );
-
     const discountAmount =
       this.applicationRequest.originalAmount * (event.target.value / 100);
-    console.log(
-      "🚀 ~ PendingApplicationRequestListComponent ~ onDiscountPercentChange ~ discountAmount:",
-      discountAmount
-    );
     this.discountObj.discountAmount = discountAmount;
   }
 
@@ -273,10 +250,6 @@ export class PendingApplicationRequestListComponent implements OnInit {
     };
     this.applicationRequestService.applyDiscount(data).subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ PendingApplicationRequestListComponent ~ onSubmit ~ response:",
-          response
-        );
         this.isLoading = false;
         Swal.fire(
           "Process Successful!",

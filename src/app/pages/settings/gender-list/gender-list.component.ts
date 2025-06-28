@@ -75,10 +75,6 @@ export class GenderListComponent implements OnInit {
     this.isLoading = true;
     this.settingsService.getAllGender({}).subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ GenderListComponent ~ getAllGender ~ response:",
-          response
-        );
         this.data = response.data;
         this.isLoading = false;
       },

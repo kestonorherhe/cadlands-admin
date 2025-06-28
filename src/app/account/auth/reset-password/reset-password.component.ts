@@ -148,7 +148,6 @@ export class ResetPasswordComponent implements OnInit {
         .pipe(first())
         .subscribe(
           (data) => {
-            console.log("🚀 ~ Login2Component ~ onSubmit ~ data:", data);
             this.isLoggingIn = false;
             Swal.fire(
               data.message,
@@ -160,7 +159,6 @@ export class ResetPasswordComponent implements OnInit {
           },
           (error) => {
             this.isLoggingIn = false;
-            console.log("error ::", error);
             this.error = error ? error : "";
           }
         );

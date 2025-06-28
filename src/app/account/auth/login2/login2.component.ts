@@ -86,7 +86,6 @@ export class Login2Component implements OnInit {
         .pipe(first())
         .subscribe(
           (data) => {
-            console.log("🚀 ~ Login2Component ~ onSubmit ~ data:", data);
             this.isLoggingIn = false;
 
             if (data.data.role && data.data.role == "admin") {
@@ -100,7 +99,6 @@ export class Login2Component implements OnInit {
           (error) => {
             this.showErr = true;
             this.isLoggingIn = false;
-            console.log("error ::", error);
             this.error = error ? error  : "";
           }
         );

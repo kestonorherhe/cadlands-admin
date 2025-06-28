@@ -60,7 +60,6 @@ export class Recoverpwd2Component implements OnInit {
       .pipe(first())
       .subscribe(
         (data) => {
-          console.log("🚀 ~ Login2Component ~ onSubmit ~ data:", data);
           this.loading = false;
           Swal.fire(
             data.message,
@@ -72,7 +71,6 @@ export class Recoverpwd2Component implements OnInit {
         },
         (error) => {
           this.loading = false;
-          console.log("error ::", error);
           this.error = error ? error : "";
         }
       );

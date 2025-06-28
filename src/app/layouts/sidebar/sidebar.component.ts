@@ -73,7 +73,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
     this.initialize();
     // this.menuItems = MENU;
     this.menuItems = JSON.parse(localStorage.getItem("menuList"));
-    // console.log("🚀 ~ SidebarComponent ~ ngOnInit ~ menuItems:", this.menuItems);
     this._scrollElement();
   }
 
@@ -188,10 +187,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
    * @param item menuItem
    */
   hasItems(item: MenuItem) {
-    // console.log(
-    //   "hasItems ::",
-    //   item.subItems !== undefined ? item.subItems.length > 0 : false
-    // );
     return item.subItems !== undefined ? item.subItems.length > 0 : false;
   }
 
@@ -209,19 +204,16 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   onSelectChange(evt) {
-    console.log("select__evt::", evt);
     evt.apiUnits = 0;
     this.requestedApis = [...this.requestedApis, evt];
   }
 
   onRemoveItem(evt) {
-    // console.log("event::", evt.value);
     this.requestedApis = this.requestedApis.filter((i) => i.id != evt.value.id);
     this.requestedApis = [...[], ...this.requestedApis];
   }
 
   removeItem(evt) {
-    // console.log("event::", evt);
     this.requestedApis = this.requestedApis.filter((i) => i.id != evt.id);
     const selectedAccounts = this.requestedApis.map((a) => a.name);
     this.obj.selectedAccounts = selectedAccounts;
@@ -234,8 +226,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
       (partialSum, a) => partialSum + Number(a.age) * Number(a.apiUnits),
       0
     );
-
-    console.log("totalAmount ::", this.totalAmount);
   }
 
   logout() {

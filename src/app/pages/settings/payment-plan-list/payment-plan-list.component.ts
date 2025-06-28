@@ -72,20 +72,17 @@ export class PaymentPlanListComponent implements OnInit {
         keyboard: false,
       })
       .result.then((result) => {
-        console.log("Modal closed" + result);
       })
       .catch((res) => {});
   }
 
   edit(data: any) {
-    console.log("🚀 ~ PaymentPlanListComponent ~ edit ~ data:", data);
     this.paymentSubPlanObj = data;
     this.paymentSubPlanObj.paymentSubPlan = data.name;
     this.showEditItemModal(this.editPaymentSubPlanModalRef);
   }
 
   viewRecord(data: any) {
-    console.log("we are editing ::", data);
     this.showDetail = true;
     this.paymentPlan = data;
     this.getAllPaymentPlan();
@@ -98,10 +95,6 @@ export class PaymentPlanListComponent implements OnInit {
       .getAllPaymentPlans({ paymentPlanId: this.paymentPlan.id })
       .subscribe(
         (response: any) => {
-          console.log(
-            "🚀 ~ PaymentPlanListComponent ~ getAllPaymentPlans ~ response:",
-            response
-          );
           this.settingsService.setPaymentSubPlans(
             response?.data?.paymentSubPlans
           );
@@ -109,13 +102,11 @@ export class PaymentPlanListComponent implements OnInit {
           this.cdr.detectChanges();
         },
         (error) => {
-          console.log("🚀 ~ MealTypeComponent ~ viewRecord ~ error:", error);
         }
       );
   }
 
   viewPaymentSubTypeRecord(data: any) {
-    console.log("we are editing ::", data);
     this.paymentSubPlan = data;
     this.getPaymentSubTypeInfo();
     this.paymentSubPlanCommissions$ =
@@ -129,10 +120,6 @@ export class PaymentPlanListComponent implements OnInit {
       .getAllPaymentSubPlans({ paymentSubPlanId: this.paymentSubPlan.id })
       .subscribe(
         (response: any) => {
-          console.log(
-            "🚀 ~ PaymentPlanListComponent ~ getAllPaymentPlans ~ response:",
-            response
-          );
           this.settingsService.setPaymentSubPlanCommissions(
             response?.data?.commissions
           );
@@ -141,7 +128,6 @@ export class PaymentPlanListComponent implements OnInit {
           this.cdr.detectChanges();
         },
         (error) => {
-          console.log("🚀 ~ MealTypeComponent ~ viewRecord ~ error:", error);
         }
       );
   }

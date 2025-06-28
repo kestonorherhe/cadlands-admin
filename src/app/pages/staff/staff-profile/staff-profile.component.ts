@@ -55,7 +55,6 @@ export class StaffProfileComponent implements OnInit {
   }
 
   viewRecord(evt: any) {
-    console.log("🚀 ~ FarmerListComponent ~ viewRecord ~ evt:", evt);
     const id = evt.row.data.id;
   }
 
@@ -71,7 +70,6 @@ export class StaffProfileComponent implements OnInit {
       .getCoreMenuItems()
       .pipe(
         tap(async ({ data }: any) => {
-          console.log("🚀 ~ Component ~ getCoreMenuItems ~ data:", data);
           this.menuItems = await this.GenerateTree(data);
           this.cdr.detectChanges();
         }),
@@ -85,10 +83,6 @@ export class StaffProfileComponent implements OnInit {
       )
       .subscribe({
         next: async ({ data }: any) => {
-          console.log(
-            "🚀 ~ Component ~ getMenuAuthorizationsByAdmin ~ data:",
-            data
-          );
 
           // Process the data synchronously
           const menuAuthorizationList1 = await this.GenerateTree(data);
@@ -112,14 +106,9 @@ export class StaffProfileComponent implements OnInit {
   getUser() {
     this.staffService.getRecords({ staffId: this.staffId }).subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ FarmerProfileComponent ~ getUser ~ response:",
-          response
-        );
         this.staff = response;
       },
       (error) => {
-        console.log("🚀 ~ FarmerProfileComponent ~ getUser ~ error:", error);
       }
     );
   }
@@ -175,10 +164,6 @@ export class StaffProfileComponent implements OnInit {
       adminId: +this.staffId,
       menuIItems: menuIItems,
     };
-    console.log(
-      "🚀 ~ MenuAuthorizationListingComponent ~ onSubmit ~ createMenuAuthDto:",
-      createMenuAuthDto
-    );
 
     this.accessControlService.assignMenuAccess(createMenuAuthDto).subscribe(
       (response: any) => {
@@ -264,10 +249,6 @@ export class StaffProfileComponent implements OnInit {
 
   private formatTree(tree: any[]): any[] {
     return tree.map((item) => {
-      console.log(
-        "🚀 ~ MenuAuthorizationListingComponent ~ returntree.map ~ item:",
-        item
-      );
       const formattedItem: any = {
         id: item.menu_auth_id,
         text: item.label,

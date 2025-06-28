@@ -32,21 +32,17 @@ export class EnvService {
 
   private setEnvVariables(): void {
     const hostname = window && window.location && window.location.hostname;
-    console.log("this is the hostname =>", hostname);
     if (/^.*localhost.*/.test(hostname)) {
       this._env = Environment.Local;
-      console.log("this is the _env ::", this._env);
 
       this._httpService = "http://localhost:3007";
       // this._httpService = "https://cadlands-api.onrender.com";
     } else if (/^ca-cadlands.vercel.app/.test(hostname)) {
       this._env = Environment.Staging;
-      console.log("this is the _env ::", this._env);
 
       this._httpService = "https://cadlands-api.onrender.com";
     } else if (/^ca.cadlands.com/.test(hostname)) {
       this._env = Environment.Prod;
-      console.log("this is the _env ::", this._env);
       this._httpService = "https://cadlands-api.onrender.com";
     } else {
       console.warn(`Cannot find environment for host name ${hostname}`);

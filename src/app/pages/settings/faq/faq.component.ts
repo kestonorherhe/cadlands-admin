@@ -54,7 +54,6 @@ export class FaqComponent implements OnInit {
         keyboard: false,
       })
       .result.then((result) => {
-        console.log("Modal closed" + result);
       })
       .catch((res) => {});
   }

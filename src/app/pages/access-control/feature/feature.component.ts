@@ -33,13 +33,11 @@ export class FeatureComponent implements OnInit {
         keyboard: false,
       })
       .result.then((result) => {
-        console.log("Modal closed" + result);
       })
       .catch((res) => {});
   }
 
   edit(data: any) {
-    console.log("we are editing ::", data);
     this.obj = data;
     this.obj.feature = data.name;
     this.showEditItemModal(this.editItemModalRef);

@@ -42,13 +42,11 @@ export class AuthenticationService {
    * @param formData
    */
   login(credential) {
-    console.log("logging in...");
     return this.http
       .post<any>(`${this.envService.httpService}/auth/admin-login`, credential)
       .pipe(
         map((user) => {
           // login successful if there's a jwt token in the response
-          console.log("user__service__response ::", user);
           if (user?.data && user?.data?.accessToken) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem(
@@ -68,7 +66,6 @@ export class AuthenticationService {
   }
 
   affiliateRegistration(credential) {
-    console.log("affiliate registration...");
     return this.http
       .post<any>(
         `${this.envService.httpService}/admins/affiliate-registration`,
@@ -77,7 +74,6 @@ export class AuthenticationService {
       .pipe(
         map((user) => {
           // login successful if there's a jwt token in the response
-          console.log("user__service__response ::", user);
           return user;
         })
       );
@@ -94,7 +90,6 @@ export class AuthenticationService {
       .pipe(
         map((response) => {
           // login successful if there's a jwt token in the response
-          console.log("user__service__response ::", response);
           return response;
         })
       );
@@ -105,24 +100,20 @@ export class AuthenticationService {
    * @param email email
    */
   forgotPassword(data) {
-    console.log("resetting password...");
     return this.http
       .post<any>(`${this.envService.httpService}/auth/forgot-password`, data)
       .pipe(
         map((response) => {
-          console.log("🚀 ~ AuthenticationService ~ map ~ response:", response);
           return response;
         })
       );
   }
 
   resetPassword(data, token) {
-    console.log("resetting password...");
     return this.http
       .post<any>(`${this.envService.httpService}/auth/reset/${token}`, data)
       .pipe(
         map((response) => {
-          console.log("🚀 ~ AuthenticationService ~ map ~ response:", response);
           return response;
         })
       );
@@ -133,7 +124,6 @@ export class AuthenticationService {
       .put<any>(`${this.envService.httpService}/auth/update-password`, data)
       .pipe(
         map((response) => {
-          console.log("🚀 ~ AuthenticationService ~ map ~ response:", response);
           return response;
         })
       );

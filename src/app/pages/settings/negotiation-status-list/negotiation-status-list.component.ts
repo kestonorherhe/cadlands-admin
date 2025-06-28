@@ -42,13 +42,11 @@ export class NegotiationStatusListComponent implements OnInit {
         keyboard: false,
       })
       .result.then((result) => {
-        console.log("Modal closed" + result);
       })
       .catch((res) => {});
   }
 
   edit(data: any) {
-    console.log("🚀 ~ NegotiationStatusListComponent ~ edit ~ data:", data);
     this.obj = data;
     this.obj.negotiationStatus = data.name;
     this.showEditItemModal(this.editItemModalRef);

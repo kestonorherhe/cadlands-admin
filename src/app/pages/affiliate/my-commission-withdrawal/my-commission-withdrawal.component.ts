@@ -60,10 +60,6 @@ export class MyCommissionWithdrawalComponent implements OnInit {
   }
 
   onSelectBank(evt: any) {
-    console.log(
-      "🚀 ~ MyCommissionWithdrawalComponent ~ onSelectBank ~ evt:",
-      evt
-    );
     this.obj.bankName = evt.bankName;
     this.obj.accountName = evt.accountName;
     this.obj.accountNumber = evt.accountNumber;
@@ -75,20 +71,11 @@ export class MyCommissionWithdrawalComponent implements OnInit {
 
     this.affiliateService.getAffiliateBanks().subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ MyWithdrawalComponent ~ this.affiliateService.getAffiliateBanks ~ response:",
-          response
-        );
         this.activeBankDetails = response.filter(
           (account: any) => account.status == true
         );
       },
-      (error) => {
-        console.log(
-          "🚀 ~ MyWithdrawalComponent ~ this.affiliateService.getAffiliateBanks ~ error:",
-          error
-        );
-      }
+      (error) => {}
     );
   }
 
@@ -175,7 +162,6 @@ export class MyCommissionWithdrawalComponent implements OnInit {
         });
       },
       (error) => {
-        console.log("🚀 ~ MyWithdrawalComponent ~ onSubmit ~ error:", error);
         this.isLoading = false;
         Swal.fire({
           // text: `${

@@ -75,10 +75,6 @@ export class NationalityListComponent implements OnInit {
     this.isLoading = true;
     this.settingsService.getAllNationality({}).subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ NationalityListComponent ~ getAllNationality ~ response:",
-          response
-        );
         this.data = response.data;
         this.isLoading = false;
       },

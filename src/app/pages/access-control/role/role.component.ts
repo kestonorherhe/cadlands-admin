@@ -32,13 +32,11 @@ export class RoleComponent implements OnInit {
         keyboard: false,
       })
       .result.then((result) => {
-        console.log('Modal closed' + result);
       })
       .catch((res) => {});
   }
 
   edit(data: any) {
-    console.log('we are editing ::', data);
     this.obj = data;
     this.showEditItemModal(this.editItemModalRef);
   }

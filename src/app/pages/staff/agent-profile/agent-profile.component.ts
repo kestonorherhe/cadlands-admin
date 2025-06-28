@@ -19,7 +19,7 @@ export class AgentProfileComponent implements OnInit {
   breadCrumbItems: Array<{}>;
   staffId: string;
   staff: any;
-  data = []
+  data = [];
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -34,7 +34,6 @@ export class AgentProfileComponent implements OnInit {
   }
 
   viewRecord(evt: any) {
-    console.log("🚀 ~ FarmerListComponent ~ viewRecord ~ evt:", evt);
     const id = evt.row.data.id;
   }
 
@@ -48,15 +47,9 @@ export class AgentProfileComponent implements OnInit {
   getUser() {
     this.staffService.getRecords({ staffId: this.staffId }).subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ FarmerProfileComponent ~ getUser ~ response:",
-          response
-        );
         this.staff = response;
       },
-      (error) => {
-        console.log("🚀 ~ FarmerProfileComponent ~ getUser ~ error:", error);
-      }
+      (error) => {}
     );
   }
 }

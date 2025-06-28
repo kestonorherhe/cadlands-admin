@@ -62,15 +62,6 @@ export class SalesCommissionService {
     return this.http.get(url);
   }
 
-  // createFeature(data: any) {
-  //   return this.http.post(`${this.envService.httpService}/feature`, data).pipe(
-  //     map((res: any) => {
-  //       console.log("create user ::", res);
-  //       return res.data;
-  //     })
-  //   );
-  // }
-
   getMyCommissions(payload: { status?: string }) {
     // Initialize URLSearchParams
     const params = new URLSearchParams();
@@ -164,7 +155,6 @@ export class SalesCommissionService {
       )
       .pipe(
         map((res: any) => {
-          console.log("create user ::", res);
           return res.data;
         })
       );
@@ -285,7 +275,6 @@ export class SalesCommissionService {
       )
       .pipe(
         map((res: any) => {
-          console.log("create user ::", res);
           return res.data;
         })
       );

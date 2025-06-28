@@ -41,7 +41,6 @@ export class PropertyLocationListComponent implements OnInit {
   ) {}
 
   viewRecord(data: any) {
-    console.log("we are editing ::", data);
     this.showDetail = true;
     this.propertyLocation = data;
     this.getPropertyLocationInfo();
@@ -63,7 +62,6 @@ export class PropertyLocationListComponent implements OnInit {
           this.cdr.detectChanges();
         },
         (error) => {
-          console.log("🚀 ~ MealTypeComponent ~ viewRecord ~ error:", error);
         }
       );
   }

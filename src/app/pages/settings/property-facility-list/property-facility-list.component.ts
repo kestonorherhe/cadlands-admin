@@ -42,13 +42,11 @@ export class PropertyFacilityListComponent implements OnInit {
         keyboard: false,
       })
       .result.then((result) => {
-        console.log("Modal closed" + result);
       })
       .catch((res) => {});
   }
 
   edit(data: any) {
-    console.log("we are editing ::", data);
     this.obj = data;
     this.obj.facilityName = data.name;
     this.showEditItemModal(this.editItemModalRef);
@@ -93,10 +91,6 @@ export class PropertyFacilityListComponent implements OnInit {
     this.isLoading = true;
     this.settingsService.getAllPropertyFacilities({}).subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ PropertyFacilityListComponent ~ getAllPropertyFacility ~ response:",
-          response
-        );
         this.data = response.data;
         this.isLoading = false;
       },

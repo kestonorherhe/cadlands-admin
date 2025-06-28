@@ -57,12 +57,7 @@ export class PendingAllocationListComponent implements OnInit, OnDestroy {
       .getApplicationPendingAllocation({})
       .subscribe(
         (response: any) => {
-          console.log(
-            "🚀 ~ PendingAllocationListComponent ~ getAllApplicationRequests ~ response:",
-            response
-          );
           this.data = response.data;
-
           this.data.applications.forEach((app) => {
             app.requestDetails.forEach((detail) => {
               detail.selectedPropertyId = null; // Ensure this property exists
@@ -90,20 +85,12 @@ export class PendingAllocationListComponent implements OnInit, OnDestroy {
     this.propertyService.getAllProperties({ status: "Available" }).subscribe(
       (response: any) => {
         this.isLoadingProperties = false;
-        console.log(
-          "🚀 ~ PendingAllocationListComponent ~ this.propertyService.getAllProperties ~ response:",
-          response
-        );
         this.properties = response.data.properties;
         this.isLoadingProperties = false;
         this.updateFilteredProperties();
       },
       (error) => {
         this.isLoadingProperties = false;
-        console.log(
-          "🚀 ~ PendingAllocationListComponent ~ this.propertyService.getAllProperties ~ error:",
-          error
-        );
       }
     );
   }
@@ -111,7 +98,6 @@ export class PendingAllocationListComponent implements OnInit, OnDestroy {
   filterProperties(data: any): any[] {
     // Generate a unique key for this data combination
     const key = `${data?.propertyTemplate?.id}-${data?.propertyPurpose?.id}-${data?.propertyLocation?.id}`;
-    console.log("this is the key :: ", key);
 
     // Return cached result if available
     if (this.filteredPropertiesMap[key]) {
@@ -144,7 +130,6 @@ export class PendingAllocationListComponent implements OnInit, OnDestroy {
   // New method to get filtered properties for a specific item
   getFilteredPropertiesForItem(item: any): any[] {
     const key = `${item?.propertyTemplate?.id}-${item?.propertyPurpose?.id}-${item?.propertyLocation?.id}`;
-    console.log("this is the key :: ", key);
 
     // If not in cache, calculate and store
     if (!this.filteredPropertiesMap[key]) {
@@ -183,10 +168,6 @@ export class PendingAllocationListComponent implements OnInit, OnDestroy {
   }
 
   allocatePlot(detail: any) {
-    console.log(
-      "🚀 ~ PendingAllocationListComponent ~ allocatePlot ~ detail:",
-      detail
-    );
     Swal.fire({
       icon: "warning",
       text: "Are you sure you want to confirm payment for this application?",
@@ -212,10 +193,6 @@ export class PendingAllocationListComponent implements OnInit, OnDestroy {
     };
     this.applicationRequestService.allocatePlot(data).subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ PendingApplicationRequestListComponent ~ onSubmit ~ response:",
-          response
-        );
         this.allocatingDetails.delete(detail.id);
         Swal.fire(
           "Process Successful!",

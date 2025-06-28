@@ -116,10 +116,6 @@ export class OtherListingProfileComponent implements OnInit {
   }
 
   viewPropertyTemplateRecord(item: any) {
-    console.log(
-      "🚀 ~ EstateProfileComponent ~ viewPropertyTemplateRecord ~ item:",
-      item
-    );
     this.getPropertyTemplateInfo(item.id);
     this.showPropertyTemplateInfo = true;
   }
@@ -132,10 +128,6 @@ export class OtherListingProfileComponent implements OnInit {
       })
       .subscribe({
         next: async (response: any) => {
-          console.log(
-            "🚀 ~ EstateProfileComponent ~ next: ~ response:",
-            response
-          );
           this.propertyTemplate = response.data;
           this.propertyTemplate.propertyTypeId = response.data.type.id;
           this.propertyTemplate.propertySubTypeId = response.data.subType.id;
@@ -156,7 +148,6 @@ export class OtherListingProfileComponent implements OnInit {
           this.prices$ = this.propertyService.propertyPrices$;
         },
         error: (error) => {
-          console.log("Error in getRecord:", error);
         },
       });
   }
@@ -305,7 +296,6 @@ export class OtherListingProfileComponent implements OnInit {
           // this.estateFiles.push(response.data?.imageUrl);
         },
         error: (error) => {
-          console.log("Error in getRecord:", error);
         },
       });
   }
@@ -341,7 +331,6 @@ export class OtherListingProfileComponent implements OnInit {
 
   // dropzone methods
   onSelect(event: any) {
-    console.log(event);
     if (this.files.length > 1) {
       Swal.fire("", "You can add only one image", "warning");
     }
@@ -349,12 +338,10 @@ export class OtherListingProfileComponent implements OnInit {
   }
 
   onRemove(event: any) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 
   onSelectEstateImage(event: any) {
-    console.log(event);
     // Clear existing files before adding new ones
     this.estateFiles = [];
 
@@ -658,10 +645,6 @@ export class OtherListingProfileComponent implements OnInit {
     }
 
   getAcivePrice(prices: any[]) {
-    console.log(
-      "🚀 ~ EstateProfileComponent ~ getAcivePrice ~ prices:",
-      prices
-    );
     if (!prices || !Array.isArray(prices) || prices.length === 0) {
       return 0;
     }

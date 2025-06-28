@@ -190,39 +190,25 @@ export class MyProfileComponent implements OnInit {
   getProfileInfo() {
     this.affiliateService.getProfile().subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ MyProfileComponent ~ getFeatures ~ response:",
-          response
-        );
         this.affiliate = response;
         if (response?.nok[0]) {
-          console.log("did we get here?");
           this.nok = response?.nok[0];
           this.nok.relationshipId = response?.nok[0]?.relationship?.id;
         }
       },
-      (error) => {
-        console.log(
-          "🚀 ~ MyProfileComponent ~ this.affiliateService.getProfile ~ error:",
-          error
-        );
-      }
+      (error) => {}
     );
     this.settingsService.getAllNationality({}).subscribe(
       (response: any) => {
         this.countryList = response.data;
       },
-      (error) => {
-        console.log("🚀 ~ MyProfileComponent ~ getProfileInfo ~ error:", error);
-      }
+      (error) => {}
     );
     this.settingsService.getAllRelationship({}).subscribe(
       (response: any) => {
         this.relationshipList = response.data;
       },
-      (error) => {
-        console.log("🚀 ~ MyProfileComponent ~ getProfileInfo ~ error:", error);
-      }
+      (error) => {}
     );
   }
 
@@ -389,7 +375,6 @@ export class MyProfileComponent implements OnInit {
         });
       },
       (error) => {
-        console.log("🚀 ~ MyProfileComponent ~ onUpdateNok ~ error:", error);
         this.isLoading = false;
         Swal.fire({
           text: error,
@@ -412,7 +397,6 @@ export class MyProfileComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     } else {
-      console.log("this.loginForm.value ::", this.loginForm.value);
       this.authenticationService.updatePassword(this.loginForm.value).subscribe(
         (response: any) => {
           Swal.fire({
@@ -481,10 +465,6 @@ export class MyProfileComponent implements OnInit {
         });
       },
       (error) => {
-        console.log(
-          "🚀 ~ MyProfileComponent ~ upgradeAccountFn ~ error:",
-          error
-        );
         Swal.fire({
           text: `${error}`,
           icon: "error",

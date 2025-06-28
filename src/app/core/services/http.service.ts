@@ -11,7 +11,6 @@ export class HttpService {
   constructor(private http: HttpClient, private envService: EnvService) {}
 
   private handleError(error: HttpErrorResponse) {
-    console.log("🚀 ~ AuthenticationService ~ handleError ~ error:", error)
     let errorMessage = "An error occurred";
     if (error.error instanceof ErrorEvent) {
       // Client-side error

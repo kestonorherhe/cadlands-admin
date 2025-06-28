@@ -15,7 +15,6 @@ export class ApplicationRequestService {
   uploadFile(data: any) {
     return this.http.post(`${this.envService.httpService}/upload`, data).pipe(
       map((res: any) => {
-        console.log("create user ::", res);
         return res.secure_url;
       })
     );
@@ -42,7 +41,6 @@ export class ApplicationRequestService {
       .post(`${this.envService.httpService}/upload-files`, data)
       .pipe(
         map((res: any) => {
-          console.log("create user ::", res);
           return res;
         })
       );

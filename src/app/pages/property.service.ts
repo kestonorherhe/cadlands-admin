@@ -29,7 +29,6 @@ export class PropertyService {
         .post(`${this.envService.httpService}/upload`, data)
         .pipe(
           map((res: any) => {
-            console.log("create user ::", res);
             return res.secure_url;
           })
         )

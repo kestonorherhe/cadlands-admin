@@ -62,7 +62,6 @@ export class PropertyPurposeListComponent implements OnInit {
           this.cdr.detectChanges();
         },
         (error) => {
-          console.log("🚀 ~ MealTypeComponent ~ viewRecord ~ error:", error);
         }
       );
   }

@@ -51,7 +51,6 @@ export class AffiliateListComponent implements OnInit {
   ) {}
 
   viewRecord(evt: any) {
-    console.log("🚀 ~ FarmerListComponent ~ viewRecord ~ evt:", evt);
     const id = evt.id;
     this._router.navigate(["affiliate", id]);
   }
@@ -66,7 +65,6 @@ export class AffiliateListComponent implements OnInit {
         keyboard: false,
       })
       .result.then((result) => {
-        console.log("Modal closed" + result);
       })
       .catch((res) => {});
   }
@@ -105,10 +103,6 @@ export class AffiliateListComponent implements OnInit {
   getAllAffiliates() {
     this.affiliateService.getRecords({ role: "affiliate" }).subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ CustomerListComponent ~ ngOnInit ~ response:",
-          response
-        );
         this.data = response;
       },
       (error) => {}
@@ -157,7 +151,6 @@ export class AffiliateListComponent implements OnInit {
       state: this.obj.state.toString(),
       city: this.obj.city.toString(),
     };
-    console.log("🚀 ~ FarmerListComponent ~ onSubmit ~ data:", data);
   }
 
   resendEmail(user: any) {

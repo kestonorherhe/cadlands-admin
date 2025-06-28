@@ -60,10 +60,6 @@ export class MyBonusWithdrawalComponent implements OnInit {
   }
 
   onSelectBank(evt: any) {
-    console.log(
-      "🚀 ~ MyCommissionWithdrawalComponent ~ onSelectBank ~ evt:",
-      evt
-    );
     this.obj.bankName = evt.bankName;
     this.obj.accountName = evt.accountName;
     this.obj.accountNumber = evt.accountNumber;
@@ -75,20 +71,11 @@ export class MyBonusWithdrawalComponent implements OnInit {
 
     this.affiliateService.getAffiliateBanks().subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ MyWithdrawalComponent ~ this.affiliateService.getAffiliateBanks ~ response:",
-          response
-        );
         this.activeBankDetails = response.filter(
           (account: any) => account.status == true
         );
       },
-      (error) => {
-        console.log(
-          "🚀 ~ MyWithdrawalComponent ~ this.affiliateService.getAffiliateBanks ~ error:",
-          error
-        );
-      }
+      (error) => {}
     );
   }
 
@@ -103,7 +90,6 @@ export class MyBonusWithdrawalComponent implements OnInit {
   }
 
   getPaidWithdrawals(data: any[]) {
-    // console.log("data :: ", data);
     const filteredWithdrawals = data.filter(
       (item: any) => item.paymentStatus === "Paid"
     );
@@ -178,14 +164,8 @@ export class MyBonusWithdrawalComponent implements OnInit {
           });
         },
         (error) => {
-          console.log("🚀 ~ MyWithdrawalComponent ~ onSubmit ~ error:", error);
           this.isLoading = false;
           Swal.fire({
-            // text: `${
-            //   error.error.statusCode === 401
-            //     ? "User not authorized!"
-            //     : error
-            // }`,
             text: `${error}`,
             icon: "error",
             confirmButtonText: "Ok, got it!",

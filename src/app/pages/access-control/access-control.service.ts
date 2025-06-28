@@ -24,7 +24,6 @@ export class AccessControlService {
   createFeature(data: any) {
     return this.http.post(`${this.envService.httpService}/feature`, data).pipe(
       map((res: any) => {
-        console.log("create user ::", res);
         return res.data;
       })
     );
@@ -52,7 +51,6 @@ export class AccessControlService {
       .post(`${this.envService.httpService}/privilege`, data)
       .pipe(
         map((res: any) => {
-          console.log("create user ::", res);
           return res.data;
         })
       );
@@ -81,7 +79,6 @@ export class AccessControlService {
   createMenu(data: any) {
     return this.http.post(`${this.envService.httpService}/menu`, data).pipe(
       map((res: any) => {
-        console.log("create user ::", res);
         return res.data;
       })
     );
@@ -122,7 +119,6 @@ export class AccessControlService {
       .post(`${this.envService.httpService}/menu-authorization`, data)
       .pipe(
         map((res: any) => {
-          console.log("create user ::", res);
           return res.data;
         })
       );
@@ -136,7 +132,6 @@ export class AccessControlService {
       )
       .pipe(
         map((res: any) => {
-          console.log("create user ::", res);
           return res.data;
         })
       );

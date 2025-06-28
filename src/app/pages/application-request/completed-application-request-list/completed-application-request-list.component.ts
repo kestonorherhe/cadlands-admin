@@ -50,7 +50,6 @@ export class CompletedApplicationRequestListComponent implements OnInit {
   ) {}
 
   viewRecord(evt: any) {
-    console.log("🚀 ~ FarmerListComponent ~ viewRecord ~ evt:", evt);
     this.obj = evt;
     this.showApplicationModal(this.viewApplicationModalRef);
   }
@@ -64,9 +63,7 @@ export class CompletedApplicationRequestListComponent implements OnInit {
         backdrop: "static",
         keyboard: false,
       })
-      .result.then((result) => {
-        console.log("Modal closed" + result);
-      })
+      .result.then((result) => {})
       .catch((res) => {});
   }
 
@@ -126,10 +123,6 @@ export class CompletedApplicationRequestListComponent implements OnInit {
   }
 
   onSelectPropertyType(evt: any) {
-    console.log(
-      "🚀 ~ PropertyListComponent ~ onSelectPropertyType ~ evt:",
-      evt
-    );
     this.propertySubTypeList = evt.propertySubTypes;
   }
 
@@ -177,10 +170,6 @@ export class CompletedApplicationRequestListComponent implements OnInit {
     };
     this.applicationRequestService.confirmFullPayment(data).subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ PendingApplicationRequestListComponent ~ onSubmit ~ response:",
-          response
-        );
         this.isLoading = false;
         Swal.fire(
           "Process Successful!",
@@ -225,10 +214,6 @@ export class CompletedApplicationRequestListComponent implements OnInit {
     };
     this.applicationRequestService.makePartPayment(data).subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ PendingApplicationRequestListComponent ~ onSubmit ~ response:",
-          response
-        );
         this.isLoading = false;
         Swal.fire(
           "Process Successful!",

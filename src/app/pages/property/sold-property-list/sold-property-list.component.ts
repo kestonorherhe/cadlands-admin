@@ -124,10 +124,6 @@ export class SoldPropertyListComponent implements OnInit {
   }
 
   onSelectPropertyType(evt: any) {
-    console.log(
-      "🚀 ~ PropertyListComponent ~ onSelectPropertyType ~ evt:",
-      evt
-    );
     this.propertySubTypeList = evt.propertySubTypes;
   }
 
@@ -151,7 +147,6 @@ export class SoldPropertyListComponent implements OnInit {
 
   // dropzone methods
   onSelect(event: any) {
-    console.log(event);
     if (this.files.length > 1) {
       Swal.fire("", "You can add only one image", "warning");
     }
@@ -159,7 +154,6 @@ export class SoldPropertyListComponent implements OnInit {
   }
 
   onRemove(event: any) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 
@@ -187,10 +181,6 @@ export class SoldPropertyListComponent implements OnInit {
     };
     this.propertyService.createProperty(data).subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ PropertyListComponent ~ onSubmit ~ response:",
-          response
-        );
         this.isLoading = false;
         Swal.fire(
           "Process Successful!",

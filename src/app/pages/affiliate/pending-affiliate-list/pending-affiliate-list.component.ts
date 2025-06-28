@@ -59,9 +59,6 @@ export class PendingAffiliateListComponent implements OnInit {
   }
 
   processApplicationFn(evt: any) {
-    console.log("🚀 ~ FarmerListComponent ~ viewRecord ~ evt:", evt);
-    // const id = evt.row.data.id;
-    // this._router.navigate(["farmers", id]);
     this.obj = evt;
     this.showProcessAffiliateApplicationModal(
       this.processAffiliateApplicationModalRef
@@ -77,9 +74,7 @@ export class PendingAffiliateListComponent implements OnInit {
         backdrop: "static",
         keyboard: false,
       })
-      .result.then((result) => {
-        console.log("Modal closed" + result);
-      })
+      .result.then((result) => {})
       .catch((res) => {});
   }
 
@@ -115,10 +110,6 @@ export class PendingAffiliateListComponent implements OnInit {
       .getRecords({ role: "affiliate", status: "pending" })
       .subscribe(
         (response: any) => {
-          console.log(
-            "🚀 ~ CustomerListComponent ~ ngOnInit ~ response:",
-            response
-          );
           this.data = response;
         },
         (error) => {}
@@ -175,7 +166,6 @@ export class PendingAffiliateListComponent implements OnInit {
       address: this.obj.address,
       status: this.obj.statusOption,
     };
-    console.log("🚀 ~ FarmerListComponent ~ onSubmit ~ data:", data);
 
     this.affiliateService.processApplication(data).subscribe(
       (response: any) => {

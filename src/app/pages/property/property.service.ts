@@ -48,7 +48,6 @@ export class PropertyService {
       .post(`${this.envService.httpService}/upload-files`, data)
       .pipe(
         map((res: any) => {
-          console.log("create user ::", res);
           return res;
         })
       );

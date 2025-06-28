@@ -85,7 +85,6 @@ export class AgentListComponent implements OnInit {
         keyboard: false,
       })
       .result.then((result) => {
-        console.log("Modal closed" + result);
       })
       .catch((res) => {});
   }
@@ -147,7 +146,6 @@ export class AgentListComponent implements OnInit {
     };
     this.staffService.createAgent(data).subscribe(
       (response: any) => {
-        console.log("🚀 ~ StaffListComponent ~ onSubmit ~ response:", response);
         Swal.fire(
           "Process Successful!",
           "Admin successfully created!",

@@ -55,7 +55,6 @@ export class AffiliatePackageListComponent implements OnInit {
   ) {}
 
   viewRecord(data: any) {
-    console.log("we are editing ::", data);
     this.showDetail = true;
     this.affiliatePackage = data;
     this.getAffiliatePackages();
@@ -70,10 +69,6 @@ export class AffiliatePackageListComponent implements OnInit {
       })
       .subscribe(
         (response: any) => {
-          console.log(
-            "🚀 ~ MealTypeComponent ~ viewRecord ~ response:",
-            response
-          );
           this.settingsService.setPackagePrices(response?.data?.prices);
           this.settingsService.setDirectSaleCommissions(
             response?.data?.directCommissions
@@ -89,7 +84,6 @@ export class AffiliatePackageListComponent implements OnInit {
           this.cdr.detectChanges();
         },
         (error) => {
-          console.log("🚀 ~ MealTypeComponent ~ viewRecord ~ error:", error);
         }
       );
   }

@@ -44,15 +44,9 @@ export class AffiliateProfileComponent implements OnInit {
   getAffiliateInfo() {
     this.staffService.getRecords({ staffId: this.affiliateId }).subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ FarmerProfileComponent ~ getUser ~ response:",
-          response
-        );
         this.affiliate = response;
       },
-      (error) => {
-        console.log("🚀 ~ FarmerProfileComponent ~ getUser ~ error:", error);
-      }
+      (error) => {}
     );
   }
 }

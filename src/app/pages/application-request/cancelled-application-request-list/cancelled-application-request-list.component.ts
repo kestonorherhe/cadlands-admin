@@ -50,7 +50,6 @@ export class CancelledApplicationRequestListComponent implements OnInit {
   ) {}
 
   viewRecord(evt: any) {
-    console.log("🚀 ~ FarmerListComponent ~ viewRecord ~ evt:", evt);
     this.obj = evt;
     this.showApplicationModal(this.viewApplicationModalRef);
   }
@@ -65,7 +64,6 @@ export class CancelledApplicationRequestListComponent implements OnInit {
         keyboard: false,
       })
       .result.then((result) => {
-        console.log("Modal closed" + result);
       })
       .catch((res) => {});
   }
@@ -126,10 +124,6 @@ export class CancelledApplicationRequestListComponent implements OnInit {
   }
 
   onSelectPropertyType(evt: any) {
-    console.log(
-      "🚀 ~ PropertyListComponent ~ onSelectPropertyType ~ evt:",
-      evt
-    );
     this.propertySubTypeList = evt.propertySubTypes;
   }
 
@@ -177,10 +171,6 @@ export class CancelledApplicationRequestListComponent implements OnInit {
     };
     this.applicationRequestService.confirmFullPayment(data).subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ PendingApplicationRequestListComponent ~ onSubmit ~ response:",
-          response
-        );
         this.isLoading = false;
         Swal.fire(
           "Process Successful!",

@@ -13,7 +13,6 @@ export class AuthGuard  {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authFackservice.currentUserValue;
-    console.log("currentUser ::", currentUser)
     if (currentUser) {
       // logged in so return true
       return true;

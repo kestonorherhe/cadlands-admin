@@ -90,7 +90,6 @@ export class MenuListingComponent implements OnInit {
   }
 
   filterMenuList2(evt: any) {
-    console.log('this.obj.parentMenu1 :: ', this.obj.parentMenu1);
     this.obj.parentMenu1Id = this.obj.parentMenu1;
     this.MenuList2 = this.filterParentMenu(this.obj.parentMenu1);
 
@@ -105,7 +104,6 @@ export class MenuListingComponent implements OnInit {
   }
 
   filterParentMenu(id: any) {
-    console.log('these are the menu items ::', this.menuItems);
     return this.menuItems.filter((i: any) => i.parentMenu?.id == id && i.link == '#');
   }
 
@@ -125,13 +123,11 @@ export class MenuListingComponent implements OnInit {
         keyboard: false,
       })
       .result.then((result) => {
-        console.log('Modal closed' + result);
       })
       .catch((res) => {});
   }
 
   edit(data: any) {
-    console.log('we are editing ::', data);
     this.obj = data;
     this.showEditItemModal(this.editItemModalRef);
   }
@@ -204,8 +200,6 @@ export class MenuListingComponent implements OnInit {
   }
 
   getOrderBy(menuArr: any): number {
-    console.log('🚀 ~ getOrderBy ~ menuArr:', menuArr);
-    console.log('selected feature ::', this.obj.featureId);
     if (menuArr.length > 0) {
       /* sort array by id */
       menuArr
@@ -220,7 +214,6 @@ export class MenuListingComponent implements OnInit {
   onSubmit() {
     this.isLoading = true;
 
-    console.log(this.obj.parentMenu1);
     const title = this.obj.label;
     const parentMenu1 = this.obj.parentMenu1;
     const parentMenu2 = this.obj.parentMenu2Id;
@@ -228,17 +221,7 @@ export class MenuListingComponent implements OnInit {
 
     // this.obj.featureId = 1;
     this.obj.statusId = true;
-
-    console.log(
-      'parentMenu1 ::',
-      parentMenu1,
-      'parentMenu2 ::',
-      parentMenu2,
-      'parentMenu3',
-      parentMenu3
-    );
     if (parentMenu1 == null && parentMenu2 == null && parentMenu3 == null) {
-      console.log('This is the menu 1');
       const orderByMenuArr = this.menuItems.filter(
         (i: any) => i.parentMenu?.id == null && i.link == '#'
       );
@@ -250,11 +233,6 @@ export class MenuListingComponent implements OnInit {
       parentMenu2 == null &&
       parentMenu3 == null
     ) {
-      console.log(
-        'This is the menu 2',
-        'this is the menu array ::',
-        this.menuItems
-      );
       this.obj.parentMenuId = parentMenu1;
       const orderByMenuArr = this.menuItems.filter(
         (i: any) => i.parentMenu?.id == parentMenu1 && i.link == '#'
@@ -266,7 +244,6 @@ export class MenuListingComponent implements OnInit {
       parentMenu2 != null &&
       parentMenu3 == null
     ) {
-      console.log('This is the menu 3');
       this.obj.parentMenuId = this.obj.parentMenu2Id;
       this.obj.orderBy = this.obj.parentMenu2OrderBy;
       // this.obj.icon = '/heroicons_outline:home';
@@ -275,7 +252,6 @@ export class MenuListingComponent implements OnInit {
       parentMenu2 != null &&
       parentMenu3 != null
     ) {
-      console.log('This is the menu 4');
       this.obj.parentMenuId = this.obj.parentMenu3Id;
       this.obj.orderBy = this.obj.parentMenu3OrderBy;
       this.obj.icon = 'heroicons_outline:home';
@@ -291,8 +267,6 @@ export class MenuListingComponent implements OnInit {
       orderBy: this.obj.orderBy,
       statusId: this.obj.statusId,
     };
-
-    console.log(createMenuDTO);
 
     this.accessControlService.createMenu(createMenuDTO).subscribe(
       (response: any) => {

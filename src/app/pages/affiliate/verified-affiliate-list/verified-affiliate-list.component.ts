@@ -53,7 +53,6 @@ export class VerifiedAffiliateListComponent implements OnInit {
   }
 
   viewRecord(evt: any) {
-    console.log("🚀 ~ FarmerListComponent ~ viewRecord ~ evt:", evt);
     const id = evt.row.data.id;
     this._router.navigate(["farmers", id]);
   }
@@ -67,9 +66,7 @@ export class VerifiedAffiliateListComponent implements OnInit {
         backdrop: "static",
         keyboard: false,
       })
-      .result.then((result) => {
-        console.log("Modal closed" + result);
-      })
+      .result.then((result) => {})
       .catch((res) => {});
   }
 
@@ -109,10 +106,6 @@ export class VerifiedAffiliateListComponent implements OnInit {
       .getRecords({ role: "affiliate", status: "verified" })
       .subscribe(
         (response: any) => {
-          console.log(
-            "🚀 ~ CustomerListComponent ~ ngOnInit ~ response:",
-            response
-          );
           this.data = response;
         },
         (error) => {}
@@ -161,6 +154,5 @@ export class VerifiedAffiliateListComponent implements OnInit {
       state: this.obj.state.toString(),
       city: this.obj.city.toString(),
     };
-    console.log("🚀 ~ FarmerListComponent ~ onSubmit ~ data:", data);
   }
 }

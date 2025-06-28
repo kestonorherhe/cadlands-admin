@@ -5,10 +5,10 @@ import {
   OnInit,
   TemplateRef,
   ViewChild,
-} from '@angular/core';
-import { Observable } from 'rxjs';
-import Swal from 'sweetalert2';
-import { AccessControlService } from '../access-control.service';
+} from "@angular/core";
+import { Observable } from "rxjs";
+import Swal from "sweetalert2";
+import { AccessControlService } from "../access-control.service";
 
 interface TreeNode {
   id: number;
@@ -20,9 +20,9 @@ interface TreeNode {
 }
 
 @Component({
-  selector: 'app-menu-authorization-listing',
-  templateUrl: './menu-authorization-listing.component.html',
-  styleUrls: ['./menu-authorization-listing.component.scss'],
+  selector: "app-menu-authorization-listing",
+  templateUrl: "./menu-authorization-listing.component.html",
+  styleUrls: ["./menu-authorization-listing.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuAuthorizationListingComponent implements OnInit {
@@ -35,31 +35,31 @@ export class MenuAuthorizationListingComponent implements OnInit {
 
   books = [
     {
-      text: 'Children',
+      text: "Children",
       value: 1,
       children: [
-        { text: 'The Cat in the Hat', value: 11 },
-        { text: 'Harry Potter', value: 12 },
+        { text: "The Cat in the Hat", value: 11 },
+        { text: "Harry Potter", value: 12 },
       ],
     },
     {
-      text: 'Programming',
+      text: "Programming",
       value: 2,
       children: [
         {
-          text: 'Frontend',
+          text: "Frontend",
           value: 21,
           children: [
-            { text: 'Angular', value: 211 },
-            { text: 'React', value: 212 },
+            { text: "Angular", value: 211 },
+            { text: "React", value: 212 },
           ],
         },
         {
-          text: 'Backend',
+          text: "Backend",
           value: 22,
           children: [
-            { text: 'Node.js', value: 221 },
-            { text: 'Django', value: 222 },
+            { text: "Node.js", value: 221 },
+            { text: "Django", value: 222 },
           ],
         },
       ],
@@ -67,23 +67,23 @@ export class MenuAuthorizationListingComponent implements OnInit {
   ];
   books2 = [
     {
-      text: 'Programming',
+      text: "Programming",
       value: 2,
       children: [
         {
-          text: 'Frontend',
+          text: "Frontend",
           value: 21,
           children: [
-            { text: 'Angular', value: 211 },
-            { text: 'React', value: 212, checked: true },
+            { text: "Angular", value: 211 },
+            { text: "React", value: 212, checked: true },
           ],
         },
         {
-          text: 'Backend',
+          text: "Backend",
           value: 22,
           children: [
-            { text: 'Node.js', value: 221 },
-            { text: 'Django', value: 222, checked: true },
+            { text: "Node.js", value: 221 },
+            { text: "Django", value: 222, checked: true },
           ],
         },
       ],
@@ -92,7 +92,7 @@ export class MenuAuthorizationListingComponent implements OnInit {
 
   selectedItems: { id: number; text: string; value: number }[] = [];
 
-  @ViewChild('editItemModal')
+  @ViewChild("editItemModal")
   editItemModalRef: TemplateRef<any>;
   constructor(
     private readonly accessControlService: AccessControlService,
@@ -108,15 +108,7 @@ export class MenuAuthorizationListingComponent implements OnInit {
   getPrivilegeList() {
     this.privilegeList$ = this.accessControlService.getAllPrivileges();
     this.accessControlService.getAllMenu().subscribe(async ({ data }: any) => {
-      console.log(
-        '🚀 ~ MenuAuthorizationListingComponent ~ this.menuService.getAllMenu ~ data:',
-        data
-      );
       this.menuItems = await this.GenerateTree(data);
-      console.log(
-        '🚀 ~ MenuAuthorizationListingComponent ~ this.menuService.getAllMenu ~ this.menuItems:',
-        this.menuItems
-      );
       this.cdr.detectChanges();
     });
   }
@@ -171,28 +163,15 @@ export class MenuAuthorizationListingComponent implements OnInit {
   onSubmit(): void {
     // this.selectedItems;
     this.isLoading = true;
-    console.log(
-      '🚀 ~ MenuAuthorizationListingComponent ~ onSubmit ~ this.selectedItems:',
-      this.selectedItems,
-      this.obj
-    );
 
     const menuIItems = this.selectedItems.map((item) => {
       return { id: item.id, menuId: +item.value };
     });
-    console.log(
-      '🚀 ~ MenuAuthorizationListingComponent ~ menuIItems ~ menuIItems:',
-      menuIItems
-    );
 
     const createMenuAuthDto = {
       privilegeId: +this.obj.privilegeId,
       menuIItems: menuIItems,
     };
-    console.log(
-      '🚀 ~ MenuAuthorizationListingComponent ~ onSubmit ~ createMenuAuthDto:',
-      createMenuAuthDto
-    );
 
     this.accessControlService
       .createMenuAuthorization(createMenuAuthDto)
@@ -280,10 +259,6 @@ export class MenuAuthorizationListingComponent implements OnInit {
 
   private formatTree(tree: any[]): any[] {
     return tree.map((item) => {
-      console.log(
-        '🚀 ~ MenuAuthorizationListingComponent ~ returntree.map ~ item:',
-        item
-      );
       const formattedItem: any = {
         id: item.menu_auth_id,
         text: item.label,

@@ -33,7 +33,6 @@ export class OtherListingComponent implements OnInit {
   ) {}
 
   viewRecord(evt: any) {
-    console.log("🚀 ~ EstateListComponent ~ viewRecord ~ evt:", evt);
     const id = evt.id;
     this._router.navigate(["estate/other-listing", id]);
   }
@@ -101,7 +100,6 @@ export class OtherListingComponent implements OnInit {
 
   // dropzone methods
   onSelect(event: any) {
-    console.log(event);
     // Clear existing files before adding new ones
     this.files = [];
 
@@ -118,7 +116,6 @@ export class OtherListingComponent implements OnInit {
   }
 
   onRemove(event: any) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 
@@ -131,8 +128,6 @@ export class OtherListingComponent implements OnInit {
     }
 
     const imageUrl = await this.propertyService.uploadImage(formData);
-    console.log("🚀 ~ EstateListComponent ~ onSubmit ~ imageUrl:", imageUrl);
-
     const data = {
       name: this.obj.estateName,
       imageUrl: imageUrl,

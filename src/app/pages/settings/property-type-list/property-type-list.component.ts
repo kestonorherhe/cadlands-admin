@@ -64,26 +64,21 @@ export class PropertyTypeListComponent implements OnInit {
         backdrop: "static",
         keyboard: false,
       })
-      .result.then((result) => {
-        console.log("Modal closed" + result);
-      })
+      .result.then((result) => {})
       .catch((res) => {});
   }
 
   editPropertyType(data: any) {
-    console.log("we are editing ::", data);
     this.obj = data;
     this.showEditItemModal(this.editPropertyTypeModalRef);
   }
 
   editSubType(data: any) {
-    console.log("we are editing ::", data);
     this.propertySubType = data;
     this.showEditItemModal(this.editPropertySubTypeModalRef);
   }
 
   viewRecord(data: any) {
-    console.log("we are editing ::", data);
     this.showDetail = true;
     this.propertyType = data;
     this.getPropertyType();
@@ -98,19 +93,13 @@ export class PropertyTypeListComponent implements OnInit {
       })
       .subscribe(
         (response: any) => {
-          console.log(
-            "🚀 ~ MealTypeComponent ~ viewRecord ~ response:",
-            response
-          );
           this.settingsService.setPropertySubTypes(
             response?.data?.propertySubTypes
           );
           this.propertySubTypes$ = this.settingsService.propertySubTypes$;
           this.cdr.detectChanges();
         },
-        (error) => {
-          console.log("🚀 ~ MealTypeComponent ~ viewRecord ~ error:", error);
-        }
+        (error) => {}
       );
   }
 
@@ -271,7 +260,6 @@ export class PropertyTypeListComponent implements OnInit {
       name: this.propertySubType.name,
       description: this.propertySubType.description,
     };
-    console.log("🚀 ~ PropertyTypeListComponent ~ onUpdatePropertySubType ~ data:", data)
     this.settingsService.updatePropertySubType(data).subscribe(
       (response: any) => {
         this.isLoading = false;

@@ -87,8 +87,6 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     } else {
-      console.log("login__form ==>>", this.loginForm.value);
-
       // localStorage.setItem("currentUser", JSON.stringify(user));
       // localStorage.setItem("token", JSON.stringify(user.token));
       // this.currentUserSubject.next(user);
@@ -102,11 +100,10 @@ export class LoginComponent implements OnInit {
         .subscribe(
           (data) => {
             this.isLoading = false;
-            window.location.replace('/dashboard')
+            window.location.replace("/dashboard");
             // this.router.navigate(["/dashboard"]);
           },
           (error) => {
-            console.log("🚀 ~ LoginComponent ~ onSubmit ~ error:", error)
             this.isLoading = false;
             this.error = error ? error : "";
           }

@@ -28,7 +28,6 @@ export class PaidWithdrawalRequestListComponent implements OnInit {
   }
 
   edit(data: any) {
-    console.log("we are editing ::", data);
   }
 
   onSubmit() {

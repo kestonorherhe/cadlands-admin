@@ -68,10 +68,6 @@ export class AffiliateDashboardComponent implements OnInit {
   }
 
   getTotalAmount(data: any[]) {
-    console.log(
-      "🚀 ~ AffiliateDashboardComponent ~ getTotalAmount ~ data:",
-      data
-    );
     const filteredSales = data;
 
     const totalAmount = filteredSales.reduce(

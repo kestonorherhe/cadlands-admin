@@ -161,15 +161,9 @@ export class EstateProfileComponent implements OnInit {
       })
       .subscribe({
         next: async (response: any) => {
-          console.log(
-            "🚀 ~ EstateProfileComponent ~ next: ~ response:",
-            response
-          );
           this.propertyTemplate = response.data;
           this.propertyTemplate.propertyTypeId = response.data.type.name;
           this.propertyTemplate.propertySubTypeId = response.data.subType.id;
-          // this.propertyTemplate.negotiationStatusId =
-          //   response.data.negotiationStatus.id;
           this.propertySubTypeList = response.data.type.propertySubTypes;
           this.propertyTemplate.facilities = response.data.facilityItems.map(
             (item: any) => {
@@ -185,7 +179,6 @@ export class EstateProfileComponent implements OnInit {
           this.prices$ = this.propertyService.propertyPrices$;
         },
         error: (error) => {
-          console.log("Error in getRecord:", error);
         },
       });
   }
@@ -282,10 +275,6 @@ export class EstateProfileComponent implements OnInit {
         this.propertyTypes = response?.data;
       },
       (error) => {
-        console.log(
-          "🚀 ~ EstateProfileComponent ~ this.settingsService.getAllPropertyTypes ~ error:",
-          error
-        );
       }
     );
     this.negotiationStatus$ = this.settingsService.getAllNegotiationStatus({});
@@ -315,7 +304,6 @@ export class EstateProfileComponent implements OnInit {
         // this.estateFiles.push(response.data?.imageUrl);
       },
       error: (error) => {
-        console.log("Error in getRecord:", error);
       },
     });
   }
@@ -360,21 +348,15 @@ export class EstateProfileComponent implements OnInit {
   }
 
   onRemove(event: any) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 
   onSelectEstateImage(event: any) {
-    console.log(event);
     // Clear existing files before adding new ones
     this.estateFiles = [];
 
     // Validate file type (optional, but recommended)
     const file = event.addedFiles[0];
-    console.log(
-      "🚀 ~ EstateProfileComponent ~ onSelectEstateImage ~ file:",
-      file
-    );
     const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
 
     if (!allowedTypes.includes(file.type)) {
@@ -394,7 +376,6 @@ export class EstateProfileComponent implements OnInit {
     try {
       this.isLoading = true;
 
-      console.log("this.estateFiles ::", this.estateFiles);
       let imageUrl;
       if (this.estateFiles.length > 0) {
         let formData: FormData = new FormData();
@@ -634,10 +615,6 @@ export class EstateProfileComponent implements OnInit {
   }
 
   getAcivePrice(prices: any[]) {
-    console.log(
-      "🚀 ~ EstateProfileComponent ~ getAcivePrice ~ prices:",
-      prices
-    );
     if (!prices || !Array.isArray(prices) || prices.length === 0) {
       return 0;
     }

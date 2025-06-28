@@ -28,10 +28,6 @@ export class PendingWithdrawalRequestListComponent implements OnInit {
   }
 
   approveRequest(item: any) {
-    console.log(
-      "🚀 ~ PendingWithdrawalRequestListComponent ~ approveRequest ~ item:",
-      item
-    );
     Swal.fire({
       icon: "warning",
       text: "Are you sure you want to approve this withdrawal request and make payment?",
@@ -81,10 +77,6 @@ export class PendingWithdrawalRequestListComponent implements OnInit {
     );
   }
   cancelRequest(item: any) {
-    console.log(
-      "🚀 ~ PendingWithdrawalRequestListComponent ~ approveRequest ~ item:",
-      item
-    );
     Swal.fire({
       icon: "warning",
       text: "Are you sure you want to cancel this withdrawal request?",

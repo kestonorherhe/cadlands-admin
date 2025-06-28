@@ -77,10 +77,6 @@ export class PendingSubscriptionRequestListComponent implements OnInit {
     );
   }
   cancelRequest(item: any) {
-    console.log(
-      "🚀 ~ PendingWithdrawalRequestListComponent ~ approveRequest ~ item:",
-      item
-    );
     Swal.fire({
       icon: "warning",
       text: "Are you sure you want to cancel this withdrawal request?",

@@ -28,22 +28,12 @@ export class MyReferralsComponent implements OnInit {
     this.referralCode = JSON.parse(
       localStorage.getItem("currentUser")
     ).referral_code;
-    console.log("referralCode ::", this.referralCode);
     this.getSubscriptionBonuses();
     this.affiliateService.getProfile().subscribe(
       (response: any) => {
-        console.log(
-          "🚀 ~ MyProfileComponent ~ getFeatures ~ response:",
-          response
-        );
         this.affiliate = response;
       },
-      (error) => {
-        console.log(
-          "🚀 ~ MyProfileComponent ~ this.affiliateService.getProfile ~ error:",
-          error
-        );
-      }
+      (error) => {}
     );
   }
 
