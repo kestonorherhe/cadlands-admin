@@ -111,7 +111,7 @@ export class CancelledApplicationRequestListComponent implements OnInit {
   getAllApplicationRequests() {
     this.isLoading = true;
     this.applicationRequestService
-      .getAllApplicationRequests({ status: "Cancelled" })
+      .getAllApplicationRequests({ status: "Declined" })
       .subscribe(
         (response: any) => {
           this.data = response.data;
