@@ -217,7 +217,7 @@ export class CompletedApplicationRequestListComponent implements OnInit {
         this.isLoading = false;
         Swal.fire(
           "Process Successful!",
-          "Full payment confirmed successfully!",
+          "Payment confirmed successfully!",
           "success"
         );
         this.modalService.dismissAll();
