@@ -5,9 +5,9 @@ import { EnvService } from 'src/app/core/services/env.service';
 import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class HttpService {
-  url = 'assets/data/data.json';
+  url = "assets/data/data.json";
   constructor(private http: HttpClient, private envService: EnvService) {}
 
   private handleError(error: HttpErrorResponse) {
@@ -25,8 +25,8 @@ export class HttpService {
     return throwError(errorMessage);
   }
 
-   // GET method to fetch data from the API
-   public get<T>(endpoint: string): Observable<T> {
+  // GET method to fetch data from the API
+  public get<T>(endpoint: string): Observable<T> {
     return this.http
       .get<T>(`${this.envService.httpService}/${endpoint}`)
       .pipe(catchError(this.handleError));
@@ -43,6 +43,12 @@ export class HttpService {
   public put<T>(endpoint: string, data: any): Observable<T> {
     return this.http
       .put<T>(`${this.envService.httpService}/${endpoint}`, data)
+      .pipe(catchError(this.handleError));
+  }
+
+  public delete<T>(endpoint: string): Observable<T> {
+    return this.http
+      .delete<T>(`${this.envService.httpService}/${endpoint}`)
       .pipe(catchError(this.handleError));
   }
 }

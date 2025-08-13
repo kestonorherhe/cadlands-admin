@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { AdvancedService } from "../../tables/advancedtable/advanced.service";
 import { DecimalPipe } from "@angular/common";
@@ -135,8 +135,9 @@ export class EstateProfileComponent implements OnInit {
   }
 
   constructor(
-    private readonly route: ActivatedRoute,
     private modalService: NgbModal,
+    private readonly route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
     private readonly propertyService: PropertyService,
     private readonly settingsService: SettingsService
   ) {
@@ -178,8 +179,7 @@ export class EstateProfileComponent implements OnInit {
           this.propertyService.setPropertyPrices(response.data?.prices);
           this.prices$ = this.propertyService.propertyPrices$;
         },
-        error: (error) => {
-        },
+        error: (error) => {},
       });
   }
 
@@ -274,8 +274,7 @@ export class EstateProfileComponent implements OnInit {
       (response: any) => {
         this.propertyTypes = response?.data;
       },
-      (error) => {
-      }
+      (error) => {}
     );
     this.negotiationStatus$ = this.settingsService.getAllNegotiationStatus({});
     this.facilities$ = this.settingsService.getAllPropertyFacilities({});
@@ -303,8 +302,7 @@ export class EstateProfileComponent implements OnInit {
         });
         // this.estateFiles.push(response.data?.imageUrl);
       },
-      error: (error) => {
-      },
+      error: (error) => {},
     });
   }
 
@@ -368,7 +366,42 @@ export class EstateProfileComponent implements OnInit {
   }
 
   removeImg(id: number, index: number) {
-    this.obj.images.splice(index, 1);
+    Swal.fire({
+      icon: "warning",
+      text: "Are you sure you want to delete image?",
+      showDenyButton: true,
+      allowOutsideClick: false,
+      confirmButtonText: "Yes, delete image!",
+      confirmButtonColor: "#1B84FF",
+      denyButtonText: `No, return`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.removeImgFn(id, index);
+      }
+    });
+  }
+
+  removeImgFn(id: number, index: number) {
+    this.propertyService.deletePropertyTemplateImage(id).subscribe(
+      (response: any) => {
+        this.isLoading = false;
+        Swal.fire(
+          "Process Successful!",
+          "Successfully deleted image!",
+          "success"
+        ).then((response) => {
+          if (response.isConfirmed) {
+            this.propertyTemplate.images.splice(index, 1);
+            this.cdr.detectChanges()
+          }
+        });
+      },
+      (error) => {
+        this.isLoading = false;
+        Swal.fire("Process Failed!", "Failed to delete image", "error");
+      }
+    );
+
     // this.cdr.detectChanges();
   }
 
@@ -517,6 +550,7 @@ export class EstateProfileComponent implements OnInit {
           "Property template successfully updated!",
           "success"
         );
+        this.files = []
         this.modalService.dismissAll();
         this.resetForm();
         this.getRecord();

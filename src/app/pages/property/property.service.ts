@@ -76,6 +76,11 @@ export class PropertyService {
   updateEstate(data: any) {
     return this.httpService.put(`estate`, data);
   }
+  deletePropertyTemplateImage(imageId: any) {
+    return this.httpService.delete(
+      `property-template/delete-image/${imageId}`,
+    );
+  }
 
   getAllEstate(payload: { estateId?: string }) {
     // Initialize URLSearchParams

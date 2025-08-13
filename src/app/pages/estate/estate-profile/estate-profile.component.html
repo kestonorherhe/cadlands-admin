@@ -476,9 +476,13 @@
                         {{ getFacilityNames(propertyTemplate?.facilityItems) }}
                       </div>
                     </div>
+
                     <div class="row fw-bold g-2 mb-4">
                       <div
-                        *ngFor="let image of [estate.imageUrl]; let i = index"
+                        *ngFor="
+                          let image of propertyTemplate?.images;
+                          let i = index
+                        "
                         class="col-auto position-relative"
                       >
                         <div
@@ -486,7 +490,7 @@
                           style="width: 125px; height: 125px"
                         >
                           <img
-                            [src]="image"
+                            [src]="image?.imageUrl"
                             style="width: 125px; height: 125px"
                             class="img-fluid rounded object-fit-cover"
                             alt="Estate Image"
@@ -1454,7 +1458,10 @@
                 style="width: 25px; height: 25px"
                 (click)="removeImg(image.id, i)"
               >
-                <i class="bi bi-x"></i>
+                <i
+                  class="bx bx-x text-white"
+                  style="font-size: 12px; font-weight: bold"
+                ></i>
               </button>
             </div>
           </div>
