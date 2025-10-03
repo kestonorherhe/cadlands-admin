@@ -16,6 +16,7 @@ import { AffiliateService } from "../affiliate.service";
 export class AffiliateListComponent implements OnInit {
   breadCrumbItems: Array<{}>;
   data = [];
+  affiliateEarnings = [];
   stateList = [{ id: 1, name: "Nasarawa" }];
   cityList = [{ id: 1, name: "Akwanga" }];
   isLoading = false;
@@ -64,8 +65,7 @@ export class AffiliateListComponent implements OnInit {
         backdrop: "static",
         keyboard: false,
       })
-      .result.then((result) => {
-      })
+      .result.then((result) => {})
       .catch((res) => {});
   }
 
@@ -104,6 +104,12 @@ export class AffiliateListComponent implements OnInit {
     this.affiliateService.getRecords({ role: "affiliate" }).subscribe(
       (response: any) => {
         this.data = response;
+      },
+      (error) => {}
+    );
+    this.affiliateService.getAffiliateEarningsReport().subscribe(
+      (response: any) => {
+        this.affiliateEarnings = response;
       },
       (error) => {}
     );

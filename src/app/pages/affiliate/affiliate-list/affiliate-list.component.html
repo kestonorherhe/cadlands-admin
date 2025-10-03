@@ -5,6 +5,37 @@
   ></app-page-title> -->
 
   <div class="row">
+    <div class="col-md-2" style="width: 30% !important">
+      <div class="card mini-stats-wid">
+        <div class="card-body">
+          <div class="media">
+            <div class="media-body">
+              <h6 class="text-muted fw-medium">Highest Earning Affiliate</h6>
+              <h5 class="fw-medium">
+                {{ affiliateEarnings[0]?.firstName }}
+                {{ affiliateEarnings[0]?.lastName }}
+              </h5>
+              <h4 class="mb-2">
+                Total: ₦ {{ affiliateEarnings[0]?.totalEarning ?? 0 | number }}
+              </h4>
+              <h6 class="text-muted fw-medium">Direct Sales Commission: ₦ {{ affiliateEarnings[0]?.totalDirectEarning ?? 0 | number }}</h6>
+              <h6 class="text-muted fw-medium">Indirect Sales Commission: ₦ {{ affiliateEarnings[0]?.totalIndirectEarning ?? 0 | number }}</h6>
+            </div>
+
+            <!-- <div
+              class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center"
+            >
+              <span class="avatar-title">
+                <i class="bx bx-user font-size-24"></i>
+              </span>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-lg-12">
       <div class="card">
         <div class="row p-4">

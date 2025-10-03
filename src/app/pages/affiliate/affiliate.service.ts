@@ -52,6 +52,9 @@ export class AffiliateService {
 
     return this.httpService.get(url);
   }
+  getAffiliateEarningsReport() {
+    return this.httpService.get(`admins/affiliate-earnings`);
+  }
   upgradeAccount() {
     return this.httpService.post(`subscription-request/upgrade-account`, {});
   }
@@ -137,6 +140,6 @@ export class AffiliateService {
     //     })
     //   );
 
-      return this.httpService.get(`auth/resend-onboarding-email/${email}`);
+    return this.httpService.get(`auth/resend-onboarding-email/${email}`);
   }
 }
