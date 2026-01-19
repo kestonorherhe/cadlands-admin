@@ -120,10 +120,13 @@ export class MyBonusWithdrawalComponent implements OnInit {
       (item: any) => item.approvalStatus === "Pending"
     );
     this.obj.amount = Number(
-      filteredSales.reduce((acc, item) => acc + item.amount, 0)
+      filteredSales.reduce((acc, item) => acc + Number(item.amount), 0),
     );
     return {
-      totalAmount: filteredSales.reduce((acc, item) => acc + item.amount, 0),
+      totalAmount: filteredSales.reduce(
+        (acc, item) => acc + Number(item.amount),
+        0,
+      ),
       count: filteredSales.length,
     };
   }
